@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kernphysik Master-App</title>
+    <style>
+        :root {
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #00ff88;
+            --text: #ffffff;
+            --locked: #444;
+        }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; max-width: 800px; }
+        h1 { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #bbb;
+            line-height: 1.4;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .locked { opacity: 0.5; cursor: not-allowed; border-style: dashed; }
+        .locked:hover { transform: none; border-color: #333; }
+
+        .icon { font-size: 50px; margin-bottom: 15px; }
+        .title { font-weight: bold; font-size: 14px; text-transform: uppercase; }
+        .badge { font-size: 10px; margin-top: 12px; padding: 4px 10px; border-radius: 10px; background: rgba(255,255,255,0.1); }
+        .active-badge { color: var(--accent); border: 1px solid var(--accent); }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #333;
+            width: 100%;
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1>Kernphysik Master-App</h1>
+        <div class="disclaimer">
+            <b>Hinweis zur Nutzung:</b> Diese App dient als interaktives Begleitmedium für das eigenständige Lernen außerhalb des Unterrichts. Sie strukturiert die komplexen Themen der Kernphysik schülergerecht um, ersetzt jedoch nicht die vertiefende Arbeit mit dem offiziellen Schulbuch sowie die im Unterricht vermittelten Inhalte.
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card" onclick="window.location.href='geschichte.html'"><div class="icon">📜</div><div class="title">1. Entdeckung</div></div>
+        <div class="card" onclick="window.location.href='atombau.html'"><div class="icon">⚛️</div><div class="title">2. Kernbau</div></div>
+        <div class="card" onclick="window.location.href='strahlung.html'"><div class="icon">☢️</div><div class="title">3. Strahlenarten</div></div>
+        <div class="card" onclick="window.location.href='schutz.html'"><div class="icon">🛡️</div><div class="title">4. Messung & Schutz</div></div>
+        <div class="card" onclick="window.location.href='halbwertszeit.html'"><div class="icon">⏳</div><div class="title">5. Halbwertszeit</div></div>
+        
+        <div class="card" onclick="window.location.href='zerfall.html'">
+            <div class="icon">📉</div>
+            <div class="title">6. Zerfallsreihen</div>
+            <div class="badge active-badge">NEU</div>
+        </div>
+
+       <div class="card" onclick="window.location.href='kernkraftwerk.html'">
+    <div class="icon">🏗️</div>
+    <div class="title">7. Kernkraftwerk</div>
+    <div class="badge active-badge">TECHNIK</div>
+</div>
+
+       <div class="card" onclick="window.location.href='umwelt.html'">
+    <div class="icon">🌿</div>
+    <div class="title">8. Anwendung & Umwelt</div>
+    <div class="badge active-badge">ABSCHLUSS</div>
+</div>
+<div class="card quiz-card" onclick="window.location.href='quiz.html'" style="grid-column: 1 / -1; background: linear-gradient(45deg, #00ff88, #0062ff); color: #000;">
+    <div class="icon">🏆</div>
+    <div class="title" style="color: #000;"><b>DIE ULTIMATIVE CHALLENGE (QUIZ)</b></div>
+    <div class="badge" style="background: #fff; color: #000;">TESTE DICH!</div>
+</div>
+    </div>
+
+    <footer>
+        &copy; 2026 Michael Nagel | Diese Anwendung ist urheberrechtlich geschützt.<br>
+        Die Vervielfältigung oder unautorisierte Weitergabe ist nicht gestattet.
+    </footer>
+
+</body>
+</html>

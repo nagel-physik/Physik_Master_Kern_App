@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 3: Die Strahlenarten</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --alpha: #ff4d4d; --beta: #4d79ff; --gamma: #d14dff; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        
+        .info-card { background: var(--box); border-radius: 10px; padding: 20px; margin-bottom: 25px; border-left: 5px solid var(--accent); }
+        
+        /* Optimierter Labor Bereich */
+        .lab-box { 
+            background: #000; 
+            padding: 60px 20px 40px 20px; 
+            border-radius: 15px; 
+            border: 3px solid #444; 
+            margin: 30px 0; 
+            position: relative; 
+            min-height: 250px;
+        }
+
+        .ray { height: 60px; display: flex; align-items: center; position: relative; z-index: 1; }
+        .ray-label { font-weight: bold; font-size: 1.5rem; width: 120px; display: inline-block; }
+        
+        .line { height: 6px; border-radius: 3px; transition: width 1s ease-in-out; width: 0; }
+        .alpha-line { background: var(--alpha); box-shadow: 0 0 15px var(--alpha); }
+        .beta-line { background: var(--beta); box-shadow: 0 0 15px var(--beta); }
+        .gamma-line { background: var(--gamma); box-shadow: 0 0 15px var(--gamma); }
+
+        /* Verbesserte Barrieren */
+        .barrier { position: absolute; height: 180px; top: 40px; background: rgba(255,255,255,0.2); border-left: 2px dashed #666; }
+        .barrier-label { 
+            position: absolute; 
+            top: -35px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            color: #fff; 
+            font-weight: bold; 
+            font-size: 14px; 
+            white-space: nowrap;
+            background: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .btn { padding: 15px 30px; background: var(--accent); color: #000; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; margin: 10px 5px; cursor: pointer; border: none; font-size: 1rem; }
+        .btn:hover { background: #fff; }
+
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #1e1e1e; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM DASHBOARD</a>
+    </div>
+
+    <h1>Station 3: Die drei Strahlenarten</h1>
+    
+    <p>Hier lernst du, wie sich die Strahlen unterscheiden. Drücke auf den Start-Knopf, um das Experiment durchzuführen!</p>
+
+    <div class="lab-box">
+        <div class="barrier" style="left: 250px; width: 4px; background: #fff;">
+            <span class="barrier-label">PAPIER</span>
+        </div>
+        <div class="barrier" style="left: 500px; width: 10px; background: #aaa;">
+            <span class="barrier-label">ALUMINIUM</span>
+        </div>
+        <div class="barrier" style="left: 750px; width: 30px; background: #555;">
+            <span class="barrier-label">BLEI</span>
+        </div>
+
+        <div class="ray">
+            <span class="ray-label" style="color: var(--alpha);">Alpha (α)</span>
+            <div id="alpha" class="line alpha-line"></div>
+        </div>
+        <div class="ray">
+            <span class="ray-label" style="color: var(--beta);">Beta (β)</span>
+            <div id="beta" class="line beta-line"></div>
+        </div>
+        <div class="ray">
+            <span class="ray-label" style="color: var(--gamma);">Gamma (γ)</span>
+            <div id="gamma" class="line gamma-line"></div>
+        </div>
+    </div>
+    
+    <center>
+        <button class="btn" onclick="fireRays()">EXPERIMENT STARTEN</button>
+        <button class="btn" style="background: #444; color: #fff;" onclick="resetRays()">RESET</button>
+    </center>
+
+    <h2>Zusammenfassung für den Test</h2>
+    <div class="info-card">
+        <p><b>Alpha (α):</b> Große Teilchen. Werden schon durch ein <span style="color: var(--alpha); font-weight: bold;">Blatt Papier</span> gestoppt.</p>
+        <p><b>Beta (β):</b> Kleine, schnelle Elektronen. Dringen tiefer ein, brauchen <span style="color: var(--beta); font-weight: bold;">Aluminium</span> zum Stoppen.</p>
+        <p><b>Gamma (γ):</b> Reine Energie-Wellen. Gehen fast überall durch. Nur massives <span style="color: var(--gamma); font-weight: bold;">Blei oder Beton</span> schwächt sie ab.</p>
+    </div>
+
+    <table class="table">
+        <tr><th>Strahlung</th><th>Art</th><th>Ladung</th><th>Stoppbar durch...</th></tr>
+        <tr><td>Alpha (α)</td><td>Teilchen (He-Kern)</td><td>+2</td><td>Papier</td></tr>
+        <tr><td>Beta (β)</td><td>Teilchen (Elektron)</td><td>-1</td><td>Alu-Blech</td></tr>
+        <tr><td>Gamma (γ)</td><td>Welle (Energie)</td><td>0</td><td>Blei / Beton</td></tr>
+    </table>
+</div>
+
+<script>
+    function fireRays() {
+        // Pixel-Werte so angepasst, dass sie genau vor/in den Barrieren stoppen
+        document.getElementById('alpha').style.width = '130px'; 
+        document.getElementById('beta').style.width = '380px';  
+        document.getElementById('gamma').style.width = '700px'; 
+    }
+    function resetRays() {
+        document.getElementById('alpha').style.width = '0';
+        document.getElementById('beta').style.width = '0';
+        document.getElementById('gamma').style.width = '0';
+    }
+</script>
+
+</body>
+</html>

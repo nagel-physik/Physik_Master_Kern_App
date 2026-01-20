@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Atombau & Isotope</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2 { color: var(--accent); border-bottom: 1px solid var(--accent); }
+        
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+        
+        .symbol-box { font-family: 'Courier New', monospace; font-size: 2.5rem; display: inline-block; padding: 10px 20px; background: #000; color: white; border-radius: 5px; margin: 10px 0; position: relative; }
+        .mass-num { position: absolute; top: 0; left: -15px; font-size: 1.2rem; color: var(--formula); }
+        .ord-num { position: absolute; bottom: 0; left: -15px; font-size: 1.2rem; color: var(--accent); }
+        
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+        
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Station 2: Der Aufbau der Atomkerne</h1>
+    
+    <p>Um Radioaktivität zu verstehen, müssen wir tief in das Innere der Atome blicken. Wie dein Buch beschreibt, besteht jedes Atom aus einer <b>Atomhülle</b> (Elektronen) und einem winzigen, aber schweren <b>Atomkern</b>.</p>
+
+    <div class="definition">
+        <b>Definition: Nukleonen</b><br>
+        Die Bausteine des Atomkerns nennt man zusammenfassend <b>Nukleonen</b> (Kernbausteine). Es sind die positiv geladenen <span class="highlight">Protonen</span> und die elektrisch neutralen <span class="highlight">Neutronen</span>.
+    </div>
+
+    <div class="step-box">
+        <h2>1. Die Symbolschreibweise (Wichtig für Tests!)</h2>
+        <p>In der Physik nutzen wir eine Kurzschreibweise, um den Kern eines Elements genau zu beschreiben:</p>
+        
+        <center>
+            <div class="symbol-box">
+                <span class="mass-num">A</span>
+                <span class="ord-num">Z</span>
+                X
+            </div>
+        </center>
+        
+        <ul>
+            <li><span class="highlight">X:</span> Das chemische Symbol (z.B. C für Kohlenstoff).</li>
+            <li><span class="highlight">Z (Ordnungszahl):</span> Anzahl der <b>Protonen</b>. Sie bestimmt, welches Element es ist.</li>
+            <li><span class="highlight">A (Massenzahl):</span> Anzahl der <b>Protonen + Neutronen</b> zusammen.</li>
+        </ul>
+        
+        <p><b>Merke die Formel:</b> <br>
+        <span style="font-family: monospace; font-size: 1.5rem; color: var(--formula);">Neutronenzahl (N) = A - Z</span></p>
+    </div>
+
+    <h2>2. Nuklide und Isotope</h2>
+    <p>Ein Atomkern mit einer ganz bestimmten Anzahl an Protonen und Neutronen nennt man ein <b>Nuklid</b>.</p>
+
+    <div class="step-box">
+        <h3>Was sind Isotope?</h3>
+        <p>Das ist ein Kernbegriff im Buch: Atome eines Elements haben <b>immer die gleiche Anzahl an Protonen</b>, aber sie können <b>unterschiedlich viele Neutronen</b> haben. Diese "Geschwister-Atome" nennt man <span class="highlight">Isotope</span>.</p>
+        
+        <table class="table">
+            <tr><th>Isotop</th><th>Protonen</th><th>Neutronen</th><th>Eigenschaft</th></tr>
+            <tr><td>Wasserstoff-1</td><td>1</td><td>0</td><td>Stabil</td></tr>
+            <tr><td>Wasserstoff-2 (Deuterium)</td><td>1</td><td>1</td><td>Stabil</td></tr>
+            <tr><td>Wasserstoff-3 (Tritium)</td><td>1</td><td>2</td><td><b>Radioaktiv!</b></td></tr>
+        </table>
+        <p><i>Erkenntnis:</i> Zu viele oder zu wenige Neutronen können einen Kern <b>instabil</b> machen. Dann wird er radioaktiv und zerfällt.</p>
+    </div>
+
+    <h2>3. Die Bausteine im Detail</h2>
+    <table class="table">
+        <tr><th>Teilchen</th><th>Ladung</th><th>Masse</th><th>Ort</th></tr>
+        <tr><td>Proton (p)</td><td>positiv (+)</td><td>ca. 1 u</td><td>Kern</td></tr>
+        <tr><td>Neutron (n)</td><td>neutral (0)</td><td>ca. 1 u</td><td>Kern</td></tr>
+        <tr><td>Elektron (e)</td><td>negativ (-)</td><td>fast 0</td><td>Hülle</td></tr>
+    </table>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="dashboard.html" class="btn" style="background: #555; color: white;">Zurück</a>
+        <a href="pse.html" class="btn">Zum interaktiven PSE</a>
+    </div>
+</div>
+
+</body>
+</html>

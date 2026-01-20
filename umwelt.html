@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 8: Anwendung & Umwelt</title>
+    <style>
+        :root { --bg: #0f172a; --accent: #00ff88; --box: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        
+        .topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0; }
+        .topic-card { background: var(--box); border-radius: 15px; padding: 20px; border: 1px solid #334155; transition: 0.3s; }
+        .topic-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        .c14-sim { background: #000; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #444; }
+        .age-display { font-size: 1.5rem; color: var(--accent); font-weight: bold; margin: 10px 0; }
+        
+        .footer-nav { margin-top: 50px; text-align: center; padding: 30px; border-top: 1px solid #333; }
+        .btn-home { background: var(--accent); color: #000; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="dashboard.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">← DASHBOARD</a>
+    <h1>Station 8: Radioaktivität in unserem Leben</h1>
+
+    <p>Radioaktivität ist nicht nur eine Gefahr, sondern auch ein mächtiges Werkzeug in der Wissenschaft und Medizin. Wir sind zudem ständig einer natürlichen Strahlung ausgesetzt.</p>
+
+    <div class="topic-grid">
+        <div class="topic-card">
+            <h3>🏥 Medizin</h3>
+            <p><b>Diagnose:</b> Mit "Tracern" (radioaktiven Markern) können Ärzte Organfunktionen sichtbar machen.</p>
+            <p><b>Therapie:</b> Bei der Bestrahlung von Krebsgeschwüren werden gezielt Zellen zerstört, um Leben zu retten.</p>
+        </div>
+
+        <div class="topic-card">
+            <h3>🏺 Archäologie</h3>
+            <p>Die <b>C14-Methode</b> nutzt den Zerfall von Kohlenstoff-Isotopen, um das Alter von Knochen, Holz oder Mumien zu bestimmen.</p>
+            <p><i>Solange ein Wesen lebt, nimmt es C14 auf. Stirbt es, tickt die "radioaktive Uhr".</i></p>
+        </div>
+    </div>
+
+    
+
+    <section class="c14-sim">
+        <h3>C14-Alters-Check</h3>
+        <p>Bewege den Regler, um zu sehen, wie viel C14 noch in einem Fundstück ist:</p>
+        <input type="range" id="c14Range" min="0" max="100" value="100" style="width: 80%;" oninput="calcAge()">
+        <div class="age-display">C14-Gehalt: <span id="percent">100</span>%</div>
+        <div id="resultText">Das Objekt ist frisch (0 Jahre alt).</div>
+    </section>
+
+    <section style="margin-top: 40px;">
+        <h2>Radioaktivität in der Umwelt</h2>
+        <div class="topic-card" style="border-left: 6px solid #fbbf24;">
+            <p>Wusstest du, dass wir ständig bestrahlt werden? Man unterscheidet:</p>
+            <ul>
+                <li><b>Kosmische Strahlung:</b> Aus dem Weltall (nimmt im Flugzeug zu!).</li>
+                <li><b>Terrestrische Strahlung:</b> Aus dem Boden (z.B. Radon-Gas oder Uran im Gestein).</li>
+                <li><b>Innere Bestrahlung:</b> Wir haben selbst natürliche radioaktive Stoffe (wie Kalium-40) im Körper.</li>
+            </ul>
+        </div>
+    </section>
+
+    
+
+    <div class="footer-nav">
+        <h2>🎉 Glückwunsch!</h2>
+        <p>Du hast alle Stationen der Kernphysik-Master-App erfolgreich abgeschlossen.</p>
+        <br><br>
+        <a href="index.html" class="btn-home">ZURÜCK ZUM START</a>
+    </div>
+</div>
+
+<script>
+    function calcAge() {
+        const val = document.getElementById('c14Range').value;
+        document.getElementById('percent').innerText = val;
+        
+        // C14 Halbwertszeit ca. 5730 Jahre
+        // Sehr vereinfachte Formel für die Demo:
+        let age = 0;
+        if (val > 0) {
+            age = Math.round((Math.log(val / 100) / Math.log(0.5)) * 5730);
+        } else {
+            age = "über 50.000";
+        }
+        
+        document.getElementById('resultText').innerText = "Geschätztes Alter: ca. " + age + " Jahre.";
+    }
+</script>
+
+</body>
+</html>

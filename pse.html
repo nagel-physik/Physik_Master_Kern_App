@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kernphysik Total: Das 118-PSE</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --nonmetal: #f1c40f; 
+            --metal: #3498db;    
+            --noble: #9b59b6;    
+            --radio: #e74c3c;    
+            --semi: #2ecc71;     
+            --accent: #00ff88;
+        }
+        body { font-family: 'Arial Narrow', sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; }
+        
+        /* Die wichtige Anleitung oben */
+        .instruction-header {
+            background: #1a1a1a;
+            border: 2px solid var(--accent);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .instruction-header b { color: var(--accent); font-size: 16px; }
+        .formula { background: #000; padding: 8px; border-radius: 5px; margin-top: 8px; font-family: monospace; display: block; text-align: center; border: 1px dashed var(--accent); }
+
+        .legend {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; font-size: 11px; justify-content: center;
+        }
+        .leg-item { display: flex; align-items: center; gap: 4px; }
+        .box { width: 10px; height: 10px; border-radius: 2px; border: 1px solid #fff; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 6px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .element { aspect-ratio: 1 / 1.1; perspective: 1000px; cursor: pointer; }
+        .inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+        .flipped { transform: rotateY(180deg); }
+
+        .front, .back {
+            position: absolute;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 4px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .front { color: #000; font-weight: 900; border: 1px solid #fff; }
+        .m-zahl { position: absolute; top: 2px; left: 4px; font-size: 12px; }
+        .o-zahl { position: absolute; bottom: 2px; left: 4px; font-size: 12px; }
+        .sym { font-size: 32px; line-height: 1; }
+        .name { font-size: 8px; text-transform: uppercase; margin-top: 2px; }
+
+        .back {
+            background: #222; color: #fff; transform: rotateY(180deg);
+            padding: 4px; font-size: 9px; text-align: left; justify-content: flex-start;
+            border: 1px solid var(--accent);
+        }
+        .back b { color: var(--accent); display: block; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+<div style="text-align: center; margin: 20px;">
+    <a href="dashboard.html" style="text-decoration: none; background: #555; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-family: Arial;">← ZURÜCK ZUM DASHBOARD</a>
+</div>
+
+    <div class="instruction-header">
+        <b>⚛️ Kernbau-Gebrauchsanweisung</b><br>
+        Jede Kachel zeigt dir die zwei wichtigsten Zahlen für die Kernphysik:<br>
+        1. <b>Oben Links (A):</b> Massenzahl (Protonen + Neutronen)<br>
+        2. <b>Unten Links (Z):</b> Ordnungszahl (Nur Protonen)
+        <div class="formula">
+            A - Z = Neutronen (N)
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="leg-item"><div class="box" style="background:var(--nonmetal)"></div> Nichtmetalle</div>
+        <div class="leg-item"><div class="box" style="background:var(--metal)"></div> Metalle</div>
+        <div class="leg-item"><div class="box" style="background:var(--semi)"></div> Halbmetalle</div>
+        <div class="leg-item"><div class="box" style="background:var(--noble)"></div> Edelgase</div>
+        <div class="leg-item"><div class="box" style="background:var(--radio)"></div> Radioaktiv</div>
+    </div>
+
+    <div class="grid" id="pse"></div>
+
+    <script>
+        // Datenbank aller 118 Elemente
+        const elements = [
+            {z:1,s:"H",n:"Wasserstoff",m:1,c:"var(--nonmetal)"},{z:2,s:"He",n:"Helium",m:4,c:"var(--noble)"},{z:3,s:"Li",n:"Lithium",m:7,c:"var(--metal)"},{z:4,s:"Be",n:"Beryllium",m:9,c:"var(--metal)"},{z:5,s:"B",n:"Bor",m:11,c:"var(--semi)"},{z:6,s:"C",n:"Kohlenstoff",m:12,c:"var(--nonmetal)"},{z:7,s:"N",n:"Stickstoff",m:14,c:"var(--nonmetal)"},{z:8,s:"O",n:"Sauerstoff",m:16,c:"var(--nonmetal)"},{z:9,s:"F",n:"Fluor",m:19,c:"var(--nonmetal)"},{z:10,s:"Ne",n:"Neon",m:20,c:"var(--noble)"},{z:11,s:"Na",n:"Natrium",m:23,c:"var(--metal)"},{z:12,s:"Mg",n:"Magnesium",m:24,c:"var(--metal)"},{z:13,s:"Al",n:"Aluminium",m:27,c:"var(--metal)"},{z:14,s:"Si",n:"Silicium",m:28,c:"var(--semi)"},{z:15,s:"P",n:"Phosphor",m:31,c:"var(--nonmetal)"},{z:16,s:"S",n:"Schwefel",m:32,c:"var(--nonmetal)"},{z:17,s:"Cl",n:"Chlor",m:35,c:"var(--nonmetal)"},{z:18,s:"Ar",n:"Argon",m:40,c:"var(--noble)"},{z:19,s:"K",n:"Kalium",m:39,c:"var(--metal)"},{z:20,s:"Ca",n:"Calcium",m:40,c:"var(--metal)"},{z:21,s:"Sc",n:"Scandium",m:45,c:"var(--metal)"},{z:22,s:"Ti",n:"Titan",m:48,c:"var(--metal)"},{z:23,s:"V",n:"Vanadium",m:51,c:"var(--metal)"},{z:24,s:"Cr",n:"Chrom",m:52,c:"var(--metal)"},{z:25,s:"Mn",n:"Mangan",m:55,c:"var(--metal)"},{z:26,s:"Fe",n:"Eisen",m:56,c:"var(--metal)"},{z:27,s:"Co",n:"Cobalt",m:59,c:"var(--metal)"},{z:28,s:"Ni",n:"Nickel",m:59,c:"var(--metal)"},{z:29,s:"Cu",n:"Kupfer",m:64,c:"var(--metal)"},{z:30,s:"Zn",n:"Zink",m:65,c:"var(--metal)"},{z:31,s:"Ga",n:"Gallium",m:70,c:"var(--metal)"},{z:32,s:"Ge",n:"Germanium",m:73,c:"var(--semi)"},{z:33,s:"As",n:"Arsen",m:75,c:"var(--semi)"},{z:34,s:"Se",n:"Selen",m:79,c:"var(--nonmetal)"},{z:35,s:"Br",n:"Brom",m:80,c:"var(--nonmetal)"},{z:36,s:"Kr",n:"Krypton",m:84,c:"var(--noble)"},{z:37,s:"Rb",n:"Rubidium",m:85,c:"var(--metal)"},{z:38,s:"Sr",n:"Strontium",m:88,c:"var(--metal)"},{z:39,s:"Y",n:"Yttrium",m:89,c:"var(--metal)"},{z:40,s:"Zr",n:"Zirconium",m:91,c:"var(--metal)"},{z:41,s:"Nb",n:"Niob",m:93,c:"var(--metal)"},{z:42,s:"Mo",n:"Molybdän",m:96,c:"var(--metal)"},{z:43,s:"Tc",n:"Technetium",m:98,c:"var(--radio)"},{z:44,s:"Ru",n:"Ruthenium",m:101,c:"var(--metal)"},{z:45,s:"Rh",n:"Rhodium",m:103,c:"var(--metal)"},{z:46,s:"Pd",n:"Palladium",m:106,c:"var(--metal)"},{z:47,s:"Ag",n:"Silber",m:108,c:"var(--metal)"},{z:48,s:"Cd",n:"Cadmium",m:112,c:"var(--metal)"},{z:49,s:"In",n:"Indium",m:115,c:"var(--metal)"},{z:50,s:"Sn",n:"Zinn",m:119,c:"var(--metal)"},{z:51,s:"Sb",n:"Antimon",m:122,c:"var(--semi)"},{z:52,s:"Te",n:"Tellur",m:128,c:"var(--semi)"},{z:53,s:"I",n:"Iod",m:127,c:"var(--nonmetal)"},{z:54,s:"Xe",n:"Xenon",m:131,c:"var(--noble)"},{z:55,s:"Cs",n:"Caesium",m:133,c:"var(--metal)"},{z:56,s:"Ba",n:"Barium",m:137,c:"var(--metal)"},{z:57,s:"La",n:"Lanthan",m:139,c:"var(--metal)"},{z:58,s:"Ce",n:"Cer",m:140,c:"var(--metal)"},{z:59,s:"Pr",n:"Praseodym",m:141,c:"var(--metal)"},{z:60,s:"Nd",n:"Neodym",m:144,c:"var(--metal)"},{z:61,s:"Pm",n:"Promethium",m:145,c:"var(--radio)"},{z:62,s:"Sm",n:"Samarium",m:150,c:"var(--metal)"},{z:63,s:"Eu",n:"Europium",m:152,c:"var(--metal)"},{z:64,s:"Gd",n:"Gadolinium",m:157,c:"var(--metal)"},{z:65,s:"Tb",n:"Terbium",m:159,c:"var(--metal)"},{z:66,s:"Dy",n:"Dysprosium",m:163,c:"var(--metal)"},{z:67,s:"Ho",n:"Holmium",m:165,c:"var(--metal)"},{z:68,s:"Er",n:"Erbium",m:167,c:"var(--metal)"},{z:69,s:"Tm",n:"Thulium",m:169,c:"var(--metal)"},{z:70,s:"Yb",n:"Ytterbium",m:173,c:"var(--metal)"},{z:71,s:"Lu",n:"Lutetium",m:175,c:"var(--metal)"},{z:72,s:"Hf",n:"Hafnium",m:178,c:"var(--metal)"},{z:73,s:"Ta",n:"Tantal",m:181,c:"var(--metal)"},{z:74,s:"W",n:"Wolfram",m:184,c:"var(--metal)"},{z:75,s:"Re",n:"Rhenium",m:186,c:"var(--metal)"},{z:76,s:"Os",n:"Osmium",m:190,c:"var(--metal)"},{z:77,s:"Ir",n:"Iridium",m:192,c:"var(--metal)"},{z:78,s:"Pt",n:"Platin",m:195,c:"var(--metal)"},{z:79,s:"Au",n:"Gold",m:197,c:"var(--metal)"},{z:80,s:"Hg",n:"Quecksilber",m:201,c:"var(--metal)"},{z:81,s:"Tl",n:"Thallium",m:204,c:"var(--metal)"},{z:82,s:"Pb",n:"Blei",m:207,c:"var(--metal)"},{z:83,s:"Bi",n:"Bismut",m:209,c:"var(--metal)"},{z:84,s:"Po",n:"Polonium",m:209,c:"var(--radio)"},{z:85,s:"At",n:"Astat",m:210,c:"var(--radio)"},{z:86,s:"Rn",n:"Radon",m:222,c:"var(--radio)"},{z:87,s:"Fr",n:"Francium",m:223,c:"var(--radio)"},{z:88,s:"Ra",n:"Radium",m:226,c:"var(--radio)"},{z:89,s:"Ac",n:"Actinium",m:227,c:"var(--radio)"},{z:90,s:"Th",n:"Thorium",m:232,c:"var(--radio)"},{z:91,s:"Pa",n:"Protactinium",m:231,c:"var(--radio)"},{z:92,s:"U",n:"Uran",m:238,c:"var(--radio)"},{z:93,s:"Np",n:"Neptunium",m:237,c:"var(--radio)"},{z:94,s:"Pu",n:"Plutonium",m:244,c:"var(--radio)"},{z:95,s:"Am",n:"Americium",m:243,c:"var(--radio)"},{z:96,s:"Cm",n:"Curium",m:247,c:"var(--radio)"},{z:97,s:"Bk",n:"Berkelium",m:247,c:"var(--radio)"},{z:98,s:"Cf",n:"Californium",m:251,c:"var(--radio)"},{z:99,s:"Es",n:"Einsteinium",m:252,c:"var(--radio)"},{z:100,s:"Fm",n:"Fermium",m:257,c:"var(--radio)"},{z:101,s:"Md",n:"Mendelevium",m:258,c:"var(--radio)"},{z:102,s:"No",n:"Nobelium",m:259,c:"var(--radio)"},{z:103,s:"Lr",n:"Lawrencium",m:262,c:"var(--radio)"},{z:104,s:"Rf",n:"Rutherfordium",m:267,c:"var(--radio)"},{z:105,s:"Db",n:"Dubnium",m:270,c:"var(--radio)"},{z:106,s:"Sg",n:"Seaborgium",m:271,c:"var(--radio)"},{z:107,s:"Bh",n:"Bohrium",m:270,c:"var(--radio)"},{z:108,s:"Hs",n:"Hassium",m:277,c:"var(--radio)"},{z:109,s:"Mt",n:"Meitnerium",m:278,c:"var(--radio)"},{z:110,s:"Ds", de:"Darmstadtium",m:281,c:"var(--radio)"},{z:111,s:"Rg",n:"Roentgenium",m:282,c:"var(--radio)"},{z:112,s:"Cn",n:"Copernicium",m:285,c:"var(--radio)"},{z:113,s:"Nh",n:"Nihonium",m:286,c:"var(--radio)"},{z:114,s:"Fl",n:"Flerovium",m:289,c:"var(--radio)"},{z:115,s:"Mc",n:"Moscovium",m:290,c:"var(--radio)"},{z:116,s:"Lv",n:"Livermorium",m:293,c:"var(--radio)"},{z:117,s:"Ts",n:"Tennessine",m:294,c:"var(--radio)"},{z:118,s:"Og",n:"Oganesson",m:294,c:"var(--radio)"}
+        ];
+
+        const grid = document.getElementById('pse');
+        elements.forEach(el => {
+            const div = document.createElement('div');
+            div.className = 'element';
+            div.onclick = () => div.children[0].classList.toggle('flipped');
+            div.innerHTML = `
+                <div class="inner">
+                    <div class="front" style="background:${el.c}">
+                        <div class="m-zahl">${el.m}</div>
+                        <div class="sym">${el.s}</div>
+                        <div class="name">${el.n || el.s}</div>
+                        <div class="o-zahl">${el.z}</div>
+                    </div>
+                    <div class="back">
+                        <b>${(el.n || el.s).toUpperCase()}</b>
+                        Protonen (Z): ${el.z}<br>
+                        Neutronen (N): ${el.m - el.z}<br><br>
+                        Kern: ${el.z > 83 ? 'Instabil (Radioaktiv)' : 'Stabil'}
+                    </div>
+                </div>`;
+            grid.appendChild(div);
+        });
+    </script>
+</body>
+</html>

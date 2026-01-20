@@ -3,125 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Station 3: Die Strahlenarten</title>
+    <title>Station 3: Strahlenarten</title>
     <style>
-        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --alpha: #ff4d4d; --beta: #4d79ff; --gamma: #d14dff; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        h1, h2 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        :root { --bg: #121212; --accent: #00ff88; --text: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
+        .container { max-width: 800px; margin: auto; }
+        h1 { color: var(--accent); text-align: center; font-size: 1.4rem; }
         
-        .info-card { background: var(--box); border-radius: 10px; padding: 20px; margin-bottom: 25px; border-left: 5px solid var(--accent); }
-        
-        /* Optimierter Labor Bereich */
-        .lab-box { 
+        /* Fester Rahmen für die Simulation, der auf Handys schrumpft */
+        .sim-area { 
             background: #000; 
-            padding: 60px 20px 40px 20px; 
+            border: 2px solid #444; 
             border-radius: 15px; 
-            border: 3px solid #444; 
-            margin: 30px 0; 
+            height: 250px; 
             position: relative; 
-            min-height: 250px;
+            margin: 20px 0;
+            overflow: hidden; 
+            width: 100%;
         }
 
-        .ray { height: 60px; display: flex; align-items: center; position: relative; z-index: 1; }
-        .ray-label { font-weight: bold; font-size: 1.5rem; width: 120px; display: inline-block; }
+        .barrier-label { position: absolute; top: 10px; font-size: 10px; font-weight: bold; text-align: center; width: 40px; }
         
-        .line { height: 6px; border-radius: 3px; transition: width 1s ease-in-out; width: 0; }
-        .alpha-line { background: var(--alpha); box-shadow: 0 0 15px var(--alpha); }
-        .beta-line { background: var(--beta); box-shadow: 0 0 15px var(--beta); }
-        .gamma-line { background: var(--gamma); box-shadow: 0 0 15px var(--gamma); }
+        /* Barrieren Visualisierung */
+        .line { position: absolute; top: 40px; bottom: 10px; width: 4px; background: #fff; }
 
-        /* Verbesserte Barrieren */
-        .barrier { position: absolute; height: 180px; top: 40px; background: rgba(255,255,255,0.2); border-left: 2px dashed #666; }
-        .barrier-label { 
-            position: absolute; 
-            top: -35px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            color: #fff; 
-            font-weight: bold; 
-            font-size: 14px; 
-            white-space: nowrap;
-            background: #333;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
+        .btn-group { display: flex; justify-content: space-between; gap: 5px; margin-bottom: 20px; }
+        .btn { flex: 1; padding: 12px 5px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
 
-        .btn { padding: 15px 30px; background: var(--accent); color: #000; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; margin: 10px 5px; cursor: pointer; border: none; font-size: 1rem; }
-        .btn:hover { background: #fff; }
-
-        .table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #1e1e1e; }
-        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
-        .table th { background: #333; color: var(--accent); }
+        .info-box { background: #1e1e1e; padding: 15px; border-radius: 10px; border-left: 5px solid var(--accent); min-height: 100px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="margin-bottom: 20px;">
-        <a href="dashboard.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM DASHBOARD</a>
+    <a href="dashboard.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">← ZURÜCK</a>
+    <h1>3. Die drei Strahlenarten</h1>
+
+    <p>Teste, wie tief die Strahlen in Materie eindringen können:</p>
+
+    <div class="btn-group">
+        <button class="btn" style="background: #ff4d4d;" onclick="runSim('alpha')">ALPHA</button>
+        <button class="btn" style="background: #3498db;" onclick="runSim('beta')">BETA</button>
+        <button class="btn" style="background: #f1c40f;" onclick="runSim('gamma')">GAMMA</button>
     </div>
 
-    <h1>Station 3: Die drei Strahlenarten</h1>
-    
-    <p>Hier lernst du, wie sich die Strahlen unterscheiden. Drücke auf den Start-Knopf, um das Experiment durchzuführen!</p>
+    <div class="sim-area" id="stage">
+        <div class="barrier-label" style="left: 30%;">Papier</div>
+        <div class="barrier-label" style="left: 60%;">Alu</div>
+        <div class="barrier-label" style="left: 85%;">Blei</div>
 
-    <div class="lab-box">
-        <div class="barrier" style="left: 250px; width: 4px; background: #fff;">
-            <span class="barrier-label">PAPIER</span>
-        </div>
-        <div class="barrier" style="left: 500px; width: 10px; background: #aaa;">
-            <span class="barrier-label">ALUMINIUM</span>
-        </div>
-        <div class="barrier" style="left: 750px; width: 30px; background: #555;">
-            <span class="barrier-label">BLEI</span>
-        </div>
+        <div class="line" style="left: 33%; background: #fff;"></div>
+        <div class="line" style="left: 63%; background: #aaa;"></div>
+        <div class="line" style="left: 88%; background: #555; width: 15px;"></div>
 
-        <div class="ray">
-            <span class="ray-label" style="color: var(--alpha);">Alpha (α)</span>
-            <div id="alpha" class="line alpha-line"></div>
-        </div>
-        <div class="ray">
-            <span class="ray-label" style="color: var(--beta);">Beta (β)</span>
-            <div id="beta" class="line beta-line"></div>
-        </div>
-        <div class="ray">
-            <span class="ray-label" style="color: var(--gamma);">Gamma (γ)</span>
-            <div id="gamma" class="line gamma-line"></div>
-        </div>
-    </div>
-    
-    <center>
-        <button class="btn" onclick="fireRays()">EXPERIMENT STARTEN</button>
-        <button class="btn" style="background: #444; color: #fff;" onclick="resetRays()">RESET</button>
-    </center>
-
-    <h2>Zusammenfassung für den Test</h2>
-    <div class="info-card">
-        <p><b>Alpha (α):</b> Große Teilchen. Werden schon durch ein <span style="color: var(--alpha); font-weight: bold;">Blatt Papier</span> gestoppt.</p>
-        <p><b>Beta (β):</b> Kleine, schnelle Elektronen. Dringen tiefer ein, brauchen <span style="color: var(--beta); font-weight: bold;">Aluminium</span> zum Stoppen.</p>
-        <p><b>Gamma (γ):</b> Reine Energie-Wellen. Gehen fast überall durch. Nur massives <span style="color: var(--gamma); font-weight: bold;">Blei oder Beton</span> schwächt sie ab.</p>
+        <div id="blob" style="position: absolute; left: -20px; top: 130px; width: 15px; height: 15px; border-radius: 50%; display: none;"></div>
     </div>
 
-    <table class="table">
-        <tr><th>Strahlung</th><th>Art</th><th>Ladung</th><th>Stoppbar durch...</th></tr>
-        <tr><td>Alpha (α)</td><td>Teilchen (He-Kern)</td><td>+2</td><td>Papier</td></tr>
-        <tr><td>Beta (β)</td><td>Teilchen (Elektron)</td><td>-1</td><td>Alu-Blech</td></tr>
-        <tr><td>Gamma (γ)</td><td>Welle (Energie)</td><td>0</td><td>Blei / Beton</td></tr>
-    </table>
+    <div class="info-box" id="info">
+        Klicke auf eine Strahlenart, um das Experiment zu starten.
+    </div>
 </div>
 
 <script>
-    function fireRays() {
-        // Pixel-Werte so angepasst, dass sie genau vor/in den Barrieren stoppen
-        document.getElementById('alpha').style.width = '130px'; 
-        document.getElementById('beta').style.width = '380px';  
-        document.getElementById('gamma').style.width = '700px'; 
-    }
-    function resetRays() {
-        document.getElementById('alpha').style.width = '0';
-        document.getElementById('beta').style.width = '0';
-        document.getElementById('gamma').style.width = '0';
+    function runSim(type) {
+        const blob = document.getElementById('blob');
+        const info = document.getElementById('info');
+        const stageWidth = document.getElementById('stage').offsetWidth;
+        
+        blob.style.display = "block";
+        blob.style.left = "-20px";
+        
+        let target = 0;
+        if(type === 'alpha') {
+            blob.style.background = "#ff4d4d";
+            target = stageWidth * 0.33;
+            info.innerHTML = "<h3>Alpha-Strahlung</h3>Bestandteile: Heliumkerne. Geringe Reichweite. Ein <b>Blatt Papier</b> reicht zur Abschirmung aus.";
+        } else if(type === 'beta') {
+            blob.style.background = "#3498db";
+            target = stageWidth * 0.63;
+            info.innerHTML = "<h3>Beta-Strahlung</h3>Bestandteile: Schnelle Elektronen. Höhere Reichweite. Wird erst von einem <b>Aluminiumblech</b> gestoppt.";
+        } else if(type === 'gamma') {
+            blob.style.background = "#f1c40f";
+            target = stageWidth * 0.88;
+            info.innerHTML = "<h3>Gamma-Strahlung</h3>Art: Energiereiche Wellen. Sehr hohe Reichweite. Erfordert dicke Schichten aus <b>Blei</b> oder Beton.";
+        }
+
+        let pos = -20;
+        clearInterval(window.timer);
+        window.timer = setInterval(() => {
+            if(pos >= target) {
+                clearInterval(window.timer);
+            } else {
+                pos += 4;
+                blob.style.left = pos + "px";
+            }
+        }, 20);
     }
 </script>
 

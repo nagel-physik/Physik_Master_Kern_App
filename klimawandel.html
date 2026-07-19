@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Klimawandel und Energiewende</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .sim-btns { margin-top: 12px; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 7: Klimawandel und Energiewende</h1>
+
+    <p>Die Art, wie die Menschheit ihre Energie gewinnt, hat direkten Einfluss auf das Klima unseres Planeten. Der Übergang zu einer klimafreundlicheren Energieversorgung wird als <b>Energiewende</b> bezeichnet.</p>
+
+    <h2>Der natürliche Treibhauseffekt</h2>
+    <div class="step-box">
+        <p>Die Sonne strahlt Energie zur Erde, die die Erdoberfläche erwärmt. Die erwärmte Erde gibt einen Teil dieser Energie als Wärmestrahlung wieder ab. Bestimmte Gase in der Atmosphäre – vor allem <b>Kohlenstoffdioxid (CO₂), Methan und Wasserdampf</b> – lassen die Sonnenstrahlung durch, absorbieren aber einen Teil der abgegebenen Wärmestrahlung und strahlen sie teilweise zur Erde zurück. Dadurch ist es auf der Erde deutlich wärmer, als es ohne diese Gase wäre.</p>
+    </div>
+    <div class="definition">
+        Der natürliche <b>Treibhauseffekt</b> ist lebensnotwendig: Ohne ihn läge die durchschnittliche Temperatur der Erde bei etwa −18 °C statt den heute gemessenen rund +15 °C.
+    </div>
+
+    <h2>Der menschengemachte Klimawandel</h2>
+    <p>Seit Beginn der Industrialisierung hat die Menschheit durch die Verbrennung fossiler Energieträger die Konzentration von CO₂ und anderen Treibhausgasen in der Atmosphäre stark erhöht. Dadurch wird der natürliche Treibhauseffekt <b>verstärkt</b> – die Erde erwärmt sich zusätzlich. Diese globale Erwärmung wird von der ganz überwiegenden Mehrheit der Klimaforscherinnen und Klimaforscher als Hauptursache des aktuellen Klimawandels angesehen und geht mit Folgen wie dem Anstieg des Meeresspiegels, häufigeren Extremwetterereignissen und dem Rückgang von Gletschern und Meereis einher.</p>
+
+    <h2>Probier's aus: Der Treibhauseffekt</h2>
+    <div class="sim-box">
+        <canvas id="greenhouseCanvas" width="420" height="220"></canvas>
+        <div class="sim-btns">
+            <button id="btnNormal" class="active" onclick="setLevel('normal')">Natürlicher Treibhauseffekt</button>
+            <button id="btnVerstaerkt" onclick="setLevel('verstaerkt')">Verstärkter Treibhauseffekt</button>
+        </div>
+    </div>
+
+    <h2>Die Energiewende</h2>
+    <div class="definition">
+        Als <b>Energiewende</b> bezeichnet man den Umbau der Energieversorgung weg von fossilen und nuklearen Energieträgern hin zu erneuerbaren Energien, verbunden mit einer effizienteren Nutzung von Energie.
+    </div>
+    <p>Zu den zentralen Bausteinen der Energiewende zählen: der Ausbau von Wind-, Solar- und Wasserkraft, die energetische Sanierung von Gebäuden, effizientere Geräte und Fahrzeuge (z. B. Elektromobilität), der Ausbau von Stromnetzen und Energiespeichern sowie internationale Klimaabkommen, die Staaten auf gemeinsame Klimaziele verpflichten.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Das Pariser Klimaabkommen</h3>
+        <p>2015 einigten sich fast alle Staaten der Welt im Pariser Klimaabkommen darauf, die globale Erwärmung möglichst deutlich unter 2 °C (am besten auf 1,5 °C) gegenüber dem vorindustriellen Niveau zu begrenzen. Um dieses Ziel zu erreichen, müssten die weltweiten Treibhausgas-Emissionen deutlich und zügig sinken – ob und wie schnell das gelingt, ist Gegenstand anhaltender politischer und gesellschaftlicher Debatten.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen dem natürlichen und dem verstärkten (menschengemachten) Treibhauseffekt.</li>
+        <li>Nenne drei Maßnahmen, die zur Energiewende beitragen können.</li>
+        <li>Diskutiere, welche Rolle dein eigenes Verhalten (z. B. Mobilität, Ernährung, Konsum) für den persönlichen CO₂-Fußabdruck spielt.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="haushalt-energie.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="energie-quiz.html" class="btn" style="background: linear-gradient(45deg, #00ff88, #0062ff); color:#000;">Zum Quiz →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('greenhouseCanvas');
+    const ctx = canvas.getContext('2d');
+    let level = 'normal';
+
+    function setLevel(l) {
+        level = l;
+        document.getElementById('btnNormal').classList.toggle('active', l === 'normal');
+        document.getElementById('btnVerstaerkt').classList.toggle('active', l === 'verstaerkt');
+        draw();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const groundY = 190;
+        const atmY = level === 'normal' ? 70 : 110;
+
+        // Erde
+        ctx.fillStyle = '#2c5f2d';
+        ctx.fillRect(0, groundY, canvas.width, 30);
+
+        // Atmosphäre (Gasschicht)
+        const gasCount = level === 'normal' ? 6 : 16;
+        ctx.fillStyle = level === 'normal' ? 'rgba(150,150,150,0.4)' : 'rgba(231,76,60,0.35)';
+        for (let i = 0; i < gasCount; i++) {
+            const x = 20 + (i * (canvas.width - 40) / gasCount) + (i%2)*5;
+            ctx.beginPath();
+            ctx.arc(x, atmY, 8, 0, Math.PI*2);
+            ctx.fill();
+        }
+
+        // Sonnenstrahlen (runter, gelb)
+        ctx.strokeStyle = '#f1c40f';
+        ctx.lineWidth = 2;
+        [60, 160, 260, 360].forEach(x => {
+            ctx.beginPath(); ctx.moveTo(x, 10); ctx.lineTo(x-15, groundY); ctx.stroke();
+        });
+
+        // Wärmestrahlung (hoch, rot), teilweise durch Gasschicht zurückgeworfen
+        ctx.strokeStyle = '#e74c3c';
+        [80, 180, 280].forEach(x => {
+            ctx.beginPath(); ctx.moveTo(x, groundY); ctx.lineTo(x+10, atmY+10); ctx.stroke();
+            // reflektierter Anteil zurück zur Erde
+            const reflectCount = level === 'normal' ? 1 : 2;
+            for (let r = 0; r < reflectCount; r++) {
+                ctx.setLineDash([3,3]);
+                ctx.beginPath(); ctx.moveTo(x+10, atmY+10); ctx.lineTo(x+10 - 15*(r+1), groundY - 5); ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            // entweichender Anteil
+            ctx.beginPath(); ctx.moveTo(x+10, atmY-10); ctx.lineTo(x+20, 10); ctx.stroke();
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(level === 'normal' ? 'Natürlicher Treibhauseffekt: wenige Treibhausgase' : 'Verstärkter Treibhauseffekt: mehr Treibhausgase, mehr Rückstrahlung', 15, 20);
+        ctx.fillText('☀ Sonnenstrahlung', 15, 40);
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillText('↑ Wärmestrahlung von der Erde', 200, 210);
+    }
+
+    draw();
+</script>
+
+</body>
+</html>

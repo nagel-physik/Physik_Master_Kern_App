@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Energie im menschlichen Körper</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.2rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input, .calc-grid select { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult { text-align: center; font-size: 1rem; font-weight: bold; color: var(--accent); min-height: 40px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 5: Energie im menschlichen Körper</h1>
+
+    <p>Nicht nur Kraftwerke brauchen Energie – auch unser Körper ist ständig auf Energienachschub angewiesen, selbst wenn wir schlafen oder still sitzen.</p>
+
+    <h2>Nährstoffe als Energieträger</h2>
+    <div class="step-box">
+        <p>Unsere Nahrung liefert Energie in Form von <b>Kohlenhydraten, Fetten und Eiweißen</b>. Der Körper wandelt diese Nährstoffe durch <b>biologische Oxidation</b> (eine langsame, kontrollierte "Verbrennung" mit Sauerstoff) in nutzbare Energie um.</p>
+    </div>
+    <div class="formula-box">Nährstoff + Sauerstoff → Kohlenstoffdioxid + Wasser + Energie</div>
+    <p>Diese Reaktion läuft in den Zellen ab und liefert die Energie, die unser Körper für Muskelarbeit, Wärmeproduktion, Wachstum und alle Lebensvorgänge benötigt. Ein Teil der freigesetzten Energie wird in Form eines energiereichen Moleküls namens <b>ATP</b> zwischengespeichert, das dann überall im Körper als "Energiewährung" genutzt werden kann.</p>
+
+    <table class="table">
+        <tr><th>Nährstoff</th><th>Energiegehalt (ca.)</th></tr>
+        <tr><td>Kohlenhydrate</td><td>≈ 17 kJ/g (≈ 4 kcal/g)</td></tr>
+        <tr><td>Eiweiße (Proteine)</td><td>≈ 17 kJ/g (≈ 4 kcal/g)</td></tr>
+        <tr><td>Fette</td><td>≈ 38 kJ/g (≈ 9 kcal/g)</td></tr>
+    </table>
+
+    <h2>Grundumsatz und Leistungsumsatz</h2>
+    <div class="definition">
+        Der <b>Grundumsatz</b> ist die Energiemenge, die der Körper bei völliger Ruhe (z. B. im Liegen) allein für lebenswichtige Prozesse (Herzschlag, Atmung, Körpertemperatur) benötigt. Der <b>Leistungsumsatz</b> ist die zusätzliche Energie, die für körperliche Aktivität gebraucht wird.
+    </div>
+    <p>Je anstrengender eine Tätigkeit, desto mehr Sauerstoff verbrauchen die arbeitenden Muskeln, um Nährstoffe zu Energie umzuwandeln – das ist auch der Grund, warum wir bei Anstrengung schneller und tiefer atmen: Der Körper braucht mehr Sauerstoff für die biologische Oxidation.</p>
+
+    <h2>Probier's aus: Energieverbrauch verschiedener Aktivitäten</h2>
+    <p>Wähle eine Aktivität und die Dauer, um den ungefähren Energieverbrauch abzuschätzen (grobe Richtwerte für einen durchschnittlichen Jugendlichen).</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div>
+                <label>Aktivität</label>
+                <select id="activity">
+                    <option value="0.1">Schlafen (≈ 0,1 kcal/min)</option>
+                    <option value="0.15">Sitzen/Lesen (≈ 0,15 kcal/min)</option>
+                    <option value="0.3" selected>Gehen (≈ 0,3 kcal/min)</option>
+                    <option value="0.6">Radfahren (≈ 0,6 kcal/min)</option>
+                    <option value="1.0">Joggen (≈ 1,0 kcal/min)</option>
+                    <option value="1.4">Schwimmen intensiv (≈ 1,4 kcal/min)</option>
+                </select>
+            </div>
+            <div><label>Dauer in Minuten</label><input type="number" id="dauer" placeholder="z. B. 30"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcEnergy()">Energieverbrauch berechnen</button></div>
+        <div id="calcResult"></div>
+        <p style="font-size:0.75rem; color:#888; text-align:center; margin-top:10px;">Werte sind grobe Richtwerte pro Kilogramm Körpergewicht und dienen nur der Veranschaulichung, nicht als Ernährungs- oder Trainingsempfehlung.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Warum wird uns beim Sport warm?</h3>
+        <p>Muskeln wandeln bei der Arbeit chemische Energie nicht vollständig in Bewegungsenergie um – ein großer Teil wird als Wärme frei (der Wirkungsgrad der Muskulatur liegt nur bei etwa 20–25 %). Das ist auch der Grund, warum uns bei körperlicher Anstrengung warm wird und wir schwitzen: Der Körper muss die überschüssige Wärme über die Haut abgeben, um sich nicht zu überhitzen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen Grundumsatz und Leistungsumsatz mit eigenen Worten.</li>
+        <li>Begründe, warum Fette pro Gramm mehr Energie liefern als Kohlenhydrate oder Eiweiße.</li>
+        <li>Erkläre, warum wir bei Anstrengung schneller atmen.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="energie-kernkraft.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="haushalt-energie.html" class="btn">Weiter zu Energie im Haushalt →</a>
+    </div>
+</div>
+
+<script>
+function calcEnergy() {
+    const rate = parseFloat(document.getElementById('activity').value);
+    const dauer = parseFloat(document.getElementById('dauer').value);
+    const result = document.getElementById('calcResult');
+    if (isNaN(dauer) || dauer <= 0) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte eine gültige Dauer eingeben.';
+        return;
+    }
+    const kcalProKg = rate * dauer;
+    const kcalGesamt = kcalProKg * 60; // Beispiel: 60 kg Körpergewicht
+    result.style.color = '#00ff88';
+    result.innerText = 'Ungefährer Verbrauch: ' + kcalGesamt.toFixed(0) + ' kcal (bei ca. 60 kg Körpergewicht) ≈ ' + (kcalGesamt*4.184).toFixed(0) + ' kJ';
+}
+</script>
+
+</body>
+</html>

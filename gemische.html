@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Gemische und Trennverfahren</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .match-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+        select { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; }
+        #matchResult { text-align: center; font-weight: bold; margin-top: 15px; min-height: 25px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 2: Gemische und Trennverfahren</h1>
+
+    <p>Die wenigsten Stoffe in unserem Alltag sind chemisch reine Stoffe – die meisten sind Gemische aus mehreren Stoffen. Um einzelne Bestandteile zu gewinnen, nutzt man verschiedene Trennverfahren.</p>
+
+    <h2>Reinstoffe und Gemische</h2>
+    <div class="definition">
+        Ein <b>Reinstoff</b> besteht durchgehend aus nur einer Sorte Teilchen (z. B. destilliertes Wasser, reines Gold). Ein <b>Gemisch</b> besteht aus mindestens zwei verschiedenen Reinstoffen, die mechanisch miteinander vermengt, aber nicht chemisch miteinander verbunden sind.
+    </div>
+    <p>Man unterscheidet <b>homogene Gemische</b> (die Bestandteile sind nicht mit bloßem Auge zu unterscheiden, z. B. Salzwasser, Luft) von <b>heterogenen Gemischen</b> (die Bestandteile sind erkennbar, z. B. Sand-Wasser-Gemisch, Nebel, Rauch).</p>
+
+    <table class="table">
+        <tr><th>Gemischart</th><th>Beispiel</th><th>Merkmal</th></tr>
+        <tr><td>Lösung (homogen)</td><td>Salzwasser</td><td>fest in flüssig gelöst</td></tr>
+        <tr><td>Suspension (heterogen)</td><td>Sand in Wasser</td><td>fest in flüssig, ungelöst, setzt sich ab</td></tr>
+        <tr><td>Emulsion (heterogen)</td><td>Öl in Wasser</td><td>flüssig in flüssig, ungelöst</td></tr>
+        <tr><td>Legierung (homogen)</td><td>Messing (Kupfer + Zink)</td><td>fest in fest gelöst</td></tr>
+        <tr><td>Rauch (heterogen)</td><td>Feststoffteilchen in Luft</td><td>fest in gasförmig</td></tr>
+    </table>
+
+    <h2>Trennverfahren</h2>
+    <p>Weil die Bestandteile eines Gemisches nur mechanisch vermengt sind, lassen sie sich mit physikalischen Verfahren wieder trennen – je nach den unterschiedlichen Stoffeigenschaften der Bestandteile:</p>
+    <div class="step-box">
+        <ul>
+            <li><b>Sieben:</b> trennt Feststoffe unterschiedlicher Korngröße.</li>
+            <li><b>Filtrieren:</b> trennt einen ungelösten Feststoff von einer Flüssigkeit (nutzt die Teilchengröße).</li>
+            <li><b>Sedimentieren/Dekantieren:</b> ein ungelöster Feststoff setzt sich ab (nutzt die Dichte) und die Flüssigkeit wird abgegossen.</li>
+            <li><b>Destillieren:</b> trennt Flüssigkeiten mit unterschiedlicher Siedetemperatur durch Verdampfen und anschließendes Kondensieren.</li>
+            <li><b>Eindampfen/Kristallisieren:</b> eine Flüssigkeit wird verdampft, ein gelöster Feststoff bleibt zurück (z. B. Salzgewinnung).</li>
+            <li><b>Chromatographie:</b> trennt Stoffe anhand ihrer unterschiedlichen Wanderungsgeschwindigkeit auf einem Trägermaterial (z. B. Filterpapier) – genutzt z. B. zur Trennung von Farbstoffgemischen.</li>
+        </ul>
+    </div>
+
+    <h2>Probier's aus: Welches Trennverfahren passt?</h2>
+    <p>Ordne jedem Gemisch das passende Trennverfahren zu.</p>
+    <div class="sim-box">
+        <div class="match-row">
+            <span style="width:220px;">Sand und Kies (verschiedene Korngröße)</span>
+            <select id="q1"><option value="">wähle...</option><option>Sieben</option><option>Filtrieren</option><option>Destillieren</option><option>Chromatographie</option></select>
+        </div>
+        <div class="match-row">
+            <span style="width:220px;">Kaffeesatz aus Kaffee</span>
+            <select id="q2"><option value="">wähle...</option><option>Sieben</option><option>Filtrieren</option><option>Destillieren</option><option>Chromatographie</option></select>
+        </div>
+        <div class="match-row">
+            <span style="width:220px;">Alkohol aus Wein gewinnen</span>
+            <select id="q3"><option value="">wähle...</option><option>Sieben</option><option>Filtrieren</option><option>Destillieren</option><option>Chromatographie</option></select>
+        </div>
+        <div class="match-row">
+            <span style="width:220px;">Farbstoffe eines Filzstifts trennen</span>
+            <select id="q4"><option value="">wähle...</option><option>Sieben</option><option>Filtrieren</option><option>Destillieren</option><option>Chromatographie</option></select>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="checkMatch()">Überprüfen</button></div>
+        <div id="matchResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Trinkwassergewinnung</h3>
+        <p>Bei der Aufbereitung von Trinkwasser kommen oft mehrere Trennverfahren nacheinander zum Einsatz: Grobe Schwebstoffe werden gesiebt oder filtriert, feinere Partikel setzen sich in Absetzbecken ab (Sedimentation), und Aktivkohlefilter binden gelöste Schadstoffe. So entsteht aus Rohwasser Schritt für Schritt sauberes Trinkwasser.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen einem homogenen und einem heterogenen Gemisch an eigenen Beispielen.</li>
+        <li>Begründe, warum sich Salz aus Salzwasser nicht durch Filtrieren gewinnen lässt.</li>
+        <li>Beschreibe, welches Trennverfahren du nutzen würdest, um Öltröpfchen aus einer Wasser-Öl-Emulsion zu gewinnen.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="stoffeigenschaften.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="saeurenbasen.html" class="btn">Weiter zu Säuren &amp; Basen →</a>
+    </div>
+</div>
+
+<script>
+function checkMatch() {
+    const answers = { q1: "Sieben", q2: "Filtrieren", q3: "Destillieren", q4: "Chromatographie" };
+    let correct = 0;
+    Object.keys(answers).forEach(id => {
+        if (document.getElementById(id).value === answers[id]) correct++;
+    });
+    const result = document.getElementById('matchResult');
+    result.style.color = correct === 4 ? '#00ff88' : '#f1c40f';
+    result.innerText = correct + ' von 4 richtig zugeordnet!';
+}
+</script>
+
+</body>
+</html>

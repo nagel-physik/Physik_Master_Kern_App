@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 1: Dauermagnete</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+        .exp-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #3498db; }
+        .exp-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #3498db; font-weight: bold; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .app-list { background: var(--box); border-radius: 10px; padding: 20px; margin: 20px 0; }
+        .app-list li { margin-bottom: 6px; }
+
+        /* Mini-Simulation: Pole testen */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .magnet-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 20px 0; height: 60px; }
+        .bar { width: 100px; height: 40px; display: flex; border-radius: 5px; overflow: hidden; font-weight: bold; color: #000; transition: transform 0.6s ease; }
+        .bar div { flex: 1; display: flex; align-items: center; justify-content: center; }
+        .n-pole { background: #e74c3c; }
+        .s-pole { background: #3498db; }
+        .arrow { font-size: 28px; }
+        .sim-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; }
+        .sim-btns button:hover { background: var(--accent); color: #000; }
+        #simResult { min-height: 30px; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="magnetismus.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM MAGNETFELDER-DASHBOARD</a>
+    </div>
+
+    <h1>Station 1: Dauermagnete</h1>
+
+    <p>Magnetismus ist ein physikalisches Phänomen, das sich als <b>Kraftwirkung zwischen Magneten</b> oder zwischen Magneten und eisenhaltigen Gegenständen zeigt. Schon im antiken Griechenland wusste man, dass bestimmte Steine (Magnetit, auch „Magneteisenstein") Eisen anziehen. Der Name <i>Magnet</i> geht auf den römischen Dichter Lukrez zurück, der die Landschaft Magnesia in Griechenland als Fundort nannte. Fast zeitgleich wurden solche Steine auch in China entdeckt und dort in Kompassen als Magnetnadel verwendet.</p>
+
+    <div class="definition">
+        <b>Merke:</b> Magnete erkennt man nicht an Form, Farbe oder Oberfläche, sondern <b>nur an ihrer Wirkung</b>: Magnete üben Kräfte auf bestimmte Stoffe aus. Eisenhaltige Körper werden angezogen. Andere Magnete werden angezogen oder abgestoßen.
+    </div>
+
+    <h2>Wo Magnete heute überall stecken</h2>
+    <div class="app-list">
+        <ul>
+            <li>Haft- und Verschlusssysteme (z. B. Messerleisten in der Küche)</li>
+            <li>Elektromotoren – ohne Magnete undenkbar</li>
+            <li>Lautsprecher und Mikrofone</li>
+            <li>Dynamos und Generatoren zur Gewinnung elektrischer Energie</li>
+            <li>Kernspintomografen (MRT) in der Medizintechnik</li>
+            <li>Recyclingtechnik – Trennung von Müll und Rohstoffen (z. B. Alteisen am Schrottplatz)</li>
+        </ul>
+    </div>
+
+    <h2>Das Modell der Elementarmagnete</h2>
+    <p>Um den Magnetismus zu erklären, nutzt man eine <b>Modellvorstellung</b>: Alle magnetisierbaren Stoffe bestehen aus winzigen Bereichen, die sich wie kleine Magnete verhalten – man nennt sie <span class="highlight">Elementarmagnete</span>.</p>
+    <div class="step-box">
+        <ul>
+            <li>Sind die Elementarmagnete <b>ungeordnet</b>, heben sich ihre Wirkungen auf – der Körper ist <b>kein Magnet</b>.</li>
+            <li>Ist die Mehrzahl der Elementarmagnete <b>in eine Richtung ausgerichtet</b>, wirkt der Körper als Magnet.</li>
+        </ul>
+        <p>Durch das Magnetfeld eines Magneten können sogar unmagnetische Körper aus Eisen, Nickel oder Cobalt magnetisiert werden: Die Elementarmagnete richten sich aus – ein neuer Magnet entsteht.</p>
+    </div>
+
+    <p>Der Raum um einen Magneten herum, in dem er Kräfte auf eisenhaltige Körper oder andere Magnete ausübt, heißt <span class="highlight">magnetisches Feld</span> oder <span class="highlight">Magnetfeld</span>. Mithilfe von Eisenfeilspänen kann man dieses Feld sichtbar machen.</p>
+
+    <h2>Die wichtigsten Eigenschaften von Dauermagneten</h2>
+    <div class="definition">
+        Magnete haben immer einen <b>Nordpol</b> und einen <b>Südpol</b>.<br>
+        Gleichartige Magnetpole <b>stoßen sich ab</b>.<br>
+        Verschiedenartige Magnetpole <b>ziehen sich an</b>.<br>
+        Einzeln können Magnetpole <b>nicht auftreten</b> (es gibt keinen Magneten mit nur einem Pol).
+    </div>
+
+    <p>Außerdem gilt: <b>Magnetische Kräfte durchdringen Stoffe unterschiedlich stark.</b> Wie stark, hängt vom Material und von der Dicke des Stoffs ab. Sogenannte <span class="highlight">ferromagnetische Stoffe</span> (Eisen, Nickel, Cobalt) werden von der magnetischen Kraft <b>nicht</b> durchdrungen. Die magnetische Kraft ist außerdem <b>an den Polen am stärksten</b>, und Magnete können ferromagnetische Stoffe selbst magnetisieren.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Nord- und Südpol</h3>
+        <p>Hängt man einen Magneten frei beweglich auf, richtet er sich in Nord-Süd-Richtung aus. Der Pol, der dabei nach Norden zeigt, heißt <b>Nordpol</b> – der andere ist der <b>Südpol</b>. Oft sind die Pole eingefärbt: Der Nordpol meist rot, der Südpol oft grün.</p>
+    </div>
+
+    <h2>Mini-Experiment: Anziehung oder Abstoßung?</h2>
+    <p>Wähle die Ausrichtung von zwei Stabmagneten und beobachte, was passiert, wenn sich ihre Pole nähern.</p>
+    <div class="sim-box">
+        <div class="magnet-row">
+            <div class="bar" id="magnet1"><div class="n-pole">N</div><div class="s-pole">S</div></div>
+            <div class="arrow">↔</div>
+            <div class="bar" id="magnet2"><div class="s-pole">S</div><div class="n-pole">N</div></div>
+        </div>
+        <div class="sim-btns">
+            <button onclick="setPoles('NS','SN')">N-S ↔ S-N (Standard)</button>
+            <button onclick="setPoles('NS','NS')">N-S ↔ N-S</button>
+            <button onclick="setPoles('SN','SN')">S-N ↔ S-N</button>
+            <button onclick="setPoles('SN','NS')">S-N ↔ N-S</button>
+        </div>
+        <div id="simResult">Klicke eine Anordnung an.</div>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Notiere Gegenstände aus deinem Haushalt, die Magnete enthalten. Welche Aufgabe haben sie?</li>
+        <li>Plane ein Experiment, mit dem du ohne weitere Hilfsmittel herausfinden kannst, welcher von zwei gleich aussehenden Metallstäben ein Dauermagnet ist und welcher ein einfacher Eisenstab.</li>
+        <li>Erläutere, wie der Magnetismus beim Abdichten von Kühlschranktüren hilft.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="magnetismus.html" class="btn" style="background: #555; color: white;">Zurück zur Übersicht</a>
+        <a href="elektromagnete.html" class="btn">Weiter zu Elektromagnete →</a>
+    </div>
+</div>
+
+<script>
+    function setPoles(m1, m2) {
+        const bar1 = document.getElementById('magnet1');
+        const bar2 = document.getElementById('magnet2');
+        const result = document.getElementById('simResult');
+
+        bar1.innerHTML = m1 === 'NS'
+            ? '<div class="n-pole">N</div><div class="s-pole">S</div>'
+            : '<div class="s-pole">S</div><div class="n-pole">N</div>';
+        bar2.innerHTML = m2 === 'NS'
+            ? '<div class="n-pole">N</div><div class="s-pole">S</div>'
+            : '<div class="s-pole">S</div><div class="n-pole">N</div>';
+
+        // Welcher Pol trifft in der Mitte aufeinander?
+        const rightPoleOfBar1 = m1 === 'NS' ? 'S' : 'N';
+        const leftPoleOfBar2 = m2 === 'NS' ? 'N' : 'S';
+
+        bar1.style.transform = 'translateX(0)';
+        bar2.style.transform = 'translateX(0)';
+
+        if (rightPoleOfBar1 !== leftPoleOfBar2) {
+            result.style.color = '#00ff88';
+            result.innerHTML = '✅ ' + rightPoleOfBar1 + '-Pol trifft auf ' + leftPoleOfBar2 + '-Pol → <b>verschiedene Pole ziehen sich an!</b>';
+            bar1.style.transform = 'translateX(15px)';
+            bar2.style.transform = 'translateX(-15px)';
+        } else {
+            result.style.color = '#e74c3c';
+            result.innerHTML = '❌ ' + rightPoleOfBar1 + '-Pol trifft auf ' + leftPoleOfBar2 + '-Pol → <b>gleiche Pole stoßen sich ab!</b>';
+            bar1.style.transform = 'translateX(-15px)';
+            bar2.style.transform = 'translateX(15px)';
+        }
+    }
+</script>
+
+</body>
+</html>

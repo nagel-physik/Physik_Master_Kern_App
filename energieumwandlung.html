@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 3: Energieumwandlungen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .sim-flex { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: flex-end; }
+        .pendulum-stage { position: relative; width: 160px; height: 160px; }
+        .pivot { position: absolute; top: 10px; left: 50%; width: 8px; height: 8px; background: #888; border-radius: 50%; transform: translateX(-50%); }
+        .arm { position: absolute; top: 10px; left: 50%; width: 3px; height: 120px; background: #ccc; transform-origin: top center; }
+        .bob { position: absolute; width: 22px; height: 22px; background: var(--accent); border-radius: 50%; left: 50%; top: 122px; transform: translateX(-50%); }
+        .energy-bars { display: flex; gap: 15px; align-items: flex-end; height: 140px; }
+        .bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 60px; }
+        .bar-track { width: 100%; height: 100px; background: #222; border-radius: 6px; display: flex; align-items: flex-end; overflow: hidden; }
+        .bar-fill { width: 100%; background: linear-gradient(0deg, #00ff88, #0062ff); transition: height 0.05s linear; }
+        .bar-label { margin-top: 6px; font-size: 0.75rem; color: #aaa; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 3: Energieumwandlungen</h1>
+
+    <p>Eine Pendeltür darf ihre Schwingung nicht wiederholen: Nach maximal einer Periode muss die Tür wieder still stehen. Andernfalls gäbe es Probleme für Personen, die die Tür passieren wollen.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Die Amplitude verändern</h3>
+        <p>Versucht man, das Schwingungsverhalten eines Fadenpendels so zu beeinflussen, dass es dem einer Pendeltür ähnelt (z. B. mithilfe von Wasser, Schaum oder Pappe als Bremse), stellt man fest: Die Amplitude nimmt von Schwingung zu Schwingung ab.</p>
+    </div>
+
+    <h2>Ungedämpfte Schwingung</h2>
+    <p>Während einer mechanischen Schwingung werden verschiedene Energieformen ineinander umgewandelt. Im Idealfall findet ständig, das heißt periodisch, eine Umwandlung zwischen <b>potenzieller</b> und <b>kinetischer</b> Energie statt. Dabei bleibt die Amplitude unverändert, die Schwingung kommt nicht zum Stillstand.</p>
+
+    <h2>Gedämpfte Schwingung</h2>
+    <p>In der Praxis ist bei mechanischen Systemen immer auch Reibung vorhanden. Diese führt dazu, dass die mechanische Energie schrittweise in Wärme umgewandelt und an die Umwelt abgegeben wird. Die Schwingung kommt nach einer Weile zum Stillstand.</p>
+
+    <div class="definition">
+        Nimmt die Amplitude einer Schwingung ab, handelt es sich um eine <b>gedämpfte Schwingung</b>. Bei einer gedämpften Schwingung wird mechanische Energie in Wärme umgewandelt und abgegeben.
+    </div>
+    <p>Eine große Dämpfung führt dazu, dass mechanische Energie sehr schnell in Wärme umgewandelt wird. Die Amplitude nimmt rasch ab, das Pendel bleibt nach kurzer Zeit stehen. Bei Türen übernehmen <b>Schwingungsdämpfer</b> diese Aufgabe – sie sind oft in die Türscharniere integriert.</p>
+
+    <h2>Probier's aus: Gedämpft oder ungedämpft?</h2>
+    <p>Beobachte, wie sich potenzielle Energie (E<sub>pot</sub>, maximal an den Umkehrpunkten) und kinetische Energie (E<sub>kin</sub>, maximal in der Ruhelage) beim Schwingen abwechseln – und was bei Dämpfung mit der Amplitude passiert.</p>
+    <div class="sim-box">
+        <div class="sim-flex">
+            <div class="pendulum-stage">
+                <div class="pivot"></div>
+                <div class="arm" id="eArm"></div>
+                <div class="bob" id="eBob"></div>
+            </div>
+            <div class="energy-bars">
+                <div class="bar-col">
+                    <div class="bar-track"><div class="bar-fill" id="potBar" style="height:100%"></div></div>
+                    <div class="bar-label">E<sub>pot</sub></div>
+                </div>
+                <div class="bar-col">
+                    <div class="bar-track"><div class="bar-fill" id="kinBar" style="height:0%"></div></div>
+                    <div class="bar-label">E<sub>kin</sub></div>
+                </div>
+            </div>
+        </div>
+        <div class="sim-btns">
+            <button onclick="startEnergy(false)">Ungedämpfte Schwingung ▶</button>
+            <button onclick="startEnergy(true)">Gedämpfte Schwingung ▶</button>
+            <button onclick="stopEnergy()">Stopp ⏹</button>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <h3>Ausgleich der Dämpfung</h3>
+        <p>Reibung führt zu einer Dämpfung einer Schwingung. Leider ist dieser Prozess in der Realität nicht zu verhindern – man kann Reibung zwar durch geeignete Materialien verringern, ein kleiner Rest bleibt aber immer. Soll eine Schwingung ungedämpft verlaufen, ist es notwendig, die durch Reibung verloren gegangene Energie dem System periodisch wieder zuzuführen (z. B. über Federn, Batterien und passende Antriebe).</p>
+        <div class="definition" style="margin-top:15px;">
+            Bleibt bei einer Schwingung die Amplitude konstant, handelt es sich um eine <b>ungedämpfte Schwingung</b>. Dabei muss periodisch Energie zugeführt werden, um die durch Reibung in Form von Wärme abgegebene Energie auszugleichen.
+        </div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Stoßdämpfer</h3>
+        <p>Fahrsicherheit und Fahrkomfort erfordern die Verringerung von Schwingungen, die durch Unebenheiten der Fahrbahn entstehen. Diese Schwingungen werden im Stoßdämpfer absorbiert – die Räder werden dadurch immer auf dem Boden gehalten, was die Fahrsicherheit verbessert. Das Prinzip aller hydraulischen Stoßdämpfer ist, Bewegungsenergie aufzunehmen und in Form von Wärme an die Umwelt abzugeben. Dazu wird Öl im Stoßdämpfergehäuse durch enge Öffnungen und Ventile gepresst.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Beschreibe die Energieumwandlungen bei einer ungedämpften und einer gedämpften Schwingung.</li>
+        <li>Beschreibe die Energieumwandlungen beim Bungeesprung.</li>
+        <li>Notiere Beispiele für ungedämpfte Schwingungen. Woher erhalten sie zusätzliche Energie?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="fadenpendel.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="resonanz.html" class="btn">Weiter zur Resonanz →</a>
+    </div>
+</div>
+
+<script>
+    let step = 0;
+    let timer = null;
+    let damped = false;
+
+    function startEnergy(withDamping) {
+        clearInterval(timer);
+        damped = withDamping;
+        step = 0;
+        timer = setInterval(() => {
+            step += 0.1;
+            let envelope = damped ? Math.max(0.1, Math.exp(-step * 0.05)) : 1;
+            const angle = 30 * envelope * Math.sin(step);
+            document.getElementById('eArm').style.transform = 'rotate(' + angle + 'deg)';
+            document.getElementById('eBob').style.left = (50 + Math.sin(angle * Math.PI/180) * 35) + '%';
+
+            const kinFraction = Math.cos(step) * Math.cos(step); // 1 bei Ruhelage, 0 an Umkehrpunkten (angenähert)
+            const potFraction = 1 - kinFraction;
+            document.getElementById('potBar').style.height = (potFraction * 100 * envelope + (1-envelope)*10) + '%';
+            document.getElementById('kinBar').style.height = (kinFraction * 100 * envelope) + '%';
+
+            if (damped && envelope <= 0.11) clearInterval(timer);
+        }, 30);
+    }
+
+    function stopEnergy() {
+        clearInterval(timer);
+    }
+
+    startEnergy(false);
+</script>
+
+</body>
+</html>

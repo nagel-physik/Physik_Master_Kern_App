@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Resonanz</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Resonanz-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .pendulum-stage { position: relative; width: 100%; max-width: 200px; height: 170px; margin: 10px auto; }
+        .pivot { position: absolute; top: 10px; left: 50%; width: 8px; height: 8px; background: #888; border-radius: 50%; transform: translateX(-50%); }
+        .arm { position: absolute; top: 10px; left: 50%; width: 3px; height: 130px; background: #ccc; transform-origin: top center; }
+        .bob { position: absolute; width: 22px; height: 22px; background: var(--accent); border-radius: 50%; left: 50%; top: 132px; transform: translateX(-50%); }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        #resonanceStatus { margin-top: 12px; font-weight: bold; min-height: 24px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 4: Resonanz</h1>
+
+    <div class="step-box" style="border-left-color:#e74c3c;">
+        <p>1940 brachte ein starker Wind die <b>Tacoma-Narrows-Brücke</b> im Nordwesten der USA zum Schwingen. Die Schwingungen wurden immer stärker, bis die Brücke zerbrach – normalerweise hätte die Brücke noch weit stärkeren Wind aushalten müssen.</p>
+    </div>
+
+    <div class="step-box">
+        <h3>Experiment: Ein Pendel anpusten</h3>
+        <p>Versucht man, ein Fadenpendel zum Schwingen zu bringen, ohne es zu berühren (z. B. durch Anpusten), gelingt das besonders gut unter bestimmten Bedingungen – dazu gleich mehr.</p>
+    </div>
+
+    <h2>Energieübertragung</h2>
+    <p>Man kann Pendel und andere schwingungsfähige Systeme zum Schwingen anregen, indem man ihnen Energie zuführt. Um möglichst effektiv Energie zu übertragen und so z. B. beim Pendel eine große Amplitude zu erreichen, ist es entscheidend, die Energie immer zum <b>richtigen Zeitpunkt</b> zu übertragen.</p>
+    <div class="definition">
+        Um einem schwingungsfähigen System effektiv Energie zuzuführen, muss die Energie zu geeigneten Zeitpunkten übertragen werden.
+    </div>
+
+    <h2>Eigenfrequenz und Erregerfrequenz</h2>
+    <p>Jedes schwingungsfähige System hat eine für das System typische Schwingungsdauer und damit auch eine typische Frequenz – die <span class="highlight">Eigenfrequenz</span>. Um die Amplitude zu erhöhen, muss das Anregen der Schwingung regelmäßig erfolgen. Damit kann man dieser Erregung ebenfalls eine Frequenz zuordnen: die <span class="highlight">Erregerfrequenz</span>.</p>
+
+    <div class="definition">
+        Resonanz tritt bei regelmäßiger Anregung ein, wenn gilt: <b>Erregerfrequenz = Eigenfrequenz</b>. Die Amplitude der Eigenschwingung wird dann maximal.
+    </div>
+    <p>Erfolgt die Anregung viel schneller oder langsamer als die Eigenfrequenz, bleibt die Amplitude des Pendels klein. Bewegt man die Hand mit der Eigenfrequenz des Pendels, wird die Amplitude immer größer. Die Amplitude kann so groß werden, dass sich das schwingungsfähige System selbst zerstört – eine <b>Resonanzkatastrophe</b>.</p>
+
+    <h2>Probier's aus: Erregerfrequenz vs. Eigenfrequenz</h2>
+    <p>Das Pendel hat eine feste Eigenfrequenz. Stelle die Erregerfrequenz (die Frequenz, mit der du anregst) ein und beobachte, wie groß die Amplitude wird.</p>
+    <div class="sim-box">
+        <div class="pendulum-stage">
+            <div class="pivot"></div>
+            <div class="arm" id="rArm"></div>
+            <div class="bob" id="rBob"></div>
+        </div>
+        <label class="slider-label">Erregerfrequenz: <span id="freqVal">0.50</span> Hz (Eigenfrequenz des Pendels: 0,50 Hz)</label>
+        <input type="range" id="excFreq" min="0.1" max="1.0" step="0.02" value="0.5" oninput="updateResonance()">
+        <div id="resonanceStatus"></div>
+    </div>
+
+    <h2>Unerwünschte und erwünschte Resonanz</h2>
+    <div class="step-box">
+        <p><b>Unerwünscht:</b> Bei der Tacoma-Narrows-Brücke sorgte Wind für Schwingungen in den Halteseilen. Diese hatten die Eigenfrequenz der Brücke, und die Amplitude verstärkte sich, bis die Brücke einstürzte. Ein 50 m hohes Windrad schwingt etwa alle 3 s hin und her – Schwingungswächter regulieren deshalb die Drehzahl des Motors, um Resonanz zu vermeiden.</p>
+        <p><b>Erwünscht:</b> Bei vielen Menschen entwickeln sich Tumore im Unterleib. Statt zu operieren, kann man Resonanz nutzen, um das Tumorgewebe zu zerstören: Dazu sendet man passend hochfrequenten Schall durch die Haut, der die Teilchen im Tumor immer stärker zum Schwingen bringt. Dadurch heizt sich der Tumor auf und zerstört sich selbst.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Lenkerflattern</h3>
+        <p>Bei vielen Zweirädern ist das Vorderrad gefedert. Dadurch kann es schwingen. Wird dieses Schwingen mit einer Frequenz angeregt, die der Eigenfrequenz nahekommt, schwingt der Lenker immer stärker mit. Die Anregung kann durch den Straßenbelag oder den Motor erfolgen, z. B. bei einer bestimmten Geschwindigkeit oder Motordrehzahl. Gefährlich wird es, wenn die Federung nicht ausreichend gedämpft ist. Beim Fahrrad hilft es, zur Dämpfung die Ellenbogen an den Körper zu legen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre die Begriffe Erregerfrequenz und Eigenfrequenz am Beispiel eines schaukelnden Kindes.</li>
+        <li>In § 27 der Straßenverkehrsordnung heißt es: „Auf Brücken darf nicht im Gleichschritt marschiert werden." Erkläre, warum dieses Gesetz erlassen wurde.</li>
+        <li>Ein Fadenpendel wird so angestoßen, dass es zur Resonanz kommt. Gib die Bedingung dafür an und beschreibe die Auswirkungen.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="energieumwandlung.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="schall.html" class="btn">Weiter zum Schall →</a>
+    </div>
+</div>
+
+<script>
+    const eigenfreq = 0.5;
+    let step = 0;
+    let timer = null;
+
+    function updateResonance() {
+        const excFreq = parseFloat(document.getElementById('excFreq').value);
+        document.getElementById('freqVal').innerText = excFreq.toFixed(2);
+
+        const diff = Math.abs(excFreq - eigenfreq);
+        const amplitude = Math.max(3, 35 / (1 + diff * 40));
+
+        clearInterval(timer);
+        step = 0;
+        timer = setInterval(() => {
+            step += 0.15;
+            const angle = amplitude * Math.sin(step * eigenfreq * 6);
+            document.getElementById('rArm').style.transform = 'rotate(' + angle + 'deg)';
+        }, 30);
+
+        const status = document.getElementById('resonanceStatus');
+        if (diff < 0.03) {
+            status.style.color = '#e74c3c';
+            status.innerText = '⚠️ Erregerfrequenz ≈ Eigenfrequenz → RESONANZ! Die Amplitude wird maximal.';
+        } else if (diff < 0.15) {
+            status.style.color = '#f1c40f';
+            status.innerText = 'Die Frequenzen nähern sich an – die Amplitude wächst.';
+        } else {
+            status.style.color = '#888';
+            status.innerText = 'Erregerfrequenz weit von der Eigenfrequenz entfernt – kleine Amplitude.';
+        }
+    }
+
+    updateResonance();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Der Transformator</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .formula-box { font-family: monospace; font-size: 1.4rem; text-align: center; background: #000; padding: 15px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Transformator-Rechner */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult { text-align: center; font-size: 1.3rem; font-weight: bold; color: var(--accent); min-height: 30px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="magnetismus.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM MAGNETFELDER-DASHBOARD</a>
+    </div>
+
+    <h1>Station 7: Der Transformator</h1>
+
+    <p>Verschiedene Anbieter von Smartphones, Pkws oder Möbeln bieten die Möglichkeit an, Smartphones kabellos aufzuladen. Diese Technik wird <b>induktives Laden</b> genannt – zur Anpassung der Spannung werden dabei Spulen verwendet.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Kabellose Energieübertragung</h3>
+        <p>Legt man zwei Spulen mit etwa 5 cm Abstand nebeneinander und schaltet an der einen Spule eine Gleichspannung ein und aus, leuchtet eine LED an der zweiten Spule kurz auf. Legt man stattdessen eine <b>Wechselspannung</b> an, leuchtet die LED dauerhaft. Bewegt man die Spule mit der LED weiter weg, wird der Effekt schwächer – die Übertragung funktioniert nur bis zu einem bestimmten Abstand.</p>
+    </div>
+
+    <p>Das Bauteil, das im Experiment aus zwei einfachen Spulen besteht, nennt man <span class="highlight">Transformator</span>. Ein Transformator überträgt Energie und transformiert (verändert) dabei Spannungen und Stromstärken.</p>
+
+    <p>Bei den meisten Transformatoren sind die Spulen fest auf einem gemeinsamen, geschlossenen Eisenkern montiert. Die <b>Primärspule</b> mit der Windungszahl N₁ wird an die Spannungsquelle mit der Primärspannung U₁ angeschlossen. Die <b>Sekundärspule</b> mit der Windungszahl N₂ stellt eine Sekundärspannung U₂ für den Nutzer bereit.</p>
+
+    <div class="definition">
+        Ein Transformator besteht aus zwei Spulen auf einem gemeinsamen, geschlossenen Eisenkern. Die Funktion des Transformators beruht auf der <b>elektromagnetischen Induktion</b>.
+    </div>
+
+    <p>Durch die anliegende Wechselspannung an der Primärspule baut sich in dieser ein sich änderndes magnetisches Feld auf. Dieses Feld umfasst auch die Sekundärseite und bewirkt das Induzieren einer Spannung in der Sekundärspule.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Windungszahl und Spannung</h3>
+        <p>Hält man N₁ = 500 fest und verändert N₂ (250, 500, 750, 1000), stellt man beim Messen von U₁ und U₂ fest: Mit einem Transformator können Spannungen vergrößert oder verkleinert werden. Vergrößert (bzw. verkleinert) sich das Verhältnis von N₁ und N₂, dann vergrößert (verkleinert) sich im gleichen Maß auch das Verhältnis von U₁ und U₂.</p>
+        <p><i>Beispiel:</i> Ist N₂ das 5-Fache von N₁, dann verfünffacht sich auch die Spannung U₂ im Vergleich zu U₁ – aus U₁ = 12 V folgt U₂ = 60 V.</p>
+    </div>
+
+    <p>Dieser Zusammenhang zwischen Windungszahlen und Spannungen wird <b>Spannungsübersetzung</b> genannt. Für einen <b>unbelasteten</b> Transformator (im Sekundärkreis fließt kein Strom) gilt:</p>
+
+    <div class="formula-box">N₁ / N₂ = U₁ / U₂</div>
+
+    <h2>Probier's aus: Der Transformator-Rechner</h2>
+    <p>Trage drei der vier Werte ein und lasse den vierten berechnen – so kannst du deine Hausaufgaben direkt überprüfen.</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Windungszahl Primärspule N₁</label><input type="number" id="n1" placeholder="z. B. 500"></div>
+            <div><label>Windungszahl Sekundärspule N₂</label><input type="number" id="n2" placeholder="z. B. 1000"></div>
+            <div><label>Primärspannung U₁ in V</label><input type="number" id="u1" placeholder="z. B. 12"></div>
+            <div><label>Sekundärspannung U₂ in V</label><input type="number" id="u2" placeholder="leer lassen, um zu berechnen"></div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn" style="border:none; cursor:pointer;" onclick="calcTrafo()">Berechnen</button>
+        </div>
+        <div id="calcResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Übrigens</h3>
+        <p>Im Idealfall wird die gesamte elektrische Energie des Primärkreises in elektrische Energie des Sekundärkreises umgewandelt. In der Realität wird ein Teil der elektrischen Energie in thermische Energie umgewandelt – große Transformatoren müssen sogar gekühlt werden.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Elektroschweißen</h3>
+        <p>Viele Hobbyschrauber tunen ihre Autos – einige Umbauten sind nur möglich, wenn Metallteile geschweißt werden. Im Haushalt sind die Stromstärken meist auf 16 A begrenzt, zum Schweißen sind aber 100 A und mehr nötig. Auch hier hilft ein Transformator: Zur Auswahl der richtigen Spulen berechnet man die Stromstärkeübersetzung mit N₁/N₂ = I₂/I₁. Erhöht man die Stromstärke, verringert sich allerdings die Spannung.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Warum kann ein Transformator nur mit Wechselspannung betrieben werden, nicht mit Gleichspannung?</li>
+        <li>Bei einem Transformator wird die Primärspannung verdoppelt. Wie ändert sich die Sekundärspannung?</li>
+        <li>Gute Transformatoren haben einen Wirkungsgrad von 99 %. Was bedeutet diese Angabe?</li>
+        <li>Erläutere die Bedeutung von Transformatoren für die Energieversorgung in unserem Land.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="generator.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="magnetismus-quiz.html" class="btn" style="background: linear-gradient(45deg, #00ff88, #0062ff); color:#000;">Zum Quiz →</a>
+    </div>
+</div>
+
+<script>
+    function calcTrafo() {
+        const n1 = parseFloat(document.getElementById('n1').value);
+        const n2 = parseFloat(document.getElementById('n2').value);
+        const u1 = parseFloat(document.getElementById('u1').value);
+        const u2 = parseFloat(document.getElementById('u2').value);
+        const result = document.getElementById('calcResult');
+
+        const vals = { n1, n2, u1, u2 };
+        const missing = Object.keys(vals).filter(k => isNaN(vals[k]));
+
+        if (missing.length !== 1) {
+            result.style.color = '#e74c3c';
+            result.innerText = 'Bitte genau 3 der 4 Felder ausfüllen, ein Feld leer lassen.';
+            return;
+        }
+
+        result.style.color = '#00ff88';
+        if (missing[0] === 'u2') {
+            const r = (n2 / n1) * u1;
+            result.innerText = 'U₂ = ' + r.toFixed(2) + ' V   (N₁/N₂ = U₁/U₂)';
+        } else if (missing[0] === 'u1') {
+            const r = (n1 / n2) * u2;
+            result.innerText = 'U₁ = ' + r.toFixed(2) + ' V';
+        } else if (missing[0] === 'n2') {
+            const r = (n1 * u2) / u1;
+            result.innerText = 'N₂ = ' + r.toFixed(0) + ' Windungen';
+        } else if (missing[0] === 'n1') {
+            const r = (n2 * u1) / u2;
+            result.innerText = 'N₁ = ' + r.toFixed(0) + ' Windungen';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Eigenschaften von Wellen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 7: Eigenschaften von Wellen</h1>
+
+    <p>Obwohl Meerwasser nicht immer klar ist, finden Delfine zielsicher ihre Beute – dazu benutzen sie Schallwellen. Obwohl man oft versucht hat, dieses Ortungssystem technisch nachzubauen, hat man die Genauigkeit der Delfine bisher nicht erreicht.</p>
+
+    <h2>1. Reflexion</h2>
+    <div class="step-box">
+        <p>Legt man eine lange Feder auf eine Bank und lenkt ein Ende schnell seitlich aus, während das andere Ende festgemacht ist, scheint die Welle am festen Ende abzuprallen.</p>
+    </div>
+    <div class="definition">
+        Treffen Wellen auf ein Hindernis, werden sie <b>reflektiert</b>. Dabei gilt das Reflexionsgesetz: <b>Einfallswinkel = Reflexionswinkel</b>.
+    </div>
+    <p>Beide Teile der Welle und das Lot liegen dabei in einer Ebene. Die Kenngrößen der Welle ändern sich durch die Reflexion nicht.</p>
+
+    <h3>Probier's aus: Einfallswinkel = Reflexionswinkel</h3>
+    <div class="sim-box">
+        <canvas id="reflectCanvas" width="400" height="220"></canvas>
+        <label class="slider-label">Einfallswinkel: <span id="angleVal">40</span>°</label>
+        <input type="range" id="angle" min="10" max="80" step="1" value="40" oninput="drawReflection()">
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Klicksonar</h3>
+        <p>Einige blinde Menschen trainieren die Klicksonar-Technik. Dabei stoßen sie mit der Zunge Klickgeräusche aus und hören auf Echos der Umwelt. Nach viel Training entsteht dabei ein dem Sehen ähnliches Bild im Gehirn. Menschen, die die Technik beherrschen, erkennen ein Auto in etwa 5 m Entfernung, ein Haus bereits in 50 m Entfernung. Experten dieser Technik können sogar im Straßenverkehr Fahrrad fahren.</p>
+    </div>
+
+    <h2>2. Interferenz</h2>
+    <p>Beobachtet man Wellen an einer Feder, die von beiden Enden gleichzeitig erzeugt werden, erkennt man: Die Wellen treffen sich an einem Punkt und laufen dahinter unverändert weiter. Misst man dabei die Lautstärke von zwei gleichen Tönen (z. B. zweier Stimmgabeln) an verschiedenen Punkten des Raumes, stellt man fest: Mal ist der Ton lauter als bei nur einer Stimmgabel, mal viel leiser.</p>
+    <div class="definition">
+        Überlagern sich mechanische Wellen, entstehen Bereiche der <b>Verstärkung</b> und der <b>Abschwächung</b>. Diese Erscheinung bezeichnet man als <b>Interferenz</b>.
+    </div>
+    <p>Sieht man von oben auf zwei sich überlagernde Wasserwellen, erkennt man, dass sich Streifen bilden: In den Bereichen, wo Wellenberge und Wellentäler verschwimmen, sind die Amplituden klein (Abschwächung). Dort, wo Wellenberge und -täler besonders gut zu sehen sind, verstärken sich die Amplituden der einzelnen Wellen (Verstärkung).</p>
+    <p>Eine besondere Form der Interferenz tritt auf, wenn sich Wellen mit ihrer Reflexion überlagern: Bewegt man ein Ende einer langen Feder mit passender Geschwindigkeit hin und her, während das andere Ende festgehalten wird, schwingt die Feder an einigen Stellen, an anderen dagegen nicht mehr. Weil die Welle auf der Stelle schwingt und sich nicht mehr fortbewegt, spricht man von einer <b>stehenden Welle</b> (genau das passiert z. B. bei den Saiten einer Gitarre).</p>
+
+    <h2>3. Brechung</h2>
+    <p>Laufen gerade Wasserwellen in einen Flachwasserbereich (z. B. über eine Glasplatte in der Wellenwanne), verändern sich die Wellenfronten an der Grenze – sie scheinen abzuknicken und zusammenzurücken.</p>
+    <div class="definition">
+        Wenn Wellen von einem Stoff in einen anderen Stoff übergehen, kommt es zur <b>Brechung</b>. Dabei verändern sich alle Kenngrößen der Welle und ihre Ausbreitungsrichtung.
+    </div>
+    <p>Ist die Geschwindigkeit der Welle im neuen Stoff größer, ist auch der Brechungswinkel größer als der Einfallswinkel – und umgekehrt. Auch Schall wird gebrochen: Die Schallgeschwindigkeit in Luft hängt von der Temperatur ab. Beim Übergang von Schall aus einer wärmeren in eine kältere Luftschicht kommt es zur Brechung – deshalb ist Verkehr nachts oft lauter zu hören als tagsüber.</p>
+
+    <h2>4. Beugung</h2>
+    <p>Beobachtet man, wie gerade Wellen hinter einem Spalt oder einer Kante weiterlaufen, sieht man: Die Wellen breiten sich hinter Spalten und Kanten kreisförmig aus. So kann eine Welle auch in Bereiche eindringen, die auf geradem Weg nicht erreichbar wären – diese Bereiche werden als <b>Schattenräume</b> bezeichnet.</p>
+    <div class="definition">
+        Treffen Wellen auf einen Spalt oder eine Kante, so dringen sie in den Schattenraum hinter dem Hindernis ein. Das nennt man <b>Beugung</b>. Die Kenngrößen der Welle ändern sich dabei nicht.
+    </div>
+    <p>Bei Schallwellen kann man Beugung hinter Wänden und Hausecken beobachten: Obwohl man die Schallquelle nicht direkt sehen kann, hört man doch die Geräusche von der anderen Seite – zum Beispiel hört ein Radfahrer ein Motorrad, obwohl er es (noch) nicht sieht.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Gefährliche Riesenwellen</h3>
+        <p>An Hafenmauern kann man manchmal besonders hohe Wellen beobachten. Bei Stürmen können sie lebensgefährliche Höhen erreichen – dabei sind die Wellen nicht überall gleich hoch. Dass solche hohen Wellen entstehen, hängt mit verschiedenen Welleneigenschaften zusammen: An Hafenmauern werden Wellen reflektiert. Dabei überlagern sich ständig ankommende mit reflektierten Wellen. Durch diese Interferenz kann es zu hohen Amplituden kommen. Bei Wasserwellen kommt eine Besonderheit hinzu: Je größer die Wellenlänge ist, umso größer ist auch die Ausbreitungsgeschwindigkeit – so können sich Wellen überholen und dabei interferieren.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre mithilfe der Begriffe Interferenz und Beugung, wie ein Wellenmuster hinter zwei Hindernissen entstehen kann.</li>
+        <li>Laura wird von ihrem Vater gerufen und reagiert nicht. Später verteidigt sie sich: „Ich stand hinter einem Baum und konnte dich nicht hören." Beurteile diese Aussage mithilfe der Beugung.</li>
+        <li>Bestimmte Erdbebenwellen (P-Wellen) breiten sich im Erdinneren als Stauchungs- und Dehnungswellen aus. Entscheide und begründe, ob es sich um eine Längs- oder Querwelle handelt.</li>
+        <li>Bei der Ultraschallreinigung erzeugen mehrere Lautsprecher Schallwellen, die sich auf den Gegenstand übertragen; durch die Schwingungen löst sich der Schmutz. Erkläre, welchen Einfluss die Interferenz dabei hat.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="wellen.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="schwingungen-quiz.html" class="btn" style="background: linear-gradient(45deg, #00ff88, #0062ff); color:#000;">Zum Quiz →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('reflectCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawReflection() {
+        const angleDeg = parseFloat(document.getElementById('angle').value);
+        document.getElementById('angleVal').innerText = angleDeg;
+        const angleRad = angleDeg * Math.PI / 180;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const groundY = canvas.height - 20;
+        const len = 140;
+
+        // Boden (Hindernis)
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(20, groundY); ctx.lineTo(canvas.width - 20, groundY);
+        ctx.stroke();
+
+        // Lot (gestrichelt)
+        ctx.strokeStyle = '#888';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4,4]);
+        ctx.beginPath();
+        ctx.moveTo(cx, groundY - 100); ctx.lineTo(cx, groundY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Einfallender Strahl (von links oben)
+        const inX = cx - Math.sin(angleRad) * len;
+        const inY = groundY - Math.cos(angleRad) * len;
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(inX, inY); ctx.lineTo(cx, groundY);
+        ctx.stroke();
+        drawArrowhead(inX, inY, cx, groundY, '#00ff88');
+
+        // Reflektierter Strahl (zur rechten oben, gleicher Winkel)
+        const outX = cx + Math.sin(angleRad) * len;
+        const outY = groundY - Math.cos(angleRad) * len;
+        ctx.strokeStyle = '#0062ff';
+        ctx.beginPath();
+        ctx.moveTo(cx, groundY); ctx.lineTo(outX, outY);
+        ctx.stroke();
+        drawArrowhead(cx, groundY, outX, outY, '#0062ff');
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Einfallswinkel = Reflexionswinkel = ' + angleDeg + '°', cx - 110, 20);
+    }
+
+    function drawArrowhead(x1, y1, x2, y2, color) {
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 - 8 * Math.cos(angle - Math.PI/6), y2 - 8 * Math.sin(angle - Math.PI/6));
+        ctx.lineTo(x2 - 8 * Math.cos(angle + Math.PI/6), y2 - 8 * Math.sin(angle + Math.PI/6));
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    drawReflection();
+</script>
+
+</body>
+</html>

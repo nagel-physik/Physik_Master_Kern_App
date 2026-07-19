@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 9: Farben des Lichts – Brechung, Beugung, Interferenz</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range], input[type=number] { width: 100%; cursor: pointer; }
+        .calc-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; text-align:left; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent); min-height: 30px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 9: Farben des Lichts – Brechung, Beugung, Interferenz</h1>
+
+    <p>Weißes Licht sieht auf den ersten Blick "farblos" aus – tatsächlich steckt in ihm aber ein ganzes Spektrum an Farben, das man mit einem Prisma sichtbar machen kann.</p>
+
+    <h2>Zerlegung des Lichts durch Brechung</h2>
+    <div class="step-box">
+        <h3>Experiment: Licht durch ein Prisma</h3>
+        <p>Lässt man weißes Licht durch ein <b>Prisma</b> fallen, entsteht dahinter auf einem Schirm ein farbiges Band – ein <b>Spektrum</b> mit den Farben Rot, Orange, Gelb, Grün, Blau und Violett.</p>
+    </div>
+    <div class="definition">
+        Weißes Licht setzt sich aus verschiedenfarbigem Licht zusammen. Beim Durchgang durch ein Prisma wird es in seine <b>Spektralfarben</b> zerlegt, weil jede Farbe unterschiedlich stark gebrochen wird: <b>Blaues Licht wird stärker gebrochen als rotes Licht.</b>
+    </div>
+    <p>Eine Sammellinse kann die auseinanderlaufenden Spektralfarben wieder zu weißem Licht vereinen – ein Beleg dafür, dass die Farben tatsächlich schon im weißen Licht enthalten waren und nicht erst vom Prisma "erzeugt" wurden.</p>
+
+    <h2>Probier's aus: Das Prisma</h2>
+    <div class="sim-box">
+        <canvas id="prismCanvas" width="420" height="200"></canvas>
+        <button class="btn" style="border:none; cursor:pointer; margin-top:10px;" onclick="animatePrism()">Licht durchs Prisma schicken</button>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Unsichtbares Licht</h3>
+        <p>An das sichtbare Spektrum schließt sich auf beiden Seiten unsichtbares Licht an. Jenseits von Rot liegt das <b>infrarote Licht (IR)</b> – wir nehmen es als Wärmestrahlung wahr; es wird z. B. in Fernbedienungen, Wärmebildkameras und Infrarot-Heizstrahlern genutzt. Jenseits von Violett liegt das <b>ultraviolette Licht (UV)</b> – es steckt viel Energie in ihm, weshalb es Sonnenbrand und Hautschäden verursachen kann, aber auch zur Desinfektion und für Schwarzlicht-Effekte genutzt wird. Wegen der schädlichen Wirkung von UV-Strahlung muss man sich mit Sonnencreme, Kleidung und Sonnenbrille schützen.</p>
+    </div>
+
+    <h2>Beugung und Interferenz</h2>
+    <div class="step-box">
+        <h3>Experiment: Licht am Doppelspalt</h3>
+        <p>Lässt man einfarbiges Laserlicht durch einen <b>Doppelspalt</b> (zwei sehr eng benachbarte, schmale Spalten) fallen, entsteht auf einem Schirm dahinter kein einfacher heller Fleck, sondern ein Muster aus abwechselnd hellen und dunklen Streifen.</p>
+    </div>
+    <div class="definition">
+        Licht wird an schmalen Spalten und Kanten <b>gebeugt</b> – es dringt dabei auch in den geometrischen Schattenraum ein. Überlagern sich die gebeugten Lichtwellen zweier (oder mehrerer) Spalte, entstehen durch <b>Interferenz</b> Bereiche der Verstärkung (helle Streifen) und der Auslöschung (dunkle Streifen).</p>
+    </div>
+    <p>Beugung und Interferenz sind typische <b>Welleneigenschaften</b> des Lichts – sie zeigen, dass sich Licht in bestimmten Situationen wie eine Welle verhält und nicht nur als geradliniger Strahl beschrieben werden kann.</p>
+
+    <p>Ein <b>optisches Gitter</b> besteht aus sehr vielen, dicht nebeneinander angeordneten Spalten (oft mehrere hundert pro Millimeter). Es erzeugt ein besonders scharfes und intensives Interferenzmuster und wird u. a. zur genauen Bestimmung von Lichtwellenlängen genutzt. Der Abstand zwischen zwei benachbarten Spalten heißt <b>Gitterkonstante d</b>.</p>
+
+    <h2>Probier's aus: Gitterkonstante berechnen</h2>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Striche pro Millimeter (N)</label><input type="number" id="strichzahl" placeholder="z. B. 80"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcGitter()">Gitterkonstante berechnen</button></div>
+        <div id="calcResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Der Regenschirm-Trick</h3>
+        <p>Betrachtet man eine helle Lichtquelle durch einen feinen, engmaschigen Stoff (z. B. einen Regenschirm), sieht man ein farbiges Beugungsmuster – der feine Stoff wirkt dabei wie ein optisches Gitter.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum blaues Licht beim Prisma stärker gebrochen wird als rotes Licht.</li>
+        <li>Vergleiche die Beugung von Schall und Licht miteinander.</li>
+        <li>Beschreibe, wie bei der Interferenz von Licht am Doppelspalt Verstärkung und Auslöschung zustande kommen.</li>
+        <li>Nenne je eine Anwendung von infrarotem und von ultraviolettem Licht.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="auge.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="farbmischung.html" class="btn">Weiter zu Farbmischung &amp; Farben der Natur →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('prismCanvas');
+    const ctx = canvas.getContext('2d');
+    const rainbow = ['#ff0000', '#ff8800', '#ffee00', '#00ff44', '#0088ff', '#6600ff'];
+    let progress = 0;
+    let animId = null;
+
+    function drawPrismScene(p) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const prismX = 180, prismY = 100, prismSize = 50;
+
+        // Prisma (Dreieck)
+        ctx.strokeStyle = '#8ecae6';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(prismX, prismY - prismSize);
+        ctx.lineTo(prismX - prismSize, prismY + prismSize * 0.6);
+        ctx.lineTo(prismX + prismSize, prismY + prismSize * 0.6);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Weißer Lichtstrahl von links
+        const beamLenIn = prismX - 20;
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(15, prismY);
+        ctx.lineTo(prismX - 5, prismY);
+        ctx.stroke();
+
+        // Spektrum nach dem Prisma (fächert sich mit p auf)
+        rainbow.forEach((color, i) => {
+            const spread = (i - (rainbow.length - 1) / 2) * 10 * p;
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(prismX + 15, prismY);
+            ctx.lineTo(canvas.width - 20, prismY + spread * 4 - 20 + i*2);
+            ctx.stroke();
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('weißes Licht', 20, prismY - 15);
+        ctx.fillText('Spektrum', canvas.width - 90, 25);
+    }
+
+    function animatePrism() {
+        if (animId) cancelAnimationFrame(animId);
+        progress = 0;
+        function step() {
+            progress += 0.04;
+            drawPrismScene(Math.min(progress, 1));
+            if (progress < 1) animId = requestAnimationFrame(step);
+        }
+        step();
+    }
+
+    function calcGitter() {
+        const N = parseFloat(document.getElementById('strichzahl').value);
+        const result = document.getElementById('calcResult');
+        if (isNaN(N) || N <= 0) {
+            result.style.color = '#e74c3c';
+            result.innerText = 'Bitte eine gültige Strichzahl eingeben.';
+            return;
+        }
+        const d_mm = 1 / N;
+        const d_um = d_mm * 1000;
+        result.style.color = '#00ff88';
+        result.innerText = 'Gitterkonstante d = ' + d_mm.toFixed(5) + ' mm = ' + d_um.toFixed(2) + ' µm';
+    }
+
+    drawPrismScene(1);
+</script>
+
+</body>
+</html>

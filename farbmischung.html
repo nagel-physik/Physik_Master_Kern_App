@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 10: Farbmischung und Farben der Natur</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align:center; }
+        .swatch { width: 100%; height: 90px; border-radius: 10px; border: 2px solid #444; margin-bottom: 15px; }
+        .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; text-align:left; }
+        .slider-row label { width: 90px; font-weight: bold; font-size: 0.85rem; }
+        input[type=range] { flex: 1; cursor: pointer; }
+        .valnum { width: 35px; text-align: right; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 10: Farbmischung und Farben der Natur</h1>
+
+    <h2>Additive Farbmischung</h2>
+    <p>Mischt man <b>farbiges Licht</b>, spricht man von additiver Farbmischung – die Lichtanteile addieren sich, es wird insgesamt heller.</p>
+    <div class="definition">
+        Bei der additiven Farbmischung entstehen aus den <b>Grundfarben Rot, Grün und Blau (RGB)</b> alle anderen Farben. Mischt man alle drei Grundfarben zu gleichen Teilen, entsteht <b>Weiß</b>.
+    </div>
+    <p>Bildschirme (Handy, Fernseher, Monitor) nutzen die additive Farbmischung: Jeder Bildpunkt (Pixel) besteht aus einem winzigen roten, grünen und blauen Leuchtpunkt, deren unterschiedlich starkes Leuchten aus der Entfernung als Mischfarbe wahrgenommen wird.</p>
+
+    <h3>Probier's aus: Additiver Farbmischer (RGB)</h3>
+    <div class="sim-box">
+        <div class="swatch" id="swatchAdd"></div>
+        <div class="slider-row"><label>Rot</label><input type="range" id="rA" min="0" max="255" value="255" oninput="updateAdditive()"><span class="valnum" id="rAval">255</span></div>
+        <div class="slider-row"><label>Grün</label><input type="range" id="gA" min="0" max="255" value="0" oninput="updateAdditive()"><span class="valnum" id="gAval">0</span></div>
+        <div class="slider-row"><label>Blau</label><input type="range" id="bA" min="0" max="255" value="0" oninput="updateAdditive()"><span class="valnum" id="bAval">0</span></div>
+    </div>
+
+    <table class="table">
+        <tr><th>Grundfarbe + Grundfarbe</th><th>Ergebnis</th></tr>
+        <tr><td>Rot + Grün</td><td>Gelb</td></tr>
+        <tr><td>Rot + Blau</td><td>Magenta</td></tr>
+        <tr><td>Grün + Blau</td><td>Cyan</td></tr>
+        <tr><td>Rot + Grün + Blau</td><td>Weiß</td></tr>
+    </table>
+    <p>Zwei Farben, die sich zu Weiß ergänzen, nennt man <b>Komplementärfarben</b> – z. B. sind Blau und Gelb sowie Rot und Cyan Komplementärfarbenpaare.</p>
+
+    <h2>Subtraktive Farbmischung</h2>
+    <p>Mischt man dagegen <b>Farbstoffe, Farbfilter oder Druckfarben</b>, spricht man von subtraktiver Farbmischung – hierbei werden bestimmte Lichtanteile aus weißem Licht herausgefiltert (absorbiert, "weggenommen"), es wird insgesamt dunkler.</p>
+    <div class="definition">
+        Bei der subtraktiven Farbmischung entstehen aus den Grundfarben <b>Cyan, Magenta und Gelb (CMY)</b> alle anderen Farben, indem sie jeweils einen Teil des weißen Lichts absorbieren. Mischt man alle drei zu gleichen Teilen, entsteht <b>Schwarz</b>.
+    </div>
+    <p>Ein Farbfilter lässt seine eigene Farbe durch und sperrt (absorbiert) seine Komplementärfarbe. Farbdrucker nutzen die subtraktive Mischung: Mit den Druckfarben Cyan, Magenta, Gelb und Schwarz (CMYK, „Vierfarbendruck") lassen sich nahezu alle Farben erzeugen.</p>
+
+    <h3>Probier's aus: Subtraktiver Farbmischer (CMY)</h3>
+    <div class="sim-box">
+        <div class="swatch" id="swatchSub"></div>
+        <div class="slider-row"><label>Cyan</label><input type="range" id="cS" min="0" max="255" value="0" oninput="updateSubtractive()"><span class="valnum" id="cSval">0</span></div>
+        <div class="slider-row"><label>Magenta</label><input type="range" id="mS" min="0" max="255" value="0" oninput="updateSubtractive()"><span class="valnum" id="mSval">0</span></div>
+        <div class="slider-row"><label>Gelb</label><input type="range" id="yS" min="0" max="255" value="0" oninput="updateSubtractive()"><span class="valnum" id="ySval">0</span></div>
+    </div>
+    <p style="font-size:0.85rem; color:#888;">Hinweis: Ein Regler auf 255 bedeutet „volle Filterwirkung" dieser Farbe – je mehr Regler du hochziehst, desto mehr Licht wird absorbiert und desto dunkler wird das Ergebnis.</p>
+
+    <h2>Farbige Erscheinungen in der Natur</h2>
+    <div class="step-box">
+        <h3>Der Regenbogen</h3>
+        <p>Ein Regenbogen entsteht, wenn Sonnenlicht auf feine Wassertröpfchen in der Luft trifft (z. B. bei Regen mit gleichzeitigem Sonnenschein). In jedem Tröpfchen wird das Licht gebrochen, an der Rückseite des Tröpfchens reflektiert und beim Austritt erneut gebrochen – dabei wird es wie bei einem Prisma in seine Spektralfarben zerlegt. Man sieht einen Regenbogen deshalb nur, wenn man der Sonne den Rücken zuwendet. Bei einem <b>doppelten Regenbogen</b> wird das Licht in den Tröpfchen zweimal reflektiert, wodurch ein zweiter, schwächerer Bogen mit umgekehrter Farbreihenfolge entsteht.</p>
+    </div>
+    <div class="step-box">
+        <h3>Himmelsblau und Abendrot</h3>
+        <p>Trifft Sonnenlicht auf die Erdatmosphäre, wird ein Teil des Lichts an den winzigen Teilchen der Luft gestreut. Blaues Licht wird dabei viel stärker gestreut als rotes Licht. Blicken wir tagsüber in den Himmel, sehen wir überwiegend das gestreute blaue Licht – der Himmel erscheint blau. Wenn die Sonne tief steht (Sonnenauf- oder -untergang), legt ihr Licht einen viel längeren Weg durch die Atmosphäre zurück. Der blaue Anteil wird dabei fast vollständig herausgestreut, sodass hauptsächlich die orangen und roten Anteile übrig bleiben – wir sehen ein Abendrot bzw. Morgenrot.</p>
+    </div>
+    <div class="definition">
+        Himmelsblau und Abendrot entstehen durch die <b>Streuung von Licht an kleinsten Teilchen</b> in der Atmosphäre.
+    </div>
+    <div class="step-box">
+        <h3>Farben des Meeres und Sehen unter Wasser</h3>
+        <p>Im Wasser werden die einzelnen Farbanteile des Lichts unterschiedlich schnell absorbiert: Rotes Licht wird am schnellsten absorbiert und ist bereits ab 5 bis 10 m Tiefe kaum noch zu sehen, blaues Licht dringt am tiefsten ein (bis etwa 60 m). Deshalb wirken Gegenstände in größerer Wassertiefe nur noch grünlich-bläulich, und erst mit einer Unterwasserlampe erscheinen die wahren Farben wieder, weil das volle weiße Licht der Lampe kurzzeitig für alle Farben sorgt. Auch die Farbe des Meeres selbst hängt vom Himmel, von Schwebeteilchen und vom Lichtweg durchs Wasser ab: In flachen, klaren Lagunen mit hellem Sandboden entsteht oft ein türkiser Farbeindruck, weil rote Lichtanteile absorbiert werden und vor allem die Komplementärfarbe Blaugrün (Türkis) übrig bleibt.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Warum sieht Blut in großer Tauchtiefe grün aus?</h3>
+        <p>Das Rot des Blutes entsteht aus roten, grünen und violetten Lichtanteilen. Taucht man in großer Tiefe, ist der rote Lichtanteil bereits vollständig absorbiert – es erreicht nur noch grünliches Licht die Wunde, wodurch das Blut in der Tiefe grün statt rot erscheint.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Nenne drei Beispiele für additives Farbmischen aus deinem Alltag.</li>
+        <li>Welche Farben musst du am PC mischen, um Weiß bzw. Schwarz zu erhalten?</li>
+        <li>Erkläre, warum der Himmel tagsüber blau, bei Sonnenuntergang aber rötlich erscheint.</li>
+        <li>Erkläre, warum man Rot in Tauchtiefen ab etwa 10 m kaum noch sehen kann.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="farbenlicht.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="optik-quiz.html" class="btn" style="background: linear-gradient(45deg, #00ff88, #0062ff); color:#000;">Zum Quiz →</a>
+    </div>
+</div>
+
+<script>
+function updateAdditive() {
+    const r = document.getElementById('rA').value;
+    const g = document.getElementById('gA').value;
+    const b = document.getElementById('bA').value;
+    document.getElementById('rAval').innerText = r;
+    document.getElementById('gAval').innerText = g;
+    document.getElementById('bAval').innerText = b;
+    document.getElementById('swatchAdd').style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+function updateSubtractive() {
+    const c = parseInt(document.getElementById('cS').value);
+    const m = parseInt(document.getElementById('mS').value);
+    const y = parseInt(document.getElementById('yS').value);
+    document.getElementById('cSval').innerText = c;
+    document.getElementById('mSval').innerText = m;
+    document.getElementById('ySval').innerText = y;
+    // Subtraktiv: je mehr Filterwirkung, desto weniger bleibt vom jeweiligen Komplementärkanal übrig
+    const r = 255 - c;
+    const g = 255 - m;
+    const b = 255 - y;
+    document.getElementById('swatchSub').style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+updateAdditive();
+updateSubtractive();
+</script>
+
+</body>
+</html>

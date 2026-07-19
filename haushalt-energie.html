@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 6: Energie im Haushalt sparen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.3rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult1, #calcResult2 { text-align: center; font-size: 1rem; font-weight: bold; color: var(--accent); min-height: 40px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 6: Energie im Haushalt sparen</h1>
+
+    <p>Jedes elektrische Gerät im Haushalt wandelt Energie um – und verursacht dabei Kosten. Wer versteht, wie man den Stromverbrauch berechnet, kann gezielt Energie und Geld sparen.</p>
+
+    <h2>Elektrische Arbeit berechnen</h2>
+    <p>Die elektrische Energie (umgangssprachlich oft "Stromverbrauch" genannt), die ein Gerät in einer bestimmten Zeit verbraucht, berechnet sich aus seiner Leistung und der Nutzungsdauer:</p>
+    <div class="formula-box">E = P · t &nbsp;&nbsp;|&nbsp;&nbsp; E in kWh, P in kW, t in h</div>
+    <p>Die Stromkosten ergeben sich, indem man die verbrauchte Energie mit dem Strompreis pro Kilowattstunde multipliziert.</p>
+
+    <h2>Probier's aus: Der Stromkosten-Rechner</h2>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Leistung des Geräts in Watt</label><input type="number" id="leistung" placeholder="z. B. 60"></div>
+            <div><label>Nutzungsdauer in Stunden</label><input type="number" id="dauer1" placeholder="z. B. 5"></div>
+            <div><label>Strompreis in Cent/kWh</label><input type="number" id="preis" placeholder="z. B. 35" value="35"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcCost()">Kosten berechnen</button></div>
+        <div id="calcResult1"></div>
+    </div>
+
+    <h2>LED statt Glühlampe</h2>
+    <p>Klassische Glühlampen wandeln nur einen kleinen Teil der elektrischen Energie in Licht um – der Großteil wird als Wärme abgegeben (niedriger Wirkungsgrad). <b>LED-Lampen</b> haben einen deutlich höheren Wirkungsgrad und benötigen für die gleiche Helligkeit nur einen Bruchteil der Leistung.</p>
+    <table class="table">
+        <tr><th>Lampentyp</th><th>Leistung für ca. 800 Lumen</th><th>Wirkungsgrad</th></tr>
+        <tr><td>Glühlampe</td><td>≈ 60 W</td><td>sehr gering (viel Wärme)</td></tr>
+        <tr><td>Energiesparlampe</td><td>≈ 12–15 W</td><td>mittel</td></tr>
+        <tr><td>LED-Lampe</td><td>≈ 7–9 W</td><td>hoch</td></tr>
+    </table>
+
+    <h2>Probier's aus: LED vs. Glühlampe im Kostenvergleich</h2>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Nutzungsdauer pro Tag in Stunden</label><input type="number" id="stundenTag" placeholder="z. B. 4"></div>
+            <div><label>Strompreis in Cent/kWh</label><input type="number" id="preis2" placeholder="z. B. 35" value="35"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcLedVsGluehlampe()">Jahreskosten vergleichen</button></div>
+        <div id="calcResult2"></div>
+    </div>
+
+    <div class="definition">
+        Elektrische Energie berechnet sich mit <b>E = P · t</b>. Geräte mit hoher Leistung oder langer Nutzungsdauer verbrauchen entsprechend mehr Energie. Durch effizientere Geräte (z. B. LEDs statt Glühlampen) lässt sich der Energieverbrauch bei gleichem Nutzen deutlich senken.
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Standby-Verbrauch</h3>
+        <p>Viele Geräte verbrauchen auch im Standby-Modus (z. B. Fernseher mit rotem Lämpchen, Ladegeräte im Steckdose ohne angeschlossenes Gerät) dauerhaft kleine Mengen Strom. Über ein Jahr und viele Geräte im Haushalt summiert sich das zu einem spürbaren Betrag – Steckdosenleisten mit Schalter helfen, diesen "Phantomverbrauch" zu vermeiden.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Ein Wasserkocher hat eine Leistung von 2000 W und läuft 6 Minuten. Berechne die verbrauchte Energie in kWh.</li>
+        <li>Erkläre, warum LED-Lampen trotz höherer Anschaffungskosten oft langfristig günstiger sind als Glühlampen.</li>
+        <li>Nenne drei eigene Möglichkeiten, wie man im Haushalt Energie sparen kann.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="koerperenergie.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="klimawandel.html" class="btn">Weiter zu Klimawandel &amp; Energiewende →</a>
+    </div>
+</div>
+
+<script>
+function calcCost() {
+    const P = parseFloat(document.getElementById('leistung').value);
+    const t = parseFloat(document.getElementById('dauer1').value);
+    const preis = parseFloat(document.getElementById('preis').value);
+    const result = document.getElementById('calcResult1');
+    if (isNaN(P) || isNaN(t) || isNaN(preis)) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte alle Felder ausfüllen.';
+        return;
+    }
+    const E = (P / 1000) * t; // kWh
+    const kosten = E * preis; // Cent
+    result.style.color = '#00ff88';
+    result.innerText = 'Verbrauch: ' + E.toFixed(3) + ' kWh  →  Kosten: ' + (kosten/100).toFixed(2) + ' €';
+}
+
+function calcLedVsGluehlampe() {
+    const stunden = parseFloat(document.getElementById('stundenTag').value);
+    const preis = parseFloat(document.getElementById('preis2').value);
+    const result = document.getElementById('calcResult2');
+    if (isNaN(stunden) || isNaN(preis)) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte beide Felder ausfüllen.';
+        return;
+    }
+    const jahresStunden = stunden * 365;
+    const eGlueh = (60/1000) * jahresStunden;
+    const eLed = (8/1000) * jahresStunden;
+    const kostenGlueh = eGlueh * preis / 100;
+    const kostenLed = eLed * preis / 100;
+    const ersparnis = kostenGlueh - kostenLed;
+    result.style.color = '#00ff88';
+    result.innerHTML = 'Glühlampe (60 W): ' + kostenGlueh.toFixed(2) + ' €/Jahr<br>' +
+        'LED (8 W): ' + kostenLed.toFixed(2) + ' €/Jahr<br>' +
+        '<span style="color:#f1c40f;">Ersparnis mit LED: ' + ersparnis.toFixed(2) + ' € pro Jahr</span>';
+}
+</script>
+
+</body>
+</html>

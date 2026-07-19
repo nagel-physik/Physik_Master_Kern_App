@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 6: Mechanische Wellen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.3rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .sim-btns button { padding: 8px 16px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button.active, .sim-btns button:hover { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 6: Mechanische Wellen</h1>
+
+    <p>Viele Menschen denken bei Wellen zuerst an Meereswellen. Sie können sehr gefährlich sein: Tsunamis sind sehr gefürchtet, da sie große Schäden anrichten – ein Grund dafür ist ihre hohe Ausbreitungsgeschwindigkeit auf offenem Meer. Normale Wasserwellen erreichen Geschwindigkeiten von maximal 100 km/h, Tsunamis hingegen bewegen sich mit etwa 800 km/h – so schnell wie Flugzeuge! Auch in unserem Alltag treffen wir oft auf Wellen: Wenn wir sprechen, erzeugen wir Schallwellen; Smartphones senden elektromagnetische Wellen aus; als Fitnessübung kann man mit schweren Seilen sogenannte Seilwellen erzeugen.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Wellen an gekoppelten Pendeln</h3>
+        <p>Erzeugt man an einer Reihe gekoppelter Pendel eine Welle, indem man das erste Pendel auslenkt, führt im Experiment jedes Pendel eine eigene Schwingung aus. Anfangs wird nur ein einziges Pendel ausgelenkt – die Schwingung überträgt sich auf die anderen Pendel: Es entsteht eine Welle.</p>
+    </div>
+
+    <div class="definition">
+        <b>Eine Welle ist die Ausbreitung einer Schwingung im Raum.</b> Es wird dabei nur Energie weitergegeben – die Pendel (bzw. Teilchen) selbst wandern nicht.
+    </div>
+
+    <h2>Die Kenngrößen einer Welle</h2>
+    <p>Um eine Welle vollständig zu beschreiben, benötigt man neben den drei bekannten Größen einer Schwingung (Schwingungsdauer, Frequenz und Amplitude) zusätzlich die <b>Wellenlänge</b> (den Abstand zweier Wellenberge oder -täler) sowie die <b>Ausbreitungsgeschwindigkeit</b>:</p>
+    <ul>
+        <li>Schwingungsdauer <i>T</i> in s</li>
+        <li>Frequenz <i>f</i> in Hz</li>
+        <li>Amplitude <i>y</i><sub>max</sub> in m</li>
+        <li>Wellenlänge <i>λ</i> in m</li>
+        <li>Ausbreitungsgeschwindigkeit <i>c</i> in m/s</li>
+    </ul>
+    <p>Eine Welle lässt sich mithilfe von zwei Diagrammen beschreiben: Das <b>y(t)-Diagramm</b> beschreibt die Schwingung an einem festen Ort. Das <b>y(s)-Diagramm</b> zeigt die gesamte Welle zu einem festen Zeitpunkt.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Wasserwellen</h3>
+        <p>Bei Wasserwellen unterscheidet man Tiefwasserwellen und Flachwasserwellen. Für Tiefwasserwellen gilt: Je größer die Wellenlänge ist, umso größer ist auch die Wellengeschwindigkeit. Läuft eine Wasserwelle in einen Flachwasserbereich, wird sie gebremst. Je flacher das Wasser wird, umso langsamer wird die Welle – dabei sinkt die Wellenlänge und die Amplitude steigt. Wird das Wasser sehr flach, bremst die Welle so stark ab, dass der obere Teil nach vorn kippt: Die Welle bricht.</p>
+    </div>
+
+    <h2>Längswellen und Querwellen</h2>
+    <div class="step-box">
+        <h3>Experiment: Arten von Wellen</h3>
+        <p>Erzeugt man mit einer langen Feder (z. B. einem Treppenläufer/Slinky) verschiedene Arten von Wellen – einmal, indem man ein Ende seitlich hin- und herbewegt, und einmal, indem man ein Ende entlang der Federachse vor- und zurückbewegt – zeigen sich zwei unterschiedliche Ausbreitungsarten.</p>
+    </div>
+    <div class="definition">
+        Bei <b>Längswellen</b> erfolgt die Schwingung <b>in Ausbreitungsrichtung</b> (Beispiel: Schall).<br>
+        Bei <b>Querwellen</b> erfolgt die Schwingung <b>quer zur Ausbreitungsrichtung</b> (Beispiel: Seilwellen, La-Ola-Wellen).
+    </div>
+    <p>Wasserwellen sind zugleich Längs- und Querwellen: Jedes Wasserteilchen schwingt sowohl in Ausbreitungsrichtung als auch quer dazu – deshalb bewegen sich die Wasserteilchen auf Kreisbahnen, bis die Welle bricht.</p>
+
+    <h2>Probier's aus: Wellen animiert</h2>
+    <p>Beobachte eine laufende Welle. Wechsle zwischen Quer- und Längswelle und verändere Wellenlänge und Frequenz.</p>
+    <div class="sim-box">
+        <canvas id="waveCanvas" width="500" height="160"></canvas>
+        <div class="sim-btns">
+            <button id="btnQuer" class="active" onclick="setWaveType('quer')">Querwelle</button>
+            <button id="btnLaengs" onclick="setWaveType('laengs')">Längswelle</button>
+        </div>
+        <label class="slider-label">Wellenlänge λ: <span id="lambdaVal">80</span> px</label>
+        <input type="range" id="lambda" min="30" max="150" step="5" value="80" oninput="drawWave()">
+        <label class="slider-label">Ausbreitungsgeschwindigkeit (Animation):</label>
+        <input type="range" id="speed" min="1" max="10" step="1" value="4" oninput="drawWave()">
+    </div>
+
+    <h2>Ausbreitungsgeschwindigkeit</h2>
+    <p>Eine Welle breitet sich in einem Stoff mit konstanter Geschwindigkeit aus. Der räumliche Abstand zweier aufeinanderfolgender Wellenberge ist die Wellenlänge λ – sie laufen am gleichen Ort im Abstand der Schwingungsdauer T vorbei. Da sich s = v·t bzw. mit s = λ, v = c und t = T einsetzen lässt, erhält man:</p>
+    <div class="formula-box">c = λ · f</div>
+
+    <div class="step-box">
+        <h3>Musteraufgabe</h3>
+        <p>Der Kammerton a' hat bei 20 °C in Luft eine Frequenz von 440 Hz und eine Wellenlänge von 0,782 m. Berechne die Schallgeschwindigkeit.</p>
+        <p><b>Lösung:</b> c = λ · f = 0,782 m · 440 Hz = <span class="highlight">344 m/s</span> — passt genau zur Schallgeschwindigkeit in Luft bei 20 °C.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Schallgeschwindigkeit in Bier</h3>
+        <p>Beim Bierbrauen sind die Konzentrationen von Hopfen und Malz sehr wichtig. Damit das Bier immer den gleichen Geschmack hat, muss das Verhältnis der Zutaten sehr genau überwacht werden. Dazu werden Messgeräte eingesetzt, die Schall nutzen: Auf der einen Seite des Bierbehälters erzeugt eine Schallquelle ein Signal, das auf der anderen Seite empfangen wird. Aus der Zeitdifferenz wird die Schallgeschwindigkeit im Bier berechnet – weicht diese vom Sollwert ab, muss z. B. die Hopfenkonzentration nachgeregelt werden.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Ordne Seilwelle, Schallwelle und Wasserwelle den Begriffen Längs- oder Querwelle zu.</li>
+        <li>Erläutere, wie die Wellenlänge mit dem Abstand zwischen Wellental und Wellenberg zusammenhängt.</li>
+        <li>Blauwale verständigen sich mit Lauten um 20 Hz. Berechne, wie lange es dauert, bis ein 500 km entfernter Wal bei 0 °C eine Nachricht hört.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="schall.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="welleneigenschaften.html" class="btn">Weiter zu Wellen-Eigenschaften →</a>
+    </div>
+</div>
+
+<script>
+    let waveType = 'quer';
+    let offset = 0;
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function setWaveType(type) {
+        waveType = type;
+        document.getElementById('btnQuer').classList.toggle('active', type === 'quer');
+        document.getElementById('btnLaengs').classList.toggle('active', type === 'laengs');
+    }
+
+    function drawWave() {
+        const lambda = parseFloat(document.getElementById('lambda').value);
+        document.getElementById('lambdaVal').innerText = lambda;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const midY = canvas.height / 2;
+        const amp = 40;
+
+        if (waveType === 'quer') {
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let x = 0; x < canvas.width; x++) {
+                const y = midY + amp * Math.sin((2 * Math.PI / lambda) * (x - offset));
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            // Teilchen
+            ctx.fillStyle = '#0062ff';
+            for (let x = 10; x < canvas.width; x += lambda / 4) {
+                const y = midY + amp * Math.sin((2 * Math.PI / lambda) * (x - offset));
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        } else {
+            // Längswelle: Teilchen entlang x verschoben (Verdichtung/Verduennung)
+            ctx.strokeStyle = '#444';
+            ctx.beginPath();
+            ctx.moveTo(0, midY); ctx.lineTo(canvas.width, midY);
+            ctx.stroke();
+            ctx.fillStyle = '#0062ff';
+            for (let x = 10; x < canvas.width; x += 12) {
+                const shift = amp * 0.4 * Math.sin((2 * Math.PI / lambda) * (x - offset));
+                ctx.beginPath();
+                ctx.arc(x + shift, midY, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+    }
+
+    function animate() {
+        const speed = parseFloat(document.getElementById('speed').value);
+        offset += speed;
+        drawWave();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
+</html>

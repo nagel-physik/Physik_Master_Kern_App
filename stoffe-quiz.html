@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Welt der Stoffe</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display:flex; flex-direction:column; align-items:center; min-height:100vh; box-sizing:border-box; }
+        .container { max-width: 700px; width:100%; }
+        .back-link { margin-bottom: 20px; }
+        .back-link a { text-decoration: none; color: var(--accent); font-weight: bold; }
+
+        h1 { color: var(--accent); text-align:center; }
+        .progress { text-align:center; color:#888; margin-bottom: 20px; font-size:0.9rem; }
+
+        .quiz-card { background: var(--box); border-radius: 15px; padding: 25px; border: 1px solid #333; }
+        .question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; }
+        .option { display:block; width:100%; text-align:left; background:#2a2a2a; color:white; border:2px solid #444; border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; font-size:1rem; transition: all 0.2s; }
+        .option:hover { border-color: var(--accent); }
+        .option.correct { background:#1e5e3a; border-color: var(--accent); }
+        .option.wrong { background:#5e1e1e; border-color:#e74c3c; }
+        .option:disabled { cursor: default; }
+
+        .next-btn { margin-top:20px; width:100%; padding:14px; background: var(--accent); color:#000; border:none; border-radius:10px; font-weight:bold; font-size:1rem; cursor:pointer; display:none; }
+
+        .score-screen { text-align:center; }
+        .score-num { font-size: 3.5rem; color: var(--accent); font-weight:bold; }
+        .retry-btn { margin-top:20px; padding:14px 30px; background:#333; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
+        .retry-btn:hover { background: var(--accent); color:#000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-link"><a href="stoffe.html">← ZURÜCK ZU WELT DER STOFFE</a></div>
+    <h1>🏆 Quiz: Welt der Stoffe</h1>
+    <div class="progress" id="progress"></div>
+
+    <div class="quiz-card" id="quizCard"></div>
+</div>
+
+<script>
+const questions = [
+    { q: "Die Dichte eines Stoffes berechnet man mit:", options: ["ρ = m / V", "ρ = m · V", "ρ = V / m"], correct: 0 },
+    { q: "Ein Gemisch, dessen Bestandteile mit bloßem Auge nicht zu unterscheiden sind, nennt man:", options: ["heterogen", "homogen", "instabil"], correct: 1 },
+    { q: "Um Salz aus Salzwasser zu gewinnen, nutzt man am besten:", options: ["Filtrieren", "Sieben", "Eindampfen"], correct: 2 },
+    { q: "Ein pH-Wert von 7 bedeutet, eine Lösung ist:", options: ["stark sauer", "neutral", "stark basisch"], correct: 1 },
+    { q: "Bei einer Neutralisation entstehen aus Säure und Base:", options: ["Salz und Wasser", "Sauerstoff und Wasserstoff", "nur Wasser"], correct: 0 },
+    { q: "Kunststoffe, die beim Erhitzen weich werden und sich neu formen lassen, heißen:", options: ["Duroplaste", "Thermoplaste", "Elastomere"], correct: 1 },
+    { q: "Winzige Kunststoffpartikel, die durch Zerfall größerer Plastikteile entstehen, nennt man:", options: ["Mikroplastik", "Bioplastik", "Nanotenside"], correct: 0 },
+    { q: "Tenside haben einen wasserliebenden und einen ...", options: ["fettliebenden Teil", "gasförmigen Teil", "radioaktiven Teil"], correct: 0 },
+    { q: "Bei der Veresterung reagieren eine Säure und ein Alkohol zu:", options: ["einem Salz und Sauerstoff", "einem Ester und Wasser", "einer Base und Wasserstoff"], correct: 1 },
+    { q: "Der Wirkstoff vieler Schmerzmittel, Acetylsalicylsäure, ist chemisch gesehen ein/eine:", options: ["Ester", "Base", "Edelgas"], correct: 0 },
+    { q: "Der Satz „Allein die Dosis macht, dass ein Ding kein Gift ist\" stammt von:", options: ["Darwin", "Paracelsus", "Lavoisier"], correct: 1 },
+    { q: "Ein Scheinmedikament ohne Wirkstoff nennt man:", options: ["Placebo", "Antidot", "Katalysator"], correct: 0 },
+    { q: "Der Botenstoff, der bei der Entstehung von Sucht eine zentrale Rolle spielt, heißt:", options: ["Insulin", "Dopamin", "Kollagen"], correct: 1 },
+    { q: "Doping im Sport ist verboten, weil es unfair ist und außerdem:", options: ["den Ticketpreis erhöht", "gesundheitliche Risiken birgt", "die Zuschauerzahl senkt"], correct: 1 },
+    { q: "Körperliche Abhängigkeit äußert sich unter anderem durch:", options: ["Entzugserscheinungen", "erhöhten Appetit auf Süßes", "besseres Namensgedächtnis"], correct: 0 }
+];
+
+let current = 0;
+let score = 0;
+
+function renderQuestion() {
+    const card = document.getElementById('quizCard');
+    document.getElementById('progress').innerText = 'Frage ' + (current + 1) + ' von ' + questions.length + '  |  Punkte: ' + score;
+
+    if (current >= questions.length) {
+        renderScore();
+        return;
+    }
+
+    const item = questions[current];
+    let html = '<div class="question">' + item.q + '</div>';
+    item.options.forEach((opt, i) => {
+        html += '<button class="option" onclick="checkAnswer(' + i + ')">' + opt + '</button>';
+    });
+    html += '<button class="next-btn" id="nextBtn" onclick="nextQuestion()">Weiter →</button>';
+    card.innerHTML = html;
+}
+
+function checkAnswer(i) {
+    const item = questions[current];
+    const buttons = document.querySelectorAll('.option');
+    buttons.forEach(b => b.disabled = true);
+
+    if (i === item.correct) {
+        buttons[i].classList.add('correct');
+        score++;
+    } else {
+        buttons[i].classList.add('wrong');
+        buttons[item.correct].classList.add('correct');
+    }
+    document.getElementById('nextBtn').style.display = 'block';
+}
+
+function nextQuestion() {
+    current++;
+    renderQuestion();
+}
+
+function renderScore() {
+    const card = document.getElementById('quizCard');
+    const percent = Math.round((score / questions.length) * 100);
+    let feedback = "";
+    if (percent >= 90) feedback = "Stark! Du kennst dich in der Welt der Stoffe richtig gut aus. 💪";
+    else if (percent >= 60) feedback = "Gut gemacht! Schau dir die Themen, bei denen es haperte, noch einmal an.";
+    else feedback = "Das war ein guter Start – geh die Stationen noch einmal in Ruhe durch, dann klappt es beim nächsten Mal besser.";
+
+    card.innerHTML = `
+        <div class="score-screen">
+            <div class="score-num">${score} / ${questions.length}</div>
+            <p>${percent}% richtig</p>
+            <p>${feedback}</p>
+            <button class="retry-btn" onclick="restartQuiz()">Nochmal versuchen</button>
+        </div>`;
+    document.getElementById('progress').innerText = 'Quiz beendet';
+}
+
+function restartQuiz() {
+    current = 0;
+    score = 0;
+    renderQuestion();
+}
+
+renderQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Waschmittel und Tenside</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #0a1a2a; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 5: Waschmittel und Tenside</h1>
+
+    <p>Warum wäscht Wasser allein Fett nicht ab, aber mit einem Spritzer Spülmittel gelingt es sofort? Der Grund liegt in speziellen Molekülen: den Tensiden.</p>
+
+    <h2>Der Aufbau von Tensiden</h2>
+    <div class="step-box">
+        <p>Fett und Wasser vermischen sich normalerweise nicht ("Öl und Wasser vertragen sich nicht"). Gibt man aber Spülmittel dazu, verteilt sich das Fett plötzlich fein im Wasser.</p>
+    </div>
+    <div class="definition">
+        <b>Tenside</b> sind Moleküle mit zwei sehr unterschiedlichen Enden: einem <b>wasserliebenden (hydrophilen)</b> Kopf und einem <b>fettliebenden, wasserabweisenden (hydrophoben)</b> Schwanz.
+    </div>
+    <p>Diese Doppelnatur macht Tenside zu idealen Vermittlern zwischen Fett und Wasser: Der hydrophobe Schwanz taucht in ein Fetttröpfchen ein, während der hydrophile Kopf nach außen ins Wasser zeigt.</p>
+
+    <h2>Probier's aus: Wie Tenside Fett lösen</h2>
+    <div class="sim-box">
+        <canvas id="tensideCanvas" width="400" height="220"></canvas>
+        <button class="btn" style="border:none; cursor:pointer; margin-top:10px;" onclick="animateTenside()">Spülmittel hinzugeben</button>
+    </div>
+
+    <h2>Wie Tenside wirken</h2>
+    <p>Umlagern viele Tensidmoleküle ein Fetttröpfchen mit ihren hydrophoben Enden nach innen und den hydrophilen Enden nach außen, entsteht ein winziges, wasserlösliches Kügelchen (eine sogenannte <b>Mizelle</b>). So kann sich das Fett fein im Wasser verteilen und abgespült werden, statt an der Oberfläche (z. B. dem Geschirr oder der Kleidung) haften zu bleiben.</p>
+    <div class="definition">
+        Tenside setzen außerdem die <b>Oberflächenspannung</b> des Wassers herab. Dadurch kann Wasser Textilien und Schmutzpartikel besser benetzen und in feine Zwischenräume eindringen – ein weiterer Grund für die reinigende Wirkung.
+    </div>
+
+    <h2>Waschmittel und Wasserhärte</h2>
+    <p>Neben Tensiden enthalten moderne Waschmittel oft weitere Bestandteile: <b>Enzyme</b> (bauen Eiweiß-, Stärke- oder Fettflecken ab), <b>Bleichmittel</b> (entfernen farbige Flecken), <b>optische Aufheller</b> (lassen Weißes strahlender erscheinen) sowie <b>Enthärter</b>, die Calcium- und Magnesium-Ionen aus hartem Wasser binden, damit die Tenside ihre volle Wirkung entfalten können.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Seife – das älteste Tensid</h3>
+        <p>Seife ist eines der ältesten bekannten Tenside und wird durch die Reaktion von Fetten mit einer starken Base (z. B. Natronlauge) hergestellt – ein Vorgang, der als <b>Verseifung</b> bezeichnet wird. Seifenmoleküle haben denselben Doppel-Charakter wie moderne Tenside: ein wasserliebendes und ein fettliebendes Ende.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre mithilfe des Aufbaus eines Tensidmoleküls, warum sich Fett im Wasser fein verteilen lässt, sobald Spülmittel zugegeben wird.</li>
+        <li>Beschreibe, was eine Mizelle ist und wie sie entsteht.</li>
+        <li>Erkläre, warum Waschmittel Enthärter enthalten, wenn das Wasser sehr "hart" ist.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="kunststoffe.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="ester.html" class="btn">Weiter zu Ester &amp; Arzneimitteln →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('tensideCanvas');
+    const ctx = canvas.getContext('2d');
+    let progress = 0;
+    let animId = null;
+
+    function drawScene(p) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = 200, cy = 110;
+        const fatRadius = 40 * (1 - p * 0.3);
+
+        // Wasser Hintergrund schon in canvas bg gesetzt
+
+        // Fetttröpfchen (schrumpft/zerfällt mit p)
+        if (p < 0.5) {
+            ctx.fillStyle = '#f1c40f';
+            ctx.beginPath();
+            ctx.arc(cx, cy, fatRadius, 0, Math.PI*2);
+            ctx.fill();
+        } else {
+            // zerfällt in Mizellen
+            const count = 5;
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2 + p*2;
+                const dist = 50 * (p - 0.5) * 2;
+                const mx = cx + Math.cos(angle) * dist;
+                const my = cy + Math.sin(angle) * dist;
+                ctx.fillStyle = '#f1c40f';
+                ctx.beginPath();
+                ctx.arc(mx, my, 12, 0, Math.PI*2);
+                ctx.fill();
+
+                // Tensid-Köpfe (blau) um jede Mizelle
+                if (p > 0.6) {
+                    for (let t = 0; t < 6; t++) {
+                        const tAngle = (t/6) * Math.PI * 2;
+                        const tx = mx + Math.cos(tAngle) * 14;
+                        const ty = my + Math.sin(tAngle) * 14;
+                        ctx.fillStyle = '#3498db';
+                        ctx.beginPath();
+                        ctx.arc(tx, ty, 3, 0, Math.PI*2);
+                        ctx.fill();
+                    }
+                }
+            }
+        }
+
+        // Tensidmoleküle, die sich annähern (nur in erster Phase)
+        if (p < 0.6) {
+            const n = 8;
+            for (let i = 0; i < n; i++) {
+                const angle = (i / n) * Math.PI * 2;
+                const dist = fatRadius + 25 + (1-p) * 40;
+                const hx = cx + Math.cos(angle) * dist;
+                const hy = cy + Math.sin(angle) * dist;
+                const tx = cx + Math.cos(angle) * (fatRadius + 5);
+                const ty = cy + Math.sin(angle) * (fatRadius + 5);
+                // Schwanz (hydrophob, gelb-orange Linie) Richtung Fett
+                ctx.strokeStyle = '#e67e22';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(tx, ty); ctx.stroke();
+                // Kopf (hydrophil, blau)
+                ctx.fillStyle = '#3498db';
+                ctx.beginPath(); ctx.arc(hx, hy, 5, 0, Math.PI*2); ctx.fill();
+            }
+        }
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(p < 0.1 ? 'Fetttröpfchen im Wasser' : (p < 0.6 ? 'Tenside lagern sich an (blau = Kopf, orange = Schwanz)' : 'Mizellen: Fett fein verteilt und wasserlöslich'), 15, 20);
+    }
+
+    function animateTenside() {
+        if (animId) cancelAnimationFrame(animId);
+        progress = 0;
+        function step() {
+            progress += 0.012;
+            drawScene(Math.min(progress, 1));
+            if (progress < 1) animId = requestAnimationFrame(step);
+        }
+        step();
+    }
+
+    drawScene(0);
+</script>
+
+</body>
+</html>

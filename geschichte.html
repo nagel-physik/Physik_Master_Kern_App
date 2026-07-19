@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 1: Die Entdeckung</title>
+    <style>
+        :root {
+            --bg: #121212;
+            --accent: #00ff88;
+            --box-bg: #1e1e1e;
+            --text: #e0e0e0;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; }
+        .content { max-width: 800px; margin: auto; padding: 20px; }
+        
+        h1 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        h2 { color: var(--accent); margin-top: 30px; }
+
+        .step-box {
+            background: var(--box-bg);
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .highlight { color: #f1c40f; font-weight: bold; }
+
+        /* Animation der Fotoplatte */
+        .experiment-sim {
+            width: 100%;
+            height: 200px;
+            background: #333;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 2px solid #555;
+        }
+        .photo-plate {
+            width: 120px;
+            height: 120px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .uran-stone {
+            width: 40px; height: 30px;
+            background: #444; border-radius: 5px;
+            z-index: 2;
+        }
+        .glow {
+            position: absolute;
+            width: 0; height: 0;
+            background: rgba(0, 255, 136, 0.4);
+            border-radius: 50%;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 200px; height: 200px; opacity: 0; }
+        }
+
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; }
+        .btn {
+            padding: 12px 25px;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1>Station 1: Ein Zufall verändert die Welt</h1>
+    
+    <p>Wir schreiben das Jahr <span class="highlight">1896</span>. Der französische Physiker <b>Henri Becquerel</b> wollte eigentlich nur untersuchen, ob bestimmte Steine nach dem Bestrahlen durch die Sonne leuchten. Doch es kam ganz anders...</p>
+
+    <div class="step-box">
+        <h3>Schritt 1: Der "Fehler" im Experiment</h3>
+        <p>Becquerel legte Uransalze auf eine lichtdicht verpackte Fotoplatte. Er dachte, er brauche Sonnenlicht für sein Experiment. Doch da es tagelang regnete, legte er alles in eine dunkle Schublade.</p>
+    </div>
+
+    <div class="experiment-sim">
+        <div class="glow"></div>
+        <div class="photo-plate">
+            <div class="uran-stone"></div>
+        </div>
+        <p style="position:absolute; bottom:10px; font-size:12px;">Simulation: Strahlung in der dunklen Schublade</p>
+    </div>
+
+    <div class="step-box">
+        <h3>Schritt 2: Die Überraschung</h3>
+        <p>Als er die Fotoplatte später entwickelte, sah er einen <span class="highlight">deutlichen Abdruck des Steins</span>. Aber wie? Es war doch völlig dunkel! Er schlussfolgerte: Das Uran muss von sich aus eine unsichtbare Strahlung aussenden – ganz ohne Energie von außen!</p>
+    </div>
+
+    <h2>Marie & Pierre Curie: Die unermüdlichen Forscher</h2>
+    <p>Die junge Polin <b>Marie Curie</b> und ihr Mann Pierre waren fasziniert. Marie nannte diese Eigenschaft <span class="highlight">Radioaktivität</span> (lateinisch <i>radius</i> = Strahl).</p>
+    
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Ihre harte Arbeit:</h3>
+        <ul>
+            <li>Sie verarbeiteten <b>Tonnen</b> von Pechblende (ein Erz).</li>
+            <li>In einer zugigen Holzhütte kochten sie die Erze in riesigen Kesseln.</li>
+            <li>Sie entdeckten zwei neue chemische Elemente: <b>Polonium</b> (nach Maries Heimat) und <b>Radium</b> (das Strahlende).</li>
+        </ul>
+    </div>
+
+    <p>Radium war so stark radioaktiv, dass es im Dunkeln bläulich leuchtete. Die Curies wussten damals noch nichts über die Gefahr – sie trugen Proben oft in ihren Taschen herum, was später zu schweren Krankheiten führte.</p>
+
+    <div class="nav-buttons">
+        <a href="dashboard.html" class="btn" style="background: #555; color: white;">Zurück</a>
+        <a href="pse.html" class="btn">Weiter zum Atombau</a>
+    </div>
+</div>
+
+</body>
+</html>

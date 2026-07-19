@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Messung & Schutz</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --warn: #e67e22; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+        
+        .info-card { background: var(--box); border-radius: 10px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--accent); }
+        .rule-box { background: #2c3e50; padding: 15px; border-radius: 10px; border: 2px solid var(--warn); }
+        
+        /* Geigerzähler Simulation */
+        .geiger-sim { background: #000; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #444; margin: 25px 0; }
+        .display { font-family: 'Courier New', monospace; background: #222; color: #00ff00; padding: 10px; font-size: 2rem; border-radius: 5px; display: inline-block; margin: 10px 0; min-width: 150px; }
+        
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; }
+        input[type=range] { width: 80%; cursor: pointer; }
+
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM DASHBOARD</a>
+    </div>
+
+    <h1>Station 4: Messung & Schutz</h1>
+
+    <section>
+        <h2>1. Wie misst man Radioaktivität?</h2>
+        <p>Da unsere Sinne die Strahlung nicht wahrnehmen können, brauchen wir technische Geräte. Das bekannteste ist das <b>Geiger-Müller-Zählrohr</b> (kurz: Geigerzähler).</p>
+        
+        <div class="info-card">
+            <h3>Funktionsweise:</h3>
+            <p>Trifft Strahlung in das Zählrohr, ionisiert sie das darin enthaltene Gas. Es fließt kurzzeitig ein Stromstoß, der als "Knacken" hörbar gemacht oder digital gezählt wird. Die Einheit für die Aktivität ist <b>Becquerel (Bq)</b>.</p>
+        </div>
+    </section>
+
+    <section class="geiger-sim">
+        <h3>Interaktives Experiment: Abstandsgesetz</h3>
+        <p>Bewege den Geigerzähler weiter weg von der Strahlenquelle. Was passiert mit der Zählrate?</p>
+        
+        <div class="display" id="countDisplay">450</div>
+        <p>Impulse pro Minute</p>
+
+        <label class="slider-label">Abstand zur Quelle:</label>
+        <input type="range" id="distance" min="1" max="10" step="1" value="1" oninput="updateGeiger()">
+        <p id="distText">Abstand: 1 Meter</p>
+    </section>
+
+    <section>
+        <h2>2. Schutz vor Strahlung (Die 5-S-Regel)</h2>
+        <p>Im Umgang mit radioaktiven Stoffen gibt es weltweit anerkannte Sicherheitsregeln. Dein Buch nennt sie die <b>5-S-Regel</b>:</p>
+        
+        <div class="rule-box">
+            <ol>
+                <li><span style="color:var(--accent); font-weight:bold;">S</span><b>chutzschichten:</b> Geeignetes Material verwenden (Blei, Wasser, Beton).</li>
+                <li><span style="color:var(--accent); font-weight:bold;">S</span><b>perrung:</b> Den Gefahrenbereich weiträumig absperren.</li>
+                <li><span style="color:var(--accent); font-weight:bold;">S</span><b>elbstschutz:</b> Schutzkleidung tragen, um Kontamination zu vermeiden.</li>
+                <li><span style="color:var(--accent); font-weight:bold;">S</span><b>teigerung des Abstands:</b> So weit wie möglich weg von der Quelle (siehe Experiment oben!).</li>
+                <li><span style="color:var(--accent); font-weight:bold;">S</span><b>enkung der Aufenthaltsdauer:</b> So kurz wie möglich in der Nähe der Strahlung bleiben.</li>
+            </ol>
+        </div>
+    </section>
+
+    <div style="margin-top: 40px; text-align: right;">
+        <a href="halbwertszeit.html" class="btn">Weiter zur Halbwertszeit →</a>
+    </div>
+</div>
+
+<script>
+    function updateGeiger() {
+        const dist = document.getElementById('distance').value;
+        document.getElementById('distText').innerText = "Abstand: " + dist + " Meter";
+        
+        // Physikalisches Gesetz: Intensität sinkt mit dem Quadrat des Abstands
+        // Wir nehmen einen Basiswert von 450 und rechnen 450 / (d*d)
+        let baseCount = 450;
+        let newCount = Math.round(baseCount / (dist * dist)) + Math.floor(Math.random() * 5); // Kleines Rauschen dazu
+        
+        document.getElementById('countDisplay').innerText = newCount;
+    }
+</script>
+
+</body>
+</html>

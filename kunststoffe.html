@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Kunststoffe im Alltag</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .recycle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin: 15px 0; }
+        .recycle-item { background: #1e1e1e; border: 2px solid #444; border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; font-size: 0.8rem; }
+        .recycle-item:hover { border-color: var(--accent); }
+        .recycle-item.selected { border-color: var(--accent); background: rgba(0,255,136,0.1); }
+        #kunststoffInfo { margin-top: 15px; min-height: 60px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 4: Kunststoffe im Alltag</h1>
+
+    <p>Kunststoffe (umgangssprachlich oft "Plastik" genannt) sind aus unserem Alltag kaum wegzudenken – von der Verpackung bis zum Autoreifen. Doch was macht sie so vielseitig, und warum sind sie gleichzeitig umstritten?</p>
+
+    <h2>Herstellung und Eigenschaften</h2>
+    <div class="step-box">
+        <p>Die meisten Kunststoffe werden aus Erdöl gewonnen. Kleine Grundbausteine (Monomere) werden dabei durch chemische Reaktionen zu langen Molekülketten (Polymeren) verknüpft.</p>
+    </div>
+    <div class="definition">
+        <b>Kunststoffe</b> sind Materialien aus langen Molekülketten (Polymeren), die meist aus Erdöl hergestellt werden. Sie zeichnen sich durch geringes Gewicht, Formbarkeit, Beständigkeit gegen viele Chemikalien und niedrige Herstellungskosten aus.
+    </div>
+    <p>Man unterscheidet u. a. <b>Thermoplaste</b> (werden beim Erhitzen weich und formbar, beim Abkühlen wieder fest – z. B. PET-Flaschen), <b>Duroplaste</b> (härten einmalig aus und lassen sich danach nicht mehr verformen – z. B. Steckdosen) und <b>Elastomere</b> (elastisch, dehnbar und kehren nach Verformung in ihre Ausgangsform zurück – z. B. Gummidichtungen).</p>
+
+    <h2>Probier's aus: Recycling-Codes zuordnen</h2>
+    <p>Klicke auf einen Kunststoff, um mehr über seine Eigenschaften und Verwendung zu erfahren.</p>
+    <div class="sim-box">
+        <div class="recycle-grid">
+            <div class="recycle-item" onclick="showInfo('pet', event)">♳<br>PET</div>
+            <div class="recycle-item" onclick="showInfo('pe', event)">♴<br>PE-HD</div>
+            <div class="recycle-item" onclick="showInfo('pvc', event)">♵<br>PVC</div>
+            <div class="recycle-item" onclick="showInfo('ldpe', event)">♶<br>PE-LD</div>
+            <div class="recycle-item" onclick="showInfo('pp', event)">♷<br>PP</div>
+            <div class="recycle-item" onclick="showInfo('ps', event)">♸<br>PS</div>
+        </div>
+        <div id="kunststoffInfo"></div>
+    </div>
+
+    <h2>Kunststoffe und Umwelt</h2>
+    <p>Die meisten herkömmlichen Kunststoffe sind sehr langlebig – ein Vorteil bei der Nutzung, aber ein großes Problem, wenn sie in die Umwelt gelangen: Sie bauen sich über Jahrzehnte bis Jahrhunderte kaum ab. Durch mechanische Zerkleinerung und UV-Strahlung entsteht <b>Mikroplastik</b> – winzige Kunststoffpartikel, die inzwischen in Gewässern, Böden und sogar in Lebewesen nachgewiesen wurden.</p>
+    <div class="definition">
+        <b>Recycling</b> bedeutet, gebrauchte Kunststoffe zu sammeln, zu sortieren und wiederzuverwerten, um Rohstoffe zu sparen und Abfall zu reduzieren. Damit Recycling gut funktioniert, ist eine saubere Trennung nach Kunststoffart wichtig – dabei helfen die Recycling-Codes auf den Verpackungen.
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Bioplastik</h3>
+        <p>Sogenannte Bio-Kunststoffe werden teilweise oder vollständig aus nachwachsenden Rohstoffen (z. B. Maisstärke) statt aus Erdöl hergestellt. Nicht jeder Bio-Kunststoff ist aber automatisch <b>biologisch abbaubar</b> – manche verhalten sich chemisch wie herkömmliches Plastik und benötigen ebenfalls spezielle Recyclingwege oder Kompostierbedingungen, die im normalen Hausgarten oft nicht erreicht werden.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen Thermoplasten, Duroplasten und Elastomeren an je einem Beispiel.</li>
+        <li>Begründe, warum die lange Haltbarkeit von Kunststoffen sowohl Vor- als auch Nachteil sein kann.</li>
+        <li>Erkläre, wie Mikroplastik entsteht und warum es problematisch ist.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="saeurenbasen.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="waschmittel.html" class="btn">Weiter zu Waschmitteln &amp; Tensiden →</a>
+    </div>
+</div>
+
+<script>
+const info = {
+    pet: "<b>PET (Polyethylenterephthalat):</b> durchsichtig, stabil, gut recycelbar. Verwendung: Getränkeflaschen, Verpackungsfolien.",
+    pe: "<b>PE-HD (Polyethylen hoher Dichte):</b> stabil, chemikalienbeständig. Verwendung: Shampooflaschen, Eimer, Rohre.",
+    pvc: "<b>PVC (Polyvinylchlorid):</b> hart oder weich einstellbar, enthält Chlor. Verwendung: Fensterrahmen, Bodenbeläge, Kabelisolierungen.",
+    ldpe: "<b>PE-LD (Polyethylen niedriger Dichte):</b> weich, biegsam. Verwendung: Plastiktüten, Frischhaltefolie.",
+    pp: "<b>PP (Polypropylen):</b> hitzebeständig, robust. Verwendung: Joghurtbecher, Verpackungen, Textilfasern.",
+    ps: "<b>PS (Polystyrol):</b> als Hartschaum sehr leicht (Styropor) oder als Klarsichtmaterial. Verwendung: Dämmstoffe, Einwegbesteck, Verpackungen."
+};
+
+function showInfo(key, evt) {
+    document.querySelectorAll('.recycle-item').forEach(el => el.classList.remove('selected'));
+    evt.currentTarget.classList.add('selected');
+    document.getElementById('kunststoffInfo').innerHTML = info[key];
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Das Fadenpendel</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.3rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        /* Pendel-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .pendulum-stage { position: relative; width: 100%; height: 220px; }
+        .pivot { position: absolute; top: 10px; left: 50%; width: 10px; height: 10px; background: #888; border-radius: 50%; transform: translateX(-50%); }
+        .pendulum-arm { position: absolute; top: 10px; left: 50%; width: 3px; background: #ccc; transform-origin: top center; transform: translateX(-50%) rotate(25deg); transition: none; }
+        .bob { position: absolute; left: 50%; width: 26px; height: 26px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        #tResult { margin-top: 10px; font-weight: bold; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 2: Das Fadenpendel</h1>
+
+    <p>Pendeluhren waren sehr lange die genauesten Zeitmesser. Aber auch sie können vor- oder nachgehen – Uhrmacher fanden dafür eine sehr einfache Methode zum Einstellen.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Hängt die Periodendauer von der Masse ab?</h3>
+        <p>Untersucht man die Abhängigkeit der Periodendauer T von der Masse m des schwingenden Körpers bei gleichbleibender Pendellänge, zeigt sich: Verschieden schwere Körper pendeln <b>gleich schnell</b>, wenn die Pendel die gleiche Länge haben.</p>
+    </div>
+
+    <div class="definition">
+        <b>Die Periodendauer eines Fadenpendels hängt nicht von seiner Masse ab.</b>
+    </div>
+    <p>Eine Pendeluhr lässt sich also <b>nicht</b> einstellen, indem man verschieden schwere Pendelkörper benutzt.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Hängt die Periodendauer von der Länge ab?</h3>
+        <p>Bestimmt man bei konstanter Masse die Periodendauer für verschieden lange Pendel, zeigt sich: Die Periodendauer eines Fadenpendels <b>hängt von seiner Länge ab</b>.</p>
+    </div>
+
+    <div class="formula-box">T = 2π · √(l / g) &nbsp;&nbsp;|&nbsp;&nbsp; g = Fallbeschleunigung ≈ 9,81 m/s²</div>
+
+    <div class="step-box">
+        <h3>Musteraufgabe</h3>
+        <p>Ein Kronleuchter mit einer Masse von 200 kg und einer Länge von 150 cm pendelt hin und her. Berechne seine Periodendauer.</p>
+        <p><b>Gegeben:</b> l = 150 cm = 1,5 m, g = 9,81 m/s² &nbsp; <b>Gesucht:</b> T in s</p>
+        <p><b>Lösung:</b> T = 2π · √(1,5 m / 9,81 m/s²) = <span class="highlight">2,46 s</span></p>
+    </div>
+
+    <h2>Probier's aus: Verändere die Pendellänge</h2>
+    <p>Stelle die Länge des Fadenpendels ein und beobachte, wie sich die Periodendauer und die Geschwindigkeit des Pendels ändern – die Masse spielt dabei (wie du oben gelesen hast) keine Rolle.</p>
+    <div class="sim-box">
+        <div class="pendulum-stage">
+            <div class="pivot"></div>
+            <div class="pendulum-arm" id="arm"></div>
+            <div class="bob" id="bob"></div>
+        </div>
+        <label class="slider-label">Pendellänge l: <span id="lenVal">100</span> cm</label>
+        <input type="range" id="length" min="20" max="200" step="5" value="100" oninput="updatePendulum()">
+        <div id="tResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Pendeluhren einstellen</h3>
+        <p>Der Pendelkörper einer Uhr lässt sich über eine Schraube am unteren Ende nach oben oder unten verschieben. Nach unten verschieben bedeutet: Pendel wird länger – Periodendauer wird größer – Uhr geht langsamer. Nach oben verschieben bedeutet: Pendel wird kürzer – Periodendauer wird kleiner – Uhr geht schneller.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Ein Fadenpendel ist nur das Modell eines Uhrpendels. Vergleiche Uhrpendel und Fadenpendel miteinander.</li>
+        <li>Ein Astronaut führt in der Raumstation ein Fadenpendelexperiment durch. Zu welchem Ergebnis gelangt er in diesem schwerelosen Raum?</li>
+        <li>Berechne die Periodendauer eines 5 m langen und 10 kg schweren Fadenpendels.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="schwingungsgroessen.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="energieumwandlung.html" class="btn">Weiter zu Energieumwandlungen →</a>
+    </div>
+</div>
+
+<script>
+    let angle = 25;
+    let direction = 1;
+    let timer = null;
+
+    function updatePendulum() {
+        const length = parseFloat(document.getElementById('length').value);
+        document.getElementById('lenVal').innerText = length;
+
+        const g = 9.81;
+        const T = 2 * Math.PI * Math.sqrt((length / 100) / g);
+        document.getElementById('tResult').innerText = 'Periodendauer T = ' + T.toFixed(2) + ' s (bei l = ' + length + ' cm)';
+
+        const armLength = 30 + length * 0.8;
+        document.getElementById('arm').style.height = armLength + 'px';
+        document.getElementById('bob').style.top = (10 + armLength - 13) + 'px';
+
+        clearInterval(timer);
+        const stepMs = 20;
+        const totalSteps = (T * 1000) / stepMs / 2;
+        let step = 0;
+        timer = setInterval(() => {
+            step += direction;
+            angle = 25 * Math.sin((step / totalSteps) * Math.PI);
+            document.getElementById('arm').style.transform = 'translateX(-50%) rotate(' + angle + 'deg)';
+            const armEl = document.getElementById('arm');
+            const rad = angle * Math.PI / 180;
+            const bobX = 50 + Math.sin(rad) * (armLength / canvasWidthPercent());
+            document.getElementById('bob').style.left = bobX + '%';
+            document.getElementById('bob').style.top = (10 + Math.cos(rad) * armLength - 13) + 'px';
+        }, stepMs);
+    }
+
+    function canvasWidthPercent() {
+        return document.querySelector('.pendulum-stage').offsetWidth / 100;
+    }
+
+    updatePendulum();
+</script>
+
+</body>
+</html>

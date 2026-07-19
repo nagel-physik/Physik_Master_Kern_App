@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Brechung und Totalreflexion</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.2rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .sim-btns { margin-top: 12px; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+        #critInfo { margin-top: 10px; font-weight: bold; color: var(--accent); min-height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 4: Brechung und Totalreflexion</h1>
+
+    <p>Ein Strohhalm in einem Wasserglas sieht „abgeknickt" aus – ein bekanntes Beispiel für die Brechung des Lichts beim Übergang zwischen zwei durchsichtigen Stoffen.</p>
+
+    <h2>Das Brechungsgesetz</h2>
+    <div class="step-box">
+        <h3>Experiment: Lichtstrahl beim Übergang Luft–Wasser</h3>
+        <p>Lässt man einen Lichtstrahl schräg von Luft in Wasser (oder Glas) eintreten, stellt man fest: Der Strahl wird an der Grenzfläche <b>zum Lot hin gebrochen</b> – er läuft im dichteren Stoff steiler weiter. Beim umgekehrten Übergang (Wasser → Luft) wird der Strahl <b>vom Lot weg gebrochen</b>.</p>
+    </div>
+    <div class="definition">
+        Beim Übergang von Licht in einen anderen durchsichtigen Stoff ändert sich seine Ausbreitungsrichtung. Diese Erscheinung nennt man <b>Brechung</b>. Ursache ist die unterschiedliche Ausbreitungsgeschwindigkeit des Lichts in den beiden Stoffen.
+    </div>
+    <p>Grund für die Brechung ist, dass Licht in unterschiedlichen Stoffen unterschiedlich schnell ist: In Luft breitet es sich fast so schnell wie im Vakuum aus, in Wasser und Glas deutlich langsamer.</p>
+    <div class="formula-box">sin α / sin β = c₁ / c₂ = n &nbsp;&nbsp;(n = Brechzahl)</div>
+    <p>Dabei ist α der Einfallswinkel im ersten Stoff und β der Brechungswinkel im zweiten Stoff (beide zum Lot gemessen).</p>
+
+    <table class="table">
+        <tr><th>Stoff</th><th>Brechzahl n (gegenüber Vakuum/Luft)</th></tr>
+        <tr><td>Luft</td><td>≈ 1,0</td></tr>
+        <tr><td>Wasser</td><td>≈ 1,33</td></tr>
+        <tr><td>Fensterglas</td><td>≈ 1,5</td></tr>
+        <tr><td>Diamant</td><td>≈ 2,42</td></tr>
+    </table>
+
+    <h2>Die Totalreflexion</h2>
+    <div class="step-box">
+        <h3>Experiment: Vom dichteren in den dünneren Stoff</h3>
+        <p>Lässt man Licht von Wasser (oder Glas) in Luft übertreten und vergrößert dabei den Einfallswinkel immer weiter, wird der Brechungswinkel immer größer. Ab einem bestimmten <b>Grenzwinkel</b> tritt kein Licht mehr in den dünneren Stoff aus – das gesamte Licht wird an der Grenzfläche reflektiert.</p>
+    </div>
+    <div class="definition">
+        Überschreitet der Einfallswinkel beim Übergang vom optisch dichteren in den optisch dünneren Stoff den <b>Grenzwinkel der Totalreflexion</b> α<sub>G</sub>, tritt kein Licht mehr aus – es kommt zur <b>Totalreflexion</b>.
+    </div>
+    <div class="formula-box">sin α<sub>G</sub> = c₁ / c₂ = 1 / n</div>
+
+    <h2>Probier's aus: Brechung und Totalreflexion</h2>
+    <p>Wähle die Richtung des Lichtwegs und verändere den Einfallswinkel. Beim Übergang vom dichteren in den dünneren Stoff kannst du beobachten, wie ab dem Grenzwinkel Totalreflexion eintritt.</p>
+    <div class="sim-box">
+        <canvas id="refractCanvas" width="400" height="260"></canvas>
+        <div class="sim-btns">
+            <button id="btnAirWater" class="active" onclick="setDirection('in')">Luft → Wasser</button>
+            <button id="btnWaterAir" onclick="setDirection('out')">Wasser → Luft</button>
+        </div>
+        <label class="slider-label">Einfallswinkel α: <span id="angleVal">30</span>°</label>
+        <input type="range" id="angle" min="1" max="89" step="1" value="30" oninput="drawRefraction()">
+        <div id="critInfo"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Das Glasfaserkabel</h3>
+        <p>Glasfaserkabel nutzen die Totalreflexion, um Licht (und damit Daten) verlustarm über sehr lange Strecken zu leiten. Das Licht wird am Anfang der Faser in einem so flachen Winkel eingekoppelt, dass es beim Auftreffen auf die Innenwand der Faser den Grenzwinkel der Totalreflexion stets überschreitet. So läuft das Licht durch fortlaufende Totalreflexion im Zickzack durch die Faser, ohne nach außen auszutreten – selbst wenn das Kabel gebogen wird. Glasfaserkabel werden für Internetverbindungen, in der Medizintechnik (Endoskope) und zur Beleuchtung eingesetzt.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum ein Strohhalm in einem Wasserglas „geknickt" erscheint.</li>
+        <li>Begründe, warum es beim Übergang Luft → Wasser keine Totalreflexion geben kann.</li>
+        <li>Berechne den Grenzwinkel der Totalreflexion für den Übergang Wasser → Luft (n<sub>Wasser</sub> = 1,33).</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="reflexion.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="spiegel.html" class="btn">Weiter zu Hohl- &amp; Wölbspiegeln →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('refractCanvas');
+    const ctx = canvas.getContext('2d');
+    const n = 1.33; // Wasser
+    let direction = 'in'; // 'in' = Luft->Wasser, 'out' = Wasser->Luft
+
+    function setDirection(dir) {
+        direction = dir;
+        document.getElementById('btnAirWater').classList.toggle('active', dir === 'in');
+        document.getElementById('btnWaterAir').classList.toggle('active', dir === 'out');
+        drawRefraction();
+    }
+
+    function drawRefraction() {
+        const angleDeg = parseFloat(document.getElementById('angle').value);
+        document.getElementById('angleVal').innerText = angleDeg;
+        const alphaRad = angleDeg * Math.PI / 180;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const midY = canvas.height / 2;
+
+        // Zwei Halbräume einfärben
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.fillRect(0, 0, canvas.width, midY);
+        ctx.fillStyle = 'rgba(0,150,255,0.12)';
+        ctx.fillRect(0, midY, canvas.width, canvas.height - midY);
+
+        // Grenzfläche
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(10, midY); ctx.lineTo(canvas.width - 10, midY);
+        ctx.stroke();
+
+        // Lot
+        ctx.strokeStyle = '#888';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4,4]);
+        ctx.beginPath();
+        ctx.moveTo(cx, 15); ctx.lineTo(cx, canvas.height - 15);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const len = 110;
+        let critInfo = document.getElementById('critInfo');
+
+        if (direction === 'in') {
+            // Luft (oben, n1=1) -> Wasser (unten, n2=1.33): einfallender Strahl von oben links
+            const inX = cx - Math.sin(alphaRad) * len;
+            const inY = midY - Math.cos(alphaRad) * len;
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(inX, inY); ctx.lineTo(cx, midY); ctx.stroke();
+            drawArrowhead(inX, inY, cx, midY, '#00ff88');
+
+            const sinBeta = Math.sin(alphaRad) / n;
+            const betaRad = Math.asin(sinBeta);
+            const betaDeg = betaRad * 180 / Math.PI;
+            const outX = cx + Math.sin(betaRad) * len;
+            const outY = midY + Math.cos(betaRad) * len;
+            ctx.strokeStyle = '#0062ff';
+            ctx.beginPath(); ctx.moveTo(cx, midY); ctx.lineTo(outX, outY); ctx.stroke();
+            drawArrowhead(cx, midY, outX, outY, '#0062ff');
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Luft (n≈1,0)', 15, 20);
+            ctx.fillText('Wasser (n≈1,33)', 15, canvas.height - 10);
+            ctx.fillText('α = ' + angleDeg + '°   β = ' + betaDeg.toFixed(1) + '°', cx - 70, canvas.height/2 - 100 < 0 ? 15 : 15);
+            critInfo.style.color = '#00ff88';
+            critInfo.innerText = 'Brechungswinkel β = ' + betaDeg.toFixed(1) + '° (zum Lot hin gebrochen)';
+        } else {
+            // Wasser (oben, n1=1.33) -> Luft (unten, n2=1): einfallender Strahl im Wasser
+            // Farben tauschen: oberer Bereich jetzt Wasser
+            ctx.fillStyle = 'rgba(0,150,255,0.12)';
+            ctx.fillRect(0, 0, canvas.width, midY);
+            ctx.fillStyle = 'rgba(255,255,255,0.03)';
+            ctx.fillRect(0, midY, canvas.width, canvas.height - midY);
+            ctx.strokeStyle = '#666';
+            ctx.beginPath(); ctx.moveTo(10, midY); ctx.lineTo(canvas.width - 10, midY); ctx.stroke();
+            ctx.strokeStyle = '#888';
+            ctx.setLineDash([4,4]);
+            ctx.beginPath(); ctx.moveTo(cx, 15); ctx.lineTo(cx, canvas.height - 15); ctx.stroke();
+            ctx.setLineDash([]);
+
+            const critRad = Math.asin(1 / n);
+            const critDeg = critRad * 180 / Math.PI;
+
+            const inX = cx - Math.sin(alphaRad) * len;
+            const inY = midY - Math.cos(alphaRad) * len;
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(inX, inY); ctx.lineTo(cx, midY); ctx.stroke();
+            drawArrowhead(inX, inY, cx, midY, '#00ff88');
+
+            if (angleDeg < critDeg) {
+                const sinBeta = Math.sin(alphaRad) * n;
+                const betaRad = Math.asin(Math.min(1, sinBeta));
+                const betaDeg = betaRad * 180 / Math.PI;
+                const outX = cx + Math.sin(betaRad) * len;
+                const outY = midY + Math.cos(betaRad) * len;
+                ctx.strokeStyle = '#0062ff';
+                ctx.beginPath(); ctx.moveTo(cx, midY); ctx.lineTo(outX, outY); ctx.stroke();
+                drawArrowhead(cx, midY, outX, outY, '#0062ff');
+                critInfo.style.color = '#00ff88';
+                critInfo.innerText = 'Brechungswinkel β = ' + betaDeg.toFixed(1) + '°  |  Grenzwinkel α_G = ' + critDeg.toFixed(1) + '°';
+            } else {
+                // Totalreflexion: reflektierter Strahl zurück ins Wasser (gleicher Winkel wie einfallend, oberhalb der Grenzfläche)
+                const outX = cx + Math.sin(alphaRad) * len;
+                const outY = midY - Math.cos(alphaRad) * len;
+                ctx.strokeStyle = '#e74c3c';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(cx, midY); ctx.lineTo(outX, outY); ctx.stroke();
+                drawArrowhead(cx, midY, outX, outY, '#e74c3c');
+                critInfo.style.color = '#e74c3c';
+                critInfo.innerText = 'TOTALREFLEXION! α = ' + angleDeg + '° > Grenzwinkel α_G = ' + critDeg.toFixed(1) + '°';
+            }
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Wasser (n≈1,33)', 15, 20);
+            ctx.fillText('Luft (n≈1,0)', 15, canvas.height - 10);
+        }
+    }
+
+    function drawArrowhead(x1, y1, x2, y2, color) {
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 - 8 * Math.cos(angle - Math.PI/6), y2 - 8 * Math.sin(angle - Math.PI/6));
+        ctx.lineTo(x2 - 8 * Math.cos(angle + Math.PI/6), y2 - 8 * Math.sin(angle + Math.PI/6));
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    drawRefraction();
+</script>
+
+</body>
+</html>

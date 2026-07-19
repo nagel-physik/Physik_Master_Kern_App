@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Schall</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 10px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #blitzResult { text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--accent); min-height: 30px; margin-top: 10px; }
+
+        .instrument-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 15px; margin: 20px 0; }
+        .instrument-card { background: var(--box); border-radius: 10px; padding: 15px; border: 1px solid #333; }
+        .instrument-card b { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 5: Schall</h1>
+
+    <p>Jeden Tag sind wir von unterschiedlichsten Geräuschen und Klängen umgeben. Manche benötigen wir zur Kommunikation, andere genießen wir, einige sind aber auch einfach nur störend. Um gesund zu bleiben, ist das richtige Maß entscheidend.</p>
+
+    <div class="definition">
+        Alle Töne, Klänge und Geräusche werden als <b>Schall</b> bezeichnet. Schall wird von Schallquellen erzeugt und abgegeben.<br>
+        <b>Schall entsteht durch schwingende Körper.</b>
+    </div>
+    <p>Schallquellen haben eine Eigenschaft gemeinsam: Sie bestehen aus Teilen, die zum Schwingen gebracht werden können. Je nach Art der Schwingung entstehen dann einzelne Töne (z. B. Klaviersaite) oder ein Tongemisch (Musik aus dem Lautsprecher). Menschen können allerdings nur Schall wahrnehmen, der von schnell schwingenden Schallquellen abstammt – die Untergrenze liegt etwa bei 16 Hz.</p>
+
+    <h2>Ausbreitung des Schalls</h2>
+    <p>Die Schallquelle in uns Menschen sind die <b>Stimmbänder</b>. Sie schwingen und übertragen diese Schwingungen auf die Luftteilchen in Mund- und Rachenraum. Damit wir gehört werden, müssen diese Schwingungen weiter übertragen werden – dazu benötigt der Schall geeignete Stoffe. Ohne solche Stoffe kann sich Schall nicht ausbreiten (im Vakuum des Weltalls z. B. hört man nichts).</p>
+    <div class="definition">
+        Schall breitet sich als <b>Schallwelle</b> im Raum aus. Zur Ausbreitung benötigt er einen Stoff. Schall breitet sich mit <b>Schallgeschwindigkeit</b> aus. In verschiedenen Stoffen erreicht der Schall unterschiedliche Geschwindigkeiten.
+    </div>
+
+    <table class="table">
+        <tr><th>Stoff</th><th>Schallgeschwindigkeit</th></tr>
+        <tr><td>Luft (20 °C)</td><td>343 m/s</td></tr>
+        <tr><td>Wasser (20 °C)</td><td>1484 m/s</td></tr>
+        <tr><td>Gummi</td><td>1480 m/s</td></tr>
+        <tr><td>Eisen</td><td>5100 m/s</td></tr>
+        <tr><td>Aluminium</td><td>6260 m/s</td></tr>
+    </table>
+
+    <p>Ist die Entfernung groß genug, kann es zu einer Zeitverzögerung zwischen Sehen und Hören kommen – man sieht z. B. einen Blitz, bevor man den Donner hört.</p>
+
+    <h2>Probier's aus: Wie weit ist das Gewitter entfernt?</h2>
+    <p>Gib die Zeit zwischen Blitz und Donner ein (Formel: s = v · t, mit v = 343 m/s in Luft bei 20 °C).</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Zeit zwischen Blitz und Donner (s)</label><input type="number" id="blitzTime" placeholder="z. B. 3"></div>
+            <div><label>Schallgeschwindigkeit (m/s)</label><input type="number" id="blitzSpeed" value="343"></div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn" style="border:none; cursor:pointer;" onclick="calcBlitz()">Entfernung berechnen</button>
+        </div>
+        <div id="blitzResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Schallortung bei Fledermäusen</h3>
+        <p>Verschiedene Tiere nutzen die Tatsache, dass Schall reflektiert werden kann, zur Orientierung. Eine Fledermaus sendet ständig Schallsignale aus, die an Hindernissen zurückgeworfen werden. Für uns Menschen sind diese Töne nicht hörbar – sie heißen <b>Ultraschall</b> und sind extrem schnelle Schwingungen, die über der menschlichen Hörgrenze von 15 kHz liegen.</p>
+    </div>
+
+    <h2>Anwendungen des Schalls</h2>
+    <div class="step-box">
+        <h3>Einparkhilfe</h3>
+        <p>Einparkhilfen nutzen häufig Schallsensoren – sie sind unempfindlicher gegen Nebel, Regen und Schmutz als optische Sensoren einer Rückfahrkamera. Der Sensor sendet und empfängt einen Schallimpuls und misst die Laufzeit zwischen gesendetem und reflektiertem Signal. Da das Signal die Strecke zum Hindernis zweimal durchläuft und die Schallgeschwindigkeit bekannt ist, lässt sich daraus die Entfernung berechnen.</p>
+    </div>
+    <div class="step-box">
+        <h3>Sonografie</h3>
+        <p>Bei der Sonografie (Ultraschalluntersuchung) werden Schallwellen in den Körper gesendet und die reflektierten Signale ausgewertet. Da Schallwellen an verschiedenen Geweben unterschiedlich stark reflektiert werden, können Computer aus der Intensität der reflektierten Signale ein Bild errechnen.</p>
+    </div>
+    <div class="step-box">
+        <h3>Lautsprecher ohne Strom – die Gitarre</h3>
+        <p>Die Saiten einer Gitarre schwingen, wenn man sie anschlägt. Da sie fest eingespannt sind, werden die Schwingungen an den Enden der Saite reflektiert und überlagern sich – durch Interferenz bildet sich dabei eine <b>stehende Welle</b> aus. Ihre Wellenlänge bestimmt die Tonhöhe. Weil die Saiten dünn sind, stoßen sie nur wenige Luftteilchen an – der Ton ist daher leise. Die Saiten übertragen ihre Schwingungen aber auf den Gitarrenkörper: Dieser hat eine viel größere Fläche und stößt beim Mitschwingen viel mehr Luftteilchen an – der Ton wird lauter.</p>
+    </div>
+    <div class="step-box" style="border-left-color:#e74c3c;">
+        <h3>Wissenswertes: Stille durch Lärm (Noise-Cancelling)</h3>
+        <p>Motorradhelme zu dämmen ist nicht gut, da der Fahrer trotz Helm Sirenen und Sprache verstehen muss. Man kann jedoch die <b>Interferenz</b> nutzen, um genau die störenden Töne zu löschen: Dazu nehmen Mikrofone die Außengeräusche auf, und Lautsprecher erzeugen passende „Gegengeräusche". Die Gegengeräusche überlagern die Außengeräusche, sodass sie sich gegenseitig auslöschen (<i>Noise Cancelling</i>).</p>
+    </div>
+
+    <h2>Physik erlebt: Musikinstrumente</h2>
+    <p>Physikalisch gesehen sind alle Instrumente Schallquellen – also Körper, die schwingen und Schallwellen abgeben. Man unterscheidet nach der Art der Tonerzeugung verschiedene Instrumentenarten:</p>
+    <div class="instrument-grid">
+        <div class="instrument-card"><b>Saiteninstrumente</b><br>Töne entstehen durch schwingende Saiten (Geige, Cello, Gitarre, Harfe, Klavier). Kurze Saiten erklingen höher (Geige), lange Saiten tiefer (Kontrabass).</div>
+        <div class="instrument-card"><b>Blasinstrumente</b><br>Eine Luftsäule in einem Rohr wird in Schwingung versetzt (Flöte, Saxofon, Posaune, Orgel) – je nach Instrument durch Anblasen einer Öffnung oder schwingende Lippen/Rohrblätter.</div>
+        <div class="instrument-card"><b>Schlaginstrumente</b><br>Eine schwingende Membran (Trommel, Pauke) oder der Klangkörper selbst (Becken, Triangel, Xylofon) erzeugt den Ton. Je größer die Fläche bzw. je länger der Körper, desto tiefer der Ton.</div>
+        <div class="instrument-card"><b>Elektronische Instrumente</b><br>Töne entstehen nicht durch mechanisch schwingende Teile, sondern durch periodische Spannungsschwankungen in elektrischen Schwingkreisen, die über Lautsprecher wiedergegeben werden (Keyboard).</div>
+    </div>
+
+    <div class="step-box">
+        <h3>Selbst erforscht: Flaschenmusik</h3>
+        <p>Puste über die Öffnung einer Flasche – du erzeugst einen Ton. Füllst du Wasser hinein, ändert sich die schwingende Luftsäule und damit die Tonhöhe. Mit sechs unterschiedlich gefüllten Flaschen lässt sich sogar eine kleine Tonleiter stimmen (c = 264 Hz, d = 297 Hz, e = 330 Hz, f = 352 Hz, g = 396 Hz, a = 440 Hz) – und damit einfache Melodien spielen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Wie weit ist ein Blitz entfernt, wenn sein Donner nach 5 s zu hören ist?</li>
+        <li>Berechne für einen 100-m-Lauf den Zeitunterschied zwischen Sehen und Hören des Startsignals.</li>
+        <li>Können sich Raumfahrer im All durch lautes Rufen verständigen? Begründe.</li>
+        <li>Wie weit ist eine Fledermaus von einem Hindernis entfernt, wenn ihr Ortungssignal nach 0,2 s zu ihr zurückkehrt?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="resonanz.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="wellen.html" class="btn">Weiter zu den Wellen →</a>
+    </div>
+</div>
+
+<script>
+    function calcBlitz() {
+        const t = parseFloat(document.getElementById('blitzTime').value);
+        const v = parseFloat(document.getElementById('blitzSpeed').value);
+        const result = document.getElementById('blitzResult');
+        if (isNaN(t) || isNaN(v)) {
+            result.style.color = '#e74c3c';
+            result.innerText = 'Bitte beide Felder ausfüllen.';
+            return;
+        }
+        const s = v * t;
+        result.style.color = '#00ff88';
+        result.innerText = 'Entfernung s = ' + s.toFixed(0) + ' m (≈ ' + (s/1000).toFixed(2) + ' km)';
+    }
+</script>
+
+</body>
+</html>

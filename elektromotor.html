@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Der Elektromotor</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Motor-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .motor-stage { position: relative; width: 220px; height: 140px; margin: 15px auto; }
+        .stator-half { position: absolute; top: 20px; width: 90px; height: 100px; border-radius: 45px 0 0 45px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#000; font-size: 22px; }
+        .stator-left { left: 0; background: #e74c3c; border-radius: 45px 0 0 45px; }
+        .stator-right { right: 0; background: #3498db; border-radius: 0 45px 45px 0; }
+        .rotor { position: absolute; top: 50%; left: 50%; width: 50px; height: 50px; transform: translate(-50%,-50%); transition: transform 0.05s linear; }
+        .rotor-half { position: absolute; width: 50%; height: 100%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px; color:#000; }
+        .rotor .n { left:0; background:#ff8080; border-radius: 25px 0 0 25px; }
+        .rotor .s { right:0; background:#7fb3e8; border-radius: 0 25px 25px 0; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover { background: var(--accent); color: #000; }
+        #motorStatus { margin-top: 15px; font-weight: bold; min-height: 24px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="magnetismus.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM MAGNETFELDER-DASHBOARD</a>
+    </div>
+
+    <h1>Station 4: Der Elektromotor</h1>
+
+    <p>Ohne die Erfindung eines mit Gleichstrom funktionierenden Elektromotors wäre die umfangreiche Nutzung akkubetriebener Geräte – vom Akkuschrauber bis zum Rasenmähroboter – unmöglich.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Bewegung einer Magnetnadel</h3>
+        <p>Schließt man eine Spule mit 1000 Windungen an eine Gleichspannung an und nähert sich eine Magnetnadel, wird diese von der Spule angezogen. Vertauscht man die Pole der Spannungsquelle, ändert sich auch die Polung des Elektromagneten – man bemerkt das an der Bewegung der Magnetnadel durch anziehende und abstoßende Kräfte.</p>
+    </div>
+
+    <h2>Aufbau des Gleichstrommotors</h2>
+    <div class="definition">
+        <ul>
+            <li>Der <b>Stator</b> ist ein Dauermagnet (der feststehende Teil).</li>
+            <li>Innerhalb dieses Magneten befindet sich der <b>Rotor (Anker)</b> – eine drehbar gelagerte Spule.</li>
+            <li>Die Stromzufuhr erfolgt über den <b>Kommutator</b> (auch Polwender genannt). Er besteht aus zwei Halbringen und Kohlebürsten als Kontakte.</li>
+        </ul>
+    </div>
+
+    <h2>So funktioniert's</h2>
+    <p>Wird an die Rotorspule eine elektrische Spannung angelegt, entsteht um sie herum ein Magnetfeld. Die Magnetpole von Stator und Rotor ziehen sich entweder gegenseitig an oder stoßen einander ab – durch diese Wechselwirkung beginnt sich der Rotor zu drehen. Nach einer halben Umdrehung ändert der Kommutator die Polung an der Rotorspule. Das dadurch umgekehrte Magnetfeld lässt den Vorgang aufs Neue beginnen – der Rotor dreht sich immer weiter.</p>
+
+    <h2>Probier's aus: Starte den Motor</h2>
+    <div class="sim-box">
+        <div class="motor-stage">
+            <div class="stator-half stator-left">N</div>
+            <div class="stator-half stator-right">S</div>
+            <div class="rotor" id="rotor">
+                <div class="rotor-half n">N</div>
+                <div class="rotor-half s">S</div>
+            </div>
+        </div>
+        <div class="sim-btns">
+            <button onclick="startMotor()">Strom einschalten ▶</button>
+            <button onclick="stopMotor()">Strom ausschalten ⏹</button>
+        </div>
+        <div id="motorStatus">Der Motor steht still.</div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Eisenkern</h3>
+        <p>In Deutschland gehen ungefähr <b>68 %</b> der in der Industrie genutzten Elektroenergie auf das Konto von Elektromotoren. Ein Großteil unserer heute verwendeten Elektromotoren sind sogenannte <i>Innenläufer</i>: Der Rotor besteht aus Dauermagneten, der Stator aus Spulen, die auf Bleche aus stark magnetisierbaren Materialien gewickelt sind. Diese Bleche wirken dann als zusätzliche Magnete – so kann beim Aufbau des Magnetfelds in den Spulen Energie eingespart werden.</p>
+        <p><i>Übrigens:</i> Der Großteil der zugeführten elektrischen Energie wird in genutzte mechanische Energie umgewandelt. Ein kleiner Teil wandelt sich allerdings auch in thermische Energie um – diesen Teil gilt es so klein wie möglich zu halten.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Notiere fünf Einsatzbeispiele für Elektromotoren.</li>
+        <li>Welche Vorteile hat der Elektromotor gegenüber dem Verbrennungsmotor?</li>
+        <li>Welche Eigenschaften von Magneten nutzt der Gleichstrommotor, um eine Drehbewegung zu erzeugen?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="magnetfeld.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="induktion.html" class="btn">Weiter zur Induktion →</a>
+    </div>
+</div>
+
+<script>
+    let angle = 0;
+    let timer = null;
+
+    function startMotor() {
+        clearInterval(timer);
+        document.getElementById('motorStatus').innerText = 'Der Rotor dreht sich – der Kommutator polt nach jeder halben Umdrehung um.';
+        timer = setInterval(() => {
+            angle += 12;
+            document.getElementById('rotor').style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
+        }, 30);
+    }
+
+    function stopMotor() {
+        clearInterval(timer);
+        document.getElementById('motorStatus').innerText = 'Der Motor steht still.';
+    }
+</script>
+
+</body>
+</html>

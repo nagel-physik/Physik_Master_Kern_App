@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 6: Optische Linsen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        #imgInfo { margin-top: 10px; font-weight: bold; color: var(--accent); min-height: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 6: Optische Linsen</h1>
+
+    <p>Ob Brille, Lupe, Fotokamera oder Fernrohr – optische Linsen stecken in vielen Geräten unseres Alltags. Sie nutzen die Brechung des Lichts, um Bilder zu erzeugen.</p>
+
+    <h2>Sammellinsen und Zerstreuungslinsen</h2>
+    <div class="definition">
+        Eine <b>Sammellinse</b> ist in der Mitte dicker als am Rand. Parallel einfallende Lichtstrahlen werden zu einem <b>Brennpunkt F</b> gebündelt. Eine <b>Zerstreuungslinse</b> ist in der Mitte dünner als am Rand. Parallel einfallende Strahlen werden auseinandergestreut; ihr <b>virtueller</b> Brennpunkt liegt auf der Seite der einfallenden Strahlen.
+    </div>
+    <p>Der Abstand zwischen der Linsenmitte und dem Brennpunkt heißt <b>Brennweite f</b>. Je stärker eine Linse gewölbt ist, desto kürzer ist ihre Brennweite und desto stärker bricht sie das Licht.</p>
+
+    <h2>Bildentstehung an Sammellinsen: die Strahlenkonstruktion</h2>
+    <p>Um zu bestimmen, wo und wie das Bild eines Gegenstands durch eine Sammellinse entsteht, genügen zwei besondere, leicht konstruierbare Strahlen (ein dritter dient zur Kontrolle):</p>
+    <div class="step-box">
+        <ul>
+            <li><b>Parallelstrahl:</b> verläuft parallel zur optischen Achse und wird hinter der Linse durch den Brennpunkt F' gebrochen.</li>
+            <li><b>Mittelpunktstrahl:</b> verläuft durch die Linsenmitte und wird nicht gebrochen (geradliniger Durchgang).</li>
+            <li><b>Brennpunktstrahl:</b> verläuft durch den Brennpunkt F vor der Linse und wird hinter der Linse parallel zur optischen Achse weitergeführt.</li>
+        </ul>
+        <p>Der Schnittpunkt der gebrochenen Strahlen ergibt die Bildspitze.</p>
+    </div>
+
+    <p>Je nachdem, wie weit der Gegenstand von der Linse entfernt ist (Gegenstandsweite g im Vergleich zur Brennweite f), unterscheidet sich das entstehende Bild:</p>
+    <div class="definition">
+        Ist <b>g &gt; f</b>, entsteht ein <b>reelles</b> (auf einem Schirm auffangbares), <b>umgekehrtes</b> Bild. Ist <b>g &lt; f</b>, entsteht ein <b>virtuelles</b> (nicht auf einem Schirm auffangbares), <b>aufrechtes, vergrößertes</b> Bild auf derselben Seite wie der Gegenstand.
+    </div>
+
+    <h2>Probier's aus: Strahlenkonstruktion an der Sammellinse</h2>
+    <p>Verändere die Gegenstandsweite g und beobachte, wie sich Lage, Größe und Art des Bildes ändern – besonders spannend ist der Übergang von g &gt; f zu g &lt; f.</p>
+    <div class="sim-box">
+        <canvas id="lensCanvas" width="480" height="260"></canvas>
+        <label class="slider-label">Gegenstandsweite g: <span id="gVal">180</span></label>
+        <input type="range" id="gSlider" min="20" max="260" step="2" value="180" oninput="drawLens()">
+        <div id="imgInfo"></div>
+    </div>
+
+    <h2>Zerstreuungslinsen</h2>
+    <p>Bei einer Zerstreuungslinse entsteht unabhängig von der Gegenstandsweite immer ein <b>virtuelles, aufrechtes, verkleinertes</b> Bild auf der Seite des Gegenstands. Zerstreuungslinsen werden z. B. in Brillen für kurzsichtige Menschen sowie in Kombination mit Sammellinsen in optischen Geräten eingesetzt.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Die Lupe</h3>
+        <p>Eine Lupe ist nichts anderes als eine Sammellinse, die man so nah an den Gegenstand hält, dass die Gegenstandsweite kleiner als die Brennweite ist (g &lt; f). Dadurch entsteht das gewünschte virtuelle, vergrößerte, aufrechte Bild (mehr dazu in der Station „Auge und optische Geräte").</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen Sammellinse und Zerstreuungslinse anhand ihrer Form.</li>
+        <li>Beschreibe, was mit dem Bild passiert, wenn ein Gegenstand von weit außerhalb der Brennweite immer näher an eine Sammellinse herangeführt wird.</li>
+        <li>Begründe, warum ein Fotoapparat mit einer Sammellinse arbeitet, bei der die Gegenstandsweite fast immer deutlich größer als die Brennweite ist.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="spiegel.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="abbildung.html" class="btn">Weiter zu Abbildungsmaßstab &amp; Linsengleichung →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('lensCanvas');
+    const ctx = canvas.getContext('2d');
+    const axisY = 130;
+    const lensX = 280;
+    const f = 70;
+    const objH = 45;
+
+    function drawLens() {
+        let g = parseFloat(document.getElementById('gSlider').value);
+        if (Math.abs(g - f) < 3) g = g < f ? f - 3 : f + 3;
+        document.getElementById('gVal').innerText = document.getElementById('gSlider').value;
+
+        const objX = lensX - g;
+        const tipY = axisY - objH;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Optische Achse
+        ctx.strokeStyle = '#555';
+        ctx.setLineDash([4,4]);
+        ctx.beginPath(); ctx.moveTo(10, axisY); ctx.lineTo(canvas.width - 10, axisY); ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Linse (Doppelpfeil-Symbol)
+        ctx.strokeStyle = '#8ecae6';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(lensX, 20); ctx.lineTo(lensX, 240); ctx.stroke();
+        drawArrowTip(lensX, 20, '#8ecae6');
+        drawArrowTipDown(lensX, 240, '#8ecae6');
+
+        // Brennpunkte
+        ctx.fillStyle = '#f1c40f';
+        [lensX - f, lensX + f].forEach(fx => { ctx.beginPath(); ctx.arc(fx, axisY, 4, 0, Math.PI*2); ctx.fill(); });
+        ctx.font = '12px sans-serif'; ctx.fillStyle = '#f1c40f';
+        ctx.fillText('F', lensX - f - 4, axisY + 18);
+        ctx.fillText("F'", lensX + f - 4, axisY + 18);
+
+        // Gegenstand (Pfeil)
+        ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(objX, axisY); ctx.lineTo(objX, tipY); ctx.stroke();
+        drawArrowTip(objX, tipY, '#00ff88');
+
+        // ---- Strahl 1: Parallelstrahl ----
+        const lensPoint1 = { x: lensX, y: tipY };
+        const dir1 = { x: f, y: objH };
+
+        // ---- Strahl 3: Brennpunktstrahl ----
+        const denom3 = (lensX - f - objX);
+        const t3pre = (lensX - objX) / denom3;
+        const y3 = tipY + t3pre * objH;
+        const lensPoint3 = { x: lensX, y: y3 };
+        const dir3 = { x: 1, y: 0 };
+
+        // ---- Strahl 2: Mittelpunktstrahl ----
+        const lensPoint2 = { x: lensX, y: axisY };
+        const dir2 = { x: (lensX - objX), y: objH };
+
+        // Bildpunkt aus Strahl1 & Strahl3
+        const tHit = (y3 - tipY) / objH;
+        const xImg = lensX + tHit * f;
+        const yImg = y3;
+        const isReal = xImg > lensX;
+
+        // Vorzeichnen: pre-lens Segmente
+        ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(objX, tipY); ctx.lineTo(lensPoint1.x, lensPoint1.y); ctx.stroke(); // Strahl1 pre (== Objekt oben, waagerecht bereits ab Spitze zur Linse)
+        ctx.beginPath(); ctx.moveTo(objX, tipY); ctx.lineTo(lensPoint3.x, lensPoint3.y); ctx.stroke(); // Strahl3 pre
+        ctx.beginPath(); ctx.moveTo(objX, tipY); ctx.lineTo(lensPoint2.x, lensPoint2.y); ctx.stroke(); // Strahl2 pre
+
+        // Nach-Linse: jeweils vorwärts (physikalische Fortsetzung) + ggf. gestrichelt rückwärts zum virtuellen Bild
+        drawPostRay(lensPoint1, dir1, xImg, yImg, isReal, '#0062ff');
+        drawPostRay(lensPoint3, dir3, xImg, yImg, isReal, '#ff8800');
+        drawPostRay(lensPoint2, dir2, xImg, yImg, isReal, '#e0e0e0');
+
+        // Bildpfeil
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = isReal ? '#e74c3c' : '#00ff88';
+        if (!isReal) ctx.setLineDash([5,4]);
+        ctx.beginPath(); ctx.moveTo(xImg, axisY); ctx.lineTo(xImg, yImg); ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrowTipGeneric(xImg, axisY, xImg, yImg, isReal ? '#e74c3c' : '#00ff88');
+
+        // Info-Text
+        const info = document.getElementById('imgInfo');
+        const inverted = (yImg - axisY) * (tipY - axisY) < 0;
+        const mag = Math.abs(yImg - axisY) / objH;
+        info.style.color = isReal ? '#e74c3c' : '#00ff88';
+        info.innerHTML = (isReal ? 'REELLES BILD' : 'VIRTUELLES BILD') + ' — ' +
+            (inverted ? 'umgekehrt' : 'aufrecht') + ', ' +
+            (mag > 1.05 ? 'vergrößert' : (mag < 0.95 ? 'verkleinert' : 'gleich groß')) +
+            ' (g ' + (g > f ? '&gt;' : '&lt;') + ' f)';
+
+        ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif';
+        ctx.fillText('Gegenstand (G)', objX - 30, tipY - 8);
+    }
+
+    function drawPostRay(lensPoint, dir, xImg, yImg, isReal, color) {
+        const len = Math.sqrt(dir.x*dir.x + dir.y*dir.y);
+        const ux = dir.x / len, uy = dir.y / len;
+        ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+
+        if (isReal) {
+            // Vorwärts bis zum (und leicht über den) Bildpunkt
+            const distToImg = Math.sqrt((xImg-lensPoint.x)**2 + (yImg-lensPoint.y)**2) + 15;
+            ctx.beginPath();
+            ctx.moveTo(lensPoint.x, lensPoint.y);
+            ctx.lineTo(lensPoint.x + ux*distToImg, lensPoint.y + uy*distToImg);
+            ctx.stroke();
+        } else {
+            // Vorwärts (divergent, real weiterlaufendes Licht) - feste Länge
+            ctx.beginPath();
+            ctx.moveTo(lensPoint.x, lensPoint.y);
+            ctx.lineTo(lensPoint.x + ux*160, lensPoint.y + uy*160);
+            ctx.stroke();
+            // Rückwärts gestrichelt zum virtuellen Bildpunkt
+            ctx.setLineDash([4,3]);
+            ctx.beginPath();
+            ctx.moveTo(lensPoint.x, lensPoint.y);
+            ctx.lineTo(xImg, yImg);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+    }
+
+    function drawArrowTip(x, y, color) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 5, y + 10);
+        ctx.lineTo(x + 5, y + 10);
+        ctx.closePath();
+        ctx.fill();
+    }
+    function drawArrowTipDown(x, y, color) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 5, y - 10);
+        ctx.lineTo(x + 5, y - 10);
+        ctx.closePath();
+        ctx.fill();
+    }
+    function drawArrowTipGeneric(x1, y1, x2, y2, color) {
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 - 8 * Math.cos(angle - Math.PI/6), y2 - 8 * Math.sin(angle - Math.PI/6));
+        ctx.lineTo(x2 - 8 * Math.cos(angle + Math.PI/6), y2 - 8 * Math.sin(angle + Math.PI/6));
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    drawLens();
+</script>
+
+</body>
+</html>

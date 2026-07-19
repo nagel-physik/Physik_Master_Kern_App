@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Interaktives Kernkraftwerk</title>
+    <style>
+        :root { 
+            --bg: #0f172a; --accent: #00ff88; --box: #1e293b; --text: #f8fafc;
+            --primar: #ef4444; --sekundar: #3b82f6; --kuhl: #22c55e;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 950px; margin: auto; }
+        
+        .kkw-screen {
+            background: #000; border: 3px solid #334155; border-radius: 20px;
+            height: 450px; position: relative; overflow: hidden; margin: 20px 0;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* Gebäude */
+        .building { border: 2px solid #64748b; position: absolute; background: #1e293b; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; font-weight: bold; z-index: 5; }
+        #reaktor { top: 120px; left: 40px; width: 100px; height: 160px; border-radius: 50px 50px 10px 10px; border-width: 4px; }
+        #dampferzeuger { top: 140px; left: 220px; width: 90px; height: 130px; border-radius: 20px; }
+        #turbine-box { top: 60px; left: 420px; width: 140px; height: 80px; }
+        #generator-box { top: 60px; left: 580px; width: 90px; height: 80px; }
+        #kuehlturm { top: 100px; right: 20px; width: 120px; height: 200px; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); background: #334155; }
+
+        /* Leitungen */
+        .pipe-path { position: absolute; border: 6px solid #333; z-index: 1; border-radius: 10px; }
+        .flow-particle { 
+            position: absolute; width: 10px; height: 10px; border-radius: 50%; 
+            background: #fff; opacity: 0; filter: blur(2px); z-index: 2;
+        }
+
+        /* Animationen */
+        @keyframes flow {
+            0% { offset-distance: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { offset-distance: 100%; opacity: 0; }
+        }
+        .active-flow { animation: flow 2s linear infinite; opacity: 1; }
+        
+        .spinning { animation: spin 0.5s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .btn-panel { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        
+        .info-card { background: var(--box); padding: 20px; border-radius: 15px; border-left: 6px solid var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="dashboard.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">← DASHBOARD</a>
+    <h1>Station 7: High-Tech Kernkraftwerk</h1>
+
+    <div class="btn-panel">
+        <button class="btn" style="background: var(--primar); color: white;" onclick="activate('primar')">PRIMÄRKREISLAUF</button>
+        <button class="btn" style="background: var(--sekundar); color: white;" onclick="activate('sekundar')">SEKUNDÄRKREISLAUF</button>
+        <button class="btn" style="background: var(--kuhl); color: white;" onclick="activate('kuhl')">KÜHLKREISLAUF</button>
+    </div>
+
+    <div class="kkw-screen">
+        <div id="reaktor" class="building">REAKTOR<br>(Radioaktiv)</div>
+        <div id="dampferzeuger" class="building">DAMPF-<br>ERZEUGER</div>
+        <div id="turbine-box" class="building"><span id="propeller" style="font-size: 30px;">⚙️</span><br>TURBINE</div>
+        <div id="generator-box" class="building"><span id="flash" style="font-size: 25px;">⚪</span><br>STROM</div>
+        <div id="kuehlturm" class="building" style="color: white; padding-top: 50px;">KÜHLTURM</div>
+
+        <div id="p1" class="flow-particle" style="offset-path: path('M 140 160 L 220 160 L 220 240 L 140 240 Z'); background: var(--primar);"></div>
+        
+        <div id="p2" class="flow-particle" style="offset-path: path('M 310 160 L 420 80 L 560 80 L 420 240 Z'); background: var(--sekundar);"></div>
+
+        <div id="p3" class="flow-particle" style="offset-path: path('M 580 250 L 800 250 L 800 150 L 580 150 Z'); background: var(--kuhl);"></div>
+    </div>
+
+    <div class="info-card" id="statusText">
+        <h3>System bereit</h3>
+        <p>Wähle einen Kreislauf aus, um die Energieflüsse und die Sicherheitsbarrieren zu verstehen.</p>
+    </div>
+</div>
+
+<script>
+    function activate(mode) {
+        // Alles stoppen
+        document.getElementById('p1').classList.remove('active-flow');
+        document.getElementById('p2').classList.remove('active-flow');
+        document.getElementById('p3').classList.remove('active-flow');
+        document.getElementById('propeller').classList.remove('spinning');
+        document.getElementById('flash').innerText = '⚪';
+        
+        const txt = document.getElementById('statusText');
+
+        if(mode === 'primar') {
+            document.getElementById('p1').classList.add('active-flow');
+            txt.innerHTML = "<h3>🔴 Der Primärkreislauf</h3><p>Das Wasser wird durch Kernspaltung auf ca. 320°C erhitzt. Damit es nicht dampft, steht es unter extremem Druck. <b>Ganz wichtig:</b> Dieses Wasser ist radioaktiv und bleibt immer im Sicherheitsbehälter!</p>";
+        } 
+        else if(mode === 'sekundar') {
+            document.getElementById('p2').classList.add('active-flow');
+            document.getElementById('propeller').classList.add('spinning');
+            document.getElementById('flash').innerText = '⚡';
+            txt.innerHTML = "<h3>🔵 Der Sekundärkreislauf</h3><p>Hier entsteht heißer Wasserdampf. Er hat keinen Kontakt zum Reaktorwasser! Der Dampf schießt mit hoher Geschwindigkeit in die <b>Turbine</b>, die den Generator wie einen riesigen Fahrraddynamo dreht.</p>";
+        }
+        else if(mode === 'kuhl') {
+            document.getElementById('p3').classList.add('active-flow');
+            txt.innerHTML = "<h3>🟢 Der Kühlkreislauf</h3><p>Damit der Kreislauf weitergeht, muss der Dampf nach der Turbine wieder zu Wasser abkühlen. Das macht das kühle Wasser aus dem Fluss oder dem Kühlturm. Hier verlässt nur sauberer Wasserdampf das Kraftwerk.</p>";
+        }
+    }
+</script>
+
+</body>
+</html>

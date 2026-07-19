@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Hohlspiegel und Wölbspiegel</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .sim-btns { margin-top: 12px; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 5: Reflexion an gewölbten Spiegeln</h1>
+
+    <p>Neben ebenen Spiegeln gibt es auch gewölbte Spiegel: Hohlspiegel (nach innen gewölbt) und Wölbspiegel (nach außen gewölbt). Beide findet man im Alltag – vom Rasierspiegel bis zum Verkehrsspiegel an der Straßenkreuzung.</p>
+
+    <h2>Der Hohlspiegel</h2>
+    <div class="step-box">
+        <h3>Experiment: Parallele Strahlen am Hohlspiegel</h3>
+        <p>Lässt man parallele Lichtstrahlen auf einen Hohlspiegel treffen, werden sie nach der Reflexion in einem gemeinsamen Punkt gebündelt.</p>
+    </div>
+    <div class="definition">
+        Ein <b>Hohlspiegel</b> (Konkavspiegel) ist nach innen gewölbt. Parallel einfallende Strahlen werden nach der Reflexion in einem Punkt gebündelt, dem <b>Brennpunkt F</b>. Der Abstand vom Spiegel zum Brennpunkt heißt <b>Brennweite f</b>.
+    </div>
+    <p>Je nachdem, wo sich ein Gegenstand vor dem Hohlspiegel befindet, entsteht ein <b>reelles</b> (auf einem Schirm auffangbares, oft umgekehrtes) oder ein <b>virtuelles</b> (vergrößertes, aufrechtes) Bild – das Prinzip ist dem der Sammellinse sehr ähnlich (siehe nächste Station).</p>
+
+    <h2>Der Wölbspiegel</h2>
+    <div class="step-box">
+        <h3>Experiment: Parallele Strahlen am Wölbspiegel</h3>
+        <p>Lässt man parallele Lichtstrahlen auf einen Wölbspiegel treffen, werden sie nach der Reflexion auseinandergestreut (divergent). Verlängert man die reflektierten Strahlen gedanklich nach hinten, treffen sie sich in einem Punkt <b>hinter</b> dem Spiegel.</p>
+    </div>
+    <div class="definition">
+        Ein <b>Wölbspiegel</b> (Konvexspiegel) ist nach außen gewölbt. Parallel einfallende Strahlen werden divergent (auseinanderlaufend) reflektiert; ihr virtueller Brennpunkt liegt hinter dem Spiegel.
+    </div>
+    <p>Ein Wölbspiegel erzeugt stets ein <b>virtuelles, verkleinertes, aufrechtes</b> Bild – dafür aber mit einem sehr großen Blickfeld.</p>
+
+    <h2>Probier's aus: Hohlspiegel oder Wölbspiegel?</h2>
+    <div class="sim-box">
+        <canvas id="mirrorCanvas" width="400" height="220"></canvas>
+        <div class="sim-btns">
+            <button id="btnConcave" class="active" onclick="setMirror('concave')">Hohlspiegel</button>
+            <button id="btnConvex" onclick="setMirror('convex')">Wölbspiegel</button>
+        </div>
+    </div>
+
+    <table class="table">
+        <tr><th>Spiegelart</th><th>Bild</th><th>Anwendung</th></tr>
+        <tr><td>Hohlspiegel</td><td>je nach Abstand reell/umgekehrt oder virtuell/vergrößert</td><td>Rasier-/Schminkspiegel, Scheinwerfer, Teleskope, Solarkocher</td></tr>
+        <tr><td>Wölbspiegel</td><td>immer virtuell, verkleinert, aufrecht</td><td>Rückspiegel, Verkehrsspiegel an Kreuzungen, Überwachungsspiegel</td></tr>
+    </table>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: „Objekte im Spiegel sind näher, als sie erscheinen"</h3>
+        <p>Dieser Warnhinweis auf Außenspiegeln von Autos bezieht sich meist auf einen leicht gewölbten Wölbspiegel: Weil er ein verkleinertes Bild erzeugt, wirken Objekte weiter entfernt, als sie tatsächlich sind – dafür sieht man ein größeres Blickfeld als mit einem ebenen Spiegel.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum Verkehrsspiegel an unübersichtlichen Kreuzungen als Wölbspiegel und nicht als ebene Spiegel gebaut werden.</li>
+        <li>Begründe, warum ein Rasierspiegel ein vergrößertes Bild zeigen kann, ein normaler Badezimmerspiegel aber nicht.</li>
+        <li>Vergleiche Hohlspiegel und Wölbspiegel hinsichtlich der Bündelung von parallelen Lichtstrahlen.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="brechung.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="linsen.html" class="btn">Weiter zu Optischen Linsen →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('mirrorCanvas');
+    const ctx = canvas.getContext('2d');
+    let mirrorType = 'concave';
+
+    function setMirror(type) {
+        mirrorType = type;
+        document.getElementById('btnConcave').classList.toggle('active', type === 'concave');
+        document.getElementById('btnConvex').classList.toggle('active', type === 'convex');
+        drawMirror();
+    }
+
+    function drawMirror() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const midY = canvas.height / 2;
+        const mirrorX = 260;
+        const curveDepth = 40;
+        const focusX = mirrorType === 'concave' ? mirrorX - 100 : mirrorX + 100;
+
+        // Spiegelkörper (gewölbt gezeichnet)
+        ctx.strokeStyle = '#8ecae6';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        if (mirrorType === 'concave') {
+            ctx.arc(mirrorX + 140, midY, 140, Math.PI - 0.5, Math.PI + 0.5);
+        } else {
+            ctx.arc(mirrorX - 140, midY, 140, -0.5, 0.5);
+        }
+        ctx.stroke();
+
+        // Optische Achse
+        ctx.strokeStyle = '#666';
+        ctx.setLineDash([4,4]);
+        ctx.beginPath();
+        ctx.moveTo(10, midY); ctx.lineTo(canvas.width - 10, midY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Brennpunkt markieren
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.arc(focusX, midY, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = '12px sans-serif';
+        ctx.fillText('F', focusX - 4, midY - 10);
+
+        // Parallele Strahlen von links
+        const ys = [midY - 70, midY - 35, midY + 35, midY + 70];
+        ys.forEach(y0 => {
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(15, y0);
+            ctx.lineTo(mirrorX, y0);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#0062ff';
+            ctx.beginPath();
+            ctx.moveTo(mirrorX, y0);
+            if (mirrorType === 'concave') {
+                ctx.lineTo(focusX, midY);
+                // über den Brennpunkt hinaus andeuten
+                const dx = focusX - mirrorX, dy = midY - y0;
+                ctx.lineTo(focusX - dx * 0.6, midY - dy * 0.6);
+            } else {
+                // divergent, so tun als kämen sie vom virtuellen Brennpunkt hinter dem Spiegel
+                const dx = mirrorX - focusX, dy = y0 - midY;
+                ctx.lineTo(mirrorX + dx * 1.3, midY + dy * 1.3);
+                ctx.setLineDash([3,3]);
+                ctx.strokeStyle = '#888';
+                ctx.moveTo(mirrorX, y0);
+                ctx.lineTo(focusX, midY);
+                ctx.setLineDash([]);
+            }
+            ctx.stroke();
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.fillText(mirrorType === 'concave' ? 'Hohlspiegel: Bündelung im Brennpunkt' : 'Wölbspiegel: Strahlen scheinen vom virtuellen Brennpunkt zu kommen', 15, 20);
+    }
+
+    drawMirror();
+</script>
+
+</body>
+</html>

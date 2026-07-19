@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Kernenergie in der Energieversorgung</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .pro-con div { padding: 15px; border-radius: 10px; }
+        .pro { background: rgba(0,255,136,0.08); border: 1px solid var(--accent); }
+        .con { background: rgba(231,76,60,0.08); border: 1px solid #e74c3c; }
+        @media (max-width: 600px) { .pro-con { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 4: Kernenergie in der Energieversorgung</h1>
+
+    <p>Kernenergie liefert seit Jahrzehnten einen Teil des weltweiten Stroms. Während die physikalischen Grundlagen (Kernspaltung, Radioaktivität) bereits in der Kategorie <a href="dashboard.html" style="color: var(--accent);">„Radioaktivität &amp; Kernphysik"</a> ausführlich behandelt werden, geht es hier um die Rolle der Kernenergie in der <b>Energieversorgung</b>: Vor- und Nachteile, Nutzung weltweit und die aktuelle Debatte in Deutschland.</p>
+
+    <h2>Wie liefert ein Kernkraftwerk Strom?</h2>
+    <div class="step-box">
+        <p>In einem Kernkraftwerk wird durch <b>Kernspaltung</b> von Uran Wärme freigesetzt. Diese Wärme erhitzt Wasser zu Dampf, der eine Turbine antreibt, die wiederum einen Generator zur Stromerzeugung antreibt – im Prinzip funktioniert ein Kernkraftwerk also ähnlich wie ein Kohlekraftwerk, nur dass die Wärmequelle nicht die Verbrennung, sondern die Kernspaltung ist.</p>
+    </div>
+
+    <h2>Kernenergie im Vergleich</h2>
+    <div class="definition">
+        Kernenergie liefert eine sehr <b>hohe Energiedichte</b>: Aus wenig Uran lässt sich sehr viel Energie gewinnen, und im laufenden Betrieb stößt ein Kernkraftwerk kaum CO₂ aus. Gleichzeitig ist Uran ein <b>endlicher Rohstoff</b>, und es entstehen radioaktive Abfälle, die über sehr lange Zeiträume sicher gelagert werden müssen.
+    </div>
+
+    <div class="pro-con">
+        <div class="pro">
+            <h3 style="border:none; margin-top:0;">Häufig genannte Argumente dafür</h3>
+            <ul>
+                <li>Sehr geringer CO₂-Ausstoß im laufenden Betrieb</li>
+                <li>Hohe, wetterunabhängige Verfügbarkeit (Grundlast)</li>
+                <li>Hohe Energiedichte des Brennstoffs</li>
+            </ul>
+        </div>
+        <div class="con">
+            <h3 style="border:none; margin-top:0;">Häufig genannte Argumente dagegen</h3>
+            <ul>
+                <li>Ungelöste Frage der Endlagerung radioaktiver Abfälle über sehr lange Zeiträume</li>
+                <li>Risiko schwerer Unfälle (z. B. Tschernobyl 1986, Fukushima 2011)</li>
+                <li>Hohe Baukosten und lange Bauzeiten neuer Kraftwerke</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Der deutsche Atomausstieg – und die aktuelle Debatte</h2>
+    <p>Deutschland hat im April 2023 seine letzten drei Kernkraftwerke abgeschaltet und damit den bereits Jahre zuvor beschlossenen <b>Atomausstieg</b> vollzogen. Seitdem wird in Politik und Gesellschaft immer wieder diskutiert, ob eine Rückkehr zur Kernenergie sinnvoll wäre – Befürworter verweisen auf den geringen CO₂-Ausstoß und die Versorgungssicherheit, Gegner auf ungelöste Entsorgungsfragen, hohe Kosten und lange Bauzeiten neuer Anlagen. Diese Debatte ist nicht abgeschlossen und wird auch im Bundestag weiterhin geführt.</p>
+    <p>Weltweit ist die Situation unterschiedlich: Länder wie Frankreich setzen stark auf Kernenergie, andere (z. B. Österreich) haben sie nie genutzt, wieder andere bauen sie aktuell aus oder planen neue Anlagen.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Grundlast und Spitzenlast</h3>
+        <p>Der Strombedarf schwankt im Tages- und Jahresverlauf. Die <b>Grundlast</b> ist der Strombedarf, der rund um die Uhr mindestens gedeckt werden muss; Kraftwerke, die dafür genutzt werden, sollten möglichst gleichmäßig und zuverlässig laufen. Die <b>Spitzenlast</b> entsteht bei besonders hohem Bedarf (z. B. mittags) und wird oft durch schnell regelbare Kraftwerke (z. B. Gaskraftwerke) oder Speicher gedeckt.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum ein Kernkraftwerk trotz Kernspaltung statt Verbrennung ähnlich wie ein Kohlekraftwerk funktioniert.</li>
+        <li>Nenne je zwei Argumente, die in der Debatte um die Kernenergie für und gegen ihre Nutzung vorgebracht werden.</li>
+        <li>Recherchiere, welchen Anteil Kernenergie aktuell an der Stromerzeugung in einem Land deiner Wahl hat.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="erneuerbare.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="koerperenergie.html" class="btn">Weiter zu Energie im menschlichen Körper →</a>
+    </div>
+</div>
+
+</body>
+</html>

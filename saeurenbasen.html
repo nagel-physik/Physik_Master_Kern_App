@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 3: Säuren und Basen im Haushalt</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .ph-scale { display: flex; height: 34px; border-radius: 8px; overflow: hidden; margin: 15px 0; }
+        .ph-scale div { flex: 1; }
+        #phMarker { position: relative; height: 20px; }
+        #phPointer { position: absolute; top: 0; width: 3px; height: 20px; background: white; transition: left 0.2s; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        #phInfo { margin-top: 10px; font-weight: bold; min-height: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 3: Säuren und Basen im Haushalt</h1>
+
+    <p>Essig, Zitronensaft, Seife und Abflussreiniger – im Haushalt begegnen uns täglich Säuren und Basen (Laugen), oft ohne dass wir es merken.</p>
+
+    <h2>Der pH-Wert</h2>
+    <div class="definition">
+        Der <b>pH-Wert</b> ist ein Maß dafür, wie sauer oder basisch (alkalisch) eine wässrige Lösung ist. Er reicht von 0 (stark sauer) über 7 (neutral, z. B. reines Wasser) bis 14 (stark basisch).
+    </div>
+    <p><b>Säuren</b> haben einen pH-Wert unter 7, <b>Basen (Laugen)</b> einen pH-Wert über 7. Mit <b>Indikatoren</b> (z. B. Universalindikator, Rotkohlsaft) lässt sich der pH-Wert einer Lösung durch Farbumschlag sichtbar machen.</p>
+
+    <h2>Probier's aus: Die pH-Skala</h2>
+    <p>Verschiebe den Regler und finde heraus, welcher Haushaltsstoff etwa zu welchem pH-Wert passt.</p>
+    <div class="sim-box">
+        <div class="ph-scale">
+            <div style="background:#c0392b;"></div><div style="background:#e74c3c;"></div><div style="background:#e67e22;"></div><div style="background:#f1c40f;"></div>
+            <div style="background:#f9e79f;"></div><div style="background:#a9dfbf;"></div><div style="background:#58d68d;"></div><div style="background:#2ecc71;"></div>
+            <div style="background:#82e0aa;"></div><div style="background:#7fb3d5;"></div><div style="background:#5499c7;"></div><div style="background:#2e86c1;"></div>
+            <div style="background:#2874a6;"></div><div style="background:#1b4f72;"></div><div style="background:#154360;"></div>
+        </div>
+        <input type="range" id="phSlider" min="0" max="14" step="1" value="7" oninput="updatePh()">
+        <div id="phInfo"></div>
+    </div>
+
+    <table class="table">
+        <tr><th>Haushaltsstoff</th><th>ungefährer pH-Wert</th></tr>
+        <tr><td>Batteriesäure, Abflussreiniger (sauer)</td><td>≈ 0–1</td></tr>
+        <tr><td>Zitronensaft</td><td>≈ 2</td></tr>
+        <tr><td>Essig</td><td>≈ 3</td></tr>
+        <tr><td>Kaffee</td><td>≈ 5</td></tr>
+        <tr><td>Reines Wasser</td><td>7 (neutral)</td></tr>
+        <tr><td>Seife</td><td>≈ 9–10</td></tr>
+        <tr><td>Backpulver-Lösung</td><td>≈ 9</td></tr>
+        <tr><td>Abflussreiniger (basisch), Ammoniak</td><td>≈ 12–13</td></tr>
+        <tr><td>Natronlauge (konzentriert)</td><td>≈ 14</td></tr>
+    </table>
+
+    <h2>Neutralisation</h2>
+    <p>Mischt man eine Säure mit einer passenden Menge einer Base, heben sich ihre Eigenschaften gegenseitig auf – man spricht von <b>Neutralisation</b>. Dabei entsteht ein Salz und meist Wasser.</p>
+    <div class="definition">Säure + Base → Salz + Wasser (Neutralisation)</div>
+    <p>Neutralisation nutzt man z. B., um übersäuerte Böden mit Kalk zu behandeln, Sodbrennen mit basischen Mitteln zu lindern, oder um Säure- und Laugenreste im Chemieunterricht sicher zu entsorgen.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Vorsicht mit Haushaltschemikalien</h3>
+        <p>Starke Säuren und Basen können Haut, Augen und Kleidung stark schädigen (Verätzungen). Deshalb sollte man Reinigungsmittel wie Abflussreiniger oder Entkalker nie mischen (es können auch gefährliche Gase entstehen!) und stets mit Handschuhen und ausreichender Belüftung arbeiten. Die Warnhinweise und Gefahrensymbole auf Verpackungen sind deshalb unbedingt zu beachten.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, was der pH-Wert aussagt und wie er sich bei Säuren, Basen und neutralen Lösungen unterscheidet.</li>
+        <li>Nenne drei Haushaltsstoffe, die sauer, und drei, die basisch reagieren.</li>
+        <li>Erkläre, warum man beim Umgang mit Haushaltschemikalien niemals verschiedene Reiniger mischen sollte.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="gemische.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="kunststoffe.html" class="btn">Weiter zu Kunststoffen →</a>
+    </div>
+</div>
+
+<script>
+const phLabels = [
+    "Batteriesäure/Abflussreiniger sauer – extrem sauer, stark ätzend",
+    "Magensäure – sehr sauer",
+    "Zitronensaft – sauer",
+    "Essig – sauer",
+    "Orangensaft – schwach sauer",
+    "Kaffee – schwach sauer",
+    "Milch – ganz leicht sauer",
+    "Reines Wasser – neutral",
+    "Meerwasser – ganz leicht basisch",
+    "Backpulver-Lösung – schwach basisch",
+    "Seife – basisch",
+    "Ammoniak-Reiniger – basisch",
+    "Abflussreiniger (basisch) – stark basisch",
+    "Bleichmittel – stark basisch",
+    "Natronlauge konzentriert – extrem basisch, stark ätzend"
+];
+
+function updatePh() {
+    const val = parseInt(document.getElementById('phSlider').value);
+    const info = document.getElementById('phInfo');
+    let color = '#00ff88';
+    if (val < 6) color = '#e74c3c';
+    else if (val > 8) color = '#3498db';
+    info.style.color = color;
+    info.innerText = 'pH ' + val + ': ' + phLabels[val];
+}
+
+updatePh();
+</script>
+
+</body>
+</html>

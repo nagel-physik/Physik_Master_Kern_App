@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 6: Zählrohr & Zerfallsreihen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --electron: #00ffff; --ion: #ffcc00; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2 { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        
+        /* Geiger-Müller Simulation */
+        .geiger-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; text-align: center; margin: 20px 0; }
+        #canvas-geiger { background: #050505; border-radius: 10px; width: 100%; max-width: 600px; height: 250px; }
+        
+        .legend { display: flex; justify-content: center; gap: 20px; font-size: 0.9rem; margin-top: 10px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+        /* Zerfallsreihe */
+        .chain-container { 
+            display: flex; overflow-x: auto; padding: 20px 0; gap: 15px; 
+            scrollbar-width: thin; scrollbar-color: var(--accent) #333;
+        }
+        .nuclide {
+            min-width: 100px; background: var(--box); border: 2px solid #444;
+            border-radius: 10px; padding: 10px; text-align: center; position: relative;
+        }
+        .nuclide b { display: block; font-size: 1.2rem; color: var(--accent); }
+        .decay-type { font-size: 0.8rem; background: #444; border-radius: 5px; padding: 2px 5px; margin-top: 5px; display: inline-block; }
+        .arrow { display: flex; align-items: center; font-size: 24px; color: #666; }
+
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM DASHBOARD</a>
+    </div>
+
+    <h1>Station 6: Messung & Zerfallsreihen</h1>
+
+    <section>
+        <h2>1. Das Geiger-Müller-Zählrohr (Nachweis)</h2>
+        <p>Radioaktive Strahlung ist unsichtbar. Das Zählrohr macht sie durch einen Trick hörbar: Die <b>Ionisation</b> von Gasatomen.</p>
+        
+        <div class="geiger-box">
+            <canvas id="canvas-geiger"></canvas>
+            <div class="legend">
+                <span><span class="dot" style="background:yellow;"></span> Strahlung</span>
+                <span><span class="dot" style="background:var(--electron);"></span> Elektron (-)</span>
+                <span><span class="dot" style="background:var(--ion);"></span> Ion (+)</span>
+            </div>
+            <br>
+            <button class="btn" onclick="startGeigerSim()">STRAHLUNG MESSEN</button>
+        </div>
+
+        <div style="background:#2c3e50; padding:15px; border-radius:10px;">
+            <h3>Was passiert im Rohr?</h3>
+            <ol>
+                <li>Ein radioaktives Teilchen tritt durch das <b>Glimmerfenster</b> ein.</li>
+                <li>Es trifft ein Gasatom und spaltet es (<b>Ionisation</b>).</li>
+                <li>Das leichte <b>Elektron (-)</b> rast zum Draht in der Mitte (Anode +).</li>
+                <li>Das schwere <b>Ion (+)</b> wandert zur Außenwand (Kathode -).</li>
+                <li>Der Stromfluss am Draht erzeugt das bekannte <b>Knack-Geräusch</b>.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section style="margin-top: 40px;">
+        <h2>2. Die Uran-Radium-Zerfallsreihe</h2>
+        <p>Ein Kern zerfällt oft nicht sofort zu einem stabilen Element. Er durchläuft eine ganze Kette von Verwandlungen. Hier ein Ausschnitt der Reihe aus deinem Buch:</p>
+        
+        <div class="chain-container">
+            <div class="nuclide"><b>U-238</b>Uran<div class="decay-type">α-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>Th-234</b>Thorium<div class="decay-type">β-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>Pa-234</b>Protact.<div class="decay-type">β-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>U-234</b>Uran<div class="decay-type">α-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>Th-230</b>Thorium<div class="decay-type">α-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>Ra-226</b>Radium<div class="decay-type">α-Strahler</div></div>
+            <div class="arrow">→</div>
+            <div class="nuclide"><b>...</b>Blei (stabil)</div>
+        </div>
+        <p><small><i>Tipp: Scrolle die Liste nach rechts, um den weiteren Verlauf zu sehen.</i></small></p>
+    </section>
+</div>
+
+<script>
+    const canvas = document.getElementById('canvas-geiger');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function initCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 250;
+        drawStaticTube();
+    }
+
+    function drawStaticTube() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        // Gehäuse (Kathode)
+        ctx.strokeStyle = "#888";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(100, 50, 400, 150);
+        ctx.fillStyle = "rgba(255,255,255,0.05)";
+        ctx.fillRect(100, 50, 400, 150);
+        
+        // Draht (Anode)
+        ctx.strokeStyle = "#ff4d4d";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(100, 125);
+        ctx.lineTo(500, 125);
+        ctx.stroke();
+
+        ctx.fillStyle = "#aaa";
+        ctx.font = "14px Arial";
+        ctx.fillText("Glimmerfenster", 30, 130);
+        ctx.fillText("Anodendraht (+)", 410, 110);
+        ctx.fillText("Metallzylinder (-)", 250, 220);
+    }
+
+    function startGeigerSim() {
+        let x = 0;
+        let y = 125;
+        let ionised = false;
+
+        function animate() {
+            drawStaticTube();
+            
+            if (!ionised) {
+                // Das eintretende Teilchen
+                x += 5;
+                ctx.fillStyle = "yellow";
+                ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI*2); ctx.fill();
+                
+                if (x > 250) {
+                    ionised = true;
+                    spawnIonisation(x, y);
+                }
+            } else {
+                updateIonisation();
+            }
+
+            if (x < 600) requestAnimationFrame(animate);
+        }
+        animate();
+    }
+
+    let ionX, ionY, eY, iY;
+    let active = false;
+
+    function spawnIonisation(x, y) {
+        ionX = x; ionY = y;
+        eY = y; iY = y;
+        active = true;
+    }
+
+    function updateIonisation() {
+        if (!active) return;
+        // Elektron zum Draht (y=125)
+        if (eY > 125) eY -= 0; // Hier im Beispiel ist Draht mittig
+        // Wir lassen Elektron und Ion sich trennen
+        eY -= 2; // Elektron hoch
+        iY += 1; // Ion langsam runter
+        
+        ctx.fillStyle = "#00ffff"; // Elektron
+        ctx.beginPath(); ctx.arc(ionX, eY, 4, 0, Math.PI*2); ctx.fill();
+        
+        ctx.fillStyle = "#ffcc00"; // Ion
+        ctx.beginPath(); ctx.arc(ionX, iY, 7, 0, Math.PI*2); ctx.fill();
+
+        if (eY < 60 || iY > 190) active = false;
+    }
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+</script>
+
+</body>
+</html>

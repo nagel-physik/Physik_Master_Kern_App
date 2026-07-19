@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Medikamente und Wirkstoffe</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 7: Medikamente und Wirkstoffe</h1>
+
+    <p>Medikamente helfen, Krankheiten zu heilen oder Beschwerden zu lindern – richtig eingesetzt sind sie eine der größten Errungenschaften der modernen Medizin. Falsch angewendet können sie aber auch schaden. Ein Grundverständnis ihrer Wirkweise hilft, verantwortungsvoll mit ihnen umzugehen.</p>
+
+    <h2>Wirkstoff und Dosis</h2>
+    <div class="definition">
+        Der <b>Wirkstoff</b> ist der Bestandteil eines Medikaments, der die eigentliche Wirkung im Körper hervorruft. Die <b>Dosis</b> ist die Menge des Wirkstoffs, die eingenommen wird.
+    </div>
+    <p>Bereits der Arzt und Alchemist Paracelsus (16. Jahrhundert) erkannte einen zentralen Grundsatz der Pharmakologie: <i>„Allein die Dosis macht, dass ein Ding kein Gift ist."</i> Das bedeutet: Fast jeder Stoff kann in ausreichend hoher Dosis schädlich wirken, während er in geringer, richtig dosierter Menge heilsam sein kann.</p>
+
+    <h2>Probier's aus: Die Dosis-Wirkungs-Kurve</h2>
+    <p>Bei den meisten Medikamenten gilt: Zu wenig Wirkstoff zeigt kaum Wirkung, eine passende Dosis wirkt wie gewünscht, und eine zu hohe Dosis kann unerwünschte Nebenwirkungen oder sogar Vergiftungen verursachen. Verschiebe den Regler, um diesen Zusammenhang zu erkunden.</p>
+    <div class="sim-box">
+        <canvas id="doseCanvas" width="400" height="220"></canvas>
+        <label class="slider-label">Eingenommene Dosis: <span id="doseVal">50</span> %</label>
+        <input type="range" id="doseSlider" min="0" max="100" step="1" value="50" oninput="drawDose()">
+    </div>
+
+    <h2>Wechselwirkungen und Nebenwirkungen</h2>
+    <p>Nimmt man mehrere Medikamente gleichzeitig ein, können sich diese in ihrer Wirkung gegenseitig beeinflussen – man spricht von <b>Wechselwirkungen</b>. Manche Kombinationen verstärken sich, andere schwächen sich ab oder werden gefährlich. Auch Alkohol kann die Wirkung vieler Medikamente stark verändern. Deshalb ist es wichtig, den <b>Beipackzettel</b> zu lesen und im Zweifel Ärztin, Arzt oder Apotheke zu fragen, statt Medikamente eigenmächtig zu kombinieren.</p>
+
+    <div class="step-box">
+        <h3>Der Placebo-Effekt</h3>
+        <p>Ein <b>Placebo</b> ist ein Scheinmedikament ohne Wirkstoff (z. B. eine Tablette nur aus Traubenzucker). Erstaunlicherweise berichten manche Menschen auch nach der Einnahme eines Placebos von einer Besserung ihrer Beschwerden – allein durch die Erwartung einer Wirkung. Der <b>Placebo-Effekt</b> zeigt, wie eng Körper und Erwartungshaltung zusammenhängen, und wird in klinischen Studien genutzt, um die tatsächliche Wirksamkeit eines neuen Medikaments zu überprüfen: Nur wenn ein Medikament deutlich besser wirkt als ein Placebo, gilt seine Wirksamkeit als nachgewiesen.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Der Beipackzettel</h3>
+        <p>Der Beipackzettel eines Medikaments enthält wichtige Informationen: den Wirkstoff und seine Wirkweise, die richtige Dosierung, mögliche Neben- und Wechselwirkungen sowie Warnhinweise (z. B. für Schwangere oder bei bestimmten Vorerkrankungen). Auch wenn er oft lang und kompliziert wirkt, lohnt sich ein Blick hinein – besonders bei neuen oder unbekannten Medikamenten.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Satz von Paracelsus „Allein die Dosis macht, dass ein Ding kein Gift ist" mit einem eigenen Beispiel.</li>
+        <li>Beschreibe, was man unter dem Placebo-Effekt versteht und wozu er in der Medizinforschung genutzt wird.</li>
+        <li>Erkläre, warum man Medikamente nicht ohne Rücksprache miteinander oder mit Alkohol kombinieren sollte.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="ester.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="sucht.html" class="btn">Weiter zu Sucht, Drogen &amp; Doping →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('doseCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawDose() {
+        const dose = parseFloat(document.getElementById('doseSlider').value);
+        document.getElementById('doseVal').innerText = dose;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const originX = 40, originY = 190, width = 340, height = 160;
+
+        // Achsen
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(originX, originY); ctx.lineTo(originX + width, originY);
+        ctx.moveTo(originX, originY); ctx.lineTo(originX, originY - height);
+        ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.font = '11px sans-serif';
+        ctx.fillText('Dosis →', originX + width - 40, originY + 18);
+        ctx.fillText('Wirkung/Risiko', originX - 30, originY - height - 5);
+
+        // Wirkungskurve (grün, steigt dann sättigt)
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = 0; x <= 100; x++) {
+            const y = 130 * (1 - Math.exp(-x/25));
+            const px = originX + (x/100)*width;
+            const py = originY - y;
+            if (x === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        // Risikokurve (rot, steigt erst ab höherer Dosis stark)
+        ctx.strokeStyle = '#e74c3c';
+        ctx.beginPath();
+        for (let x = 0; x <= 100; x++) {
+            const y = x < 60 ? 0 : Math.pow((x-60)/40, 2) * 140;
+            const px = originX + (x/100)*width;
+            const py = originY - Math.min(y, height);
+            if (x === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        // Markierung aktuelle Dosis
+        const mx = originX + (dose/100)*width;
+        ctx.strokeStyle = '#f1c40f';
+        ctx.setLineDash([4,3]);
+        ctx.beginPath(); ctx.moveTo(mx, originY); ctx.lineTo(mx, originY-height); ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = '#00ff88'; ctx.fillText('Wirkung', originX+10, originY-140);
+        ctx.fillStyle = '#e74c3c'; ctx.fillText('Risiko/Nebenwirkung', originX+180, originY-20);
+
+        let msg = '';
+        let color = '';
+        if (dose < 25) { msg = 'Zu geringe Dosis: kaum Wirkung'; color = '#888'; }
+        else if (dose < 65) { msg = 'Angemessene Dosis: gewünschte Wirkung'; color = '#00ff88'; }
+        else { msg = 'Zu hohe Dosis: steigendes Risiko für Nebenwirkungen'; color = '#e74c3c'; }
+        ctx.fillStyle = color;
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText(msg, 20, 20);
+    }
+
+    drawDose();
+</script>
+
+</body>
+</html>

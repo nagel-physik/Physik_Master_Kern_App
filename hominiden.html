@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 4: Vom Australopithecus zum Homo sapiens</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .slider-label { display: block; margin-top: 10px; font-weight: bold; text-align: center; font-size: 1.1rem; color: var(--accent); }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; text-align: center; }
+        .info-grid div { background: #1e1e1e; border-radius: 8px; padding: 10px; }
+        .info-grid .label { font-size: 0.7rem; color: #888; }
+        .info-grid .value { font-weight: bold; color: var(--formula); }
+        #speciesDesc { margin-top: 15px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="evolution.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU EVOLUTION DES MENSCHEN</a>
+    </div>
+
+    <h1>Station 4: Vom Australopithecus zum Homo sapiens</h1>
+
+    <p>Die Entwicklungslinie des Menschen zeigt über mehrere Millionen Jahre allmähliche Veränderungen: aufrechter Gang, wachsendes Gehirnvolumen und zunehmend komplexere Werkzeugnutzung.</p>
+
+    <h2>Probier's aus: Die Entwicklung des Menschen</h2>
+    <p>Verschiebe den Regler durch die Entwicklungsstufen und vergleiche Gehirnvolumen, Körpergröße und wichtige Merkmale.</p>
+    <div class="sim-box">
+        <input type="range" id="stageSlider" min="0" max="3" step="1" value="0" oninput="updateStage()">
+        <div class="slider-label" id="speciesName"></div>
+        <div class="info-grid">
+            <div><div class="label">Lebte vor</div><div class="value" id="infoAge"></div></div>
+            <div><div class="label">Gehirnvolumen</div><div class="value" id="infoBrain"></div></div>
+            <div><div class="label">Körpergröße</div><div class="value" id="infoHeight"></div></div>
+        </div>
+        <div id="speciesDesc"></div>
+    </div>
+
+    <h2>Wichtige Entwicklungstrends</h2>
+    <div class="definition">
+        Im Verlauf der Menschwerdung (Hominisation) zeigen sich mehrere klare Trends: <b>zunehmendes Gehirnvolumen</b>, ein zunehmend <b>aufrechter Gang</b> (mit Veränderungen an Becken, Wirbelsäule und Fußgewölbe), ein <b>Rückgang des Kiefer- und Gebissapparates</b> sowie eine zunehmend komplexere <b>Werkzeugnutzung und Kultur</b>.
+    </div>
+
+    <table class="table">
+        <tr><th>Art</th><th>Zeitraum (ca.)</th><th>Bedeutung</th></tr>
+        <tr><td>Australopithecus (z. B. "Lucy")</td><td>vor 4–2,9 Mio. Jahren</td><td>früher aufrechter Gang, noch kleines Gehirn, teils baumkletternd</td></tr>
+        <tr><td>Homo habilis</td><td>vor 2,4–1,4 Mio. Jahren</td><td>„der geschickte Mensch" – erste einfache Steinwerkzeuge</td></tr>
+        <tr><td>Homo erectus</td><td>vor 1,9 Mio.–ca. 110.000 Jahren</td><td>„der aufgerichtete Mensch" – nutzte Feuer, verließ als erste Menschenart Afrika</td></tr>
+        <tr><td>Homo sapiens</td><td>seit ca. 300.000 Jahren</td><td>„der wissende Mensch" – der moderne Mensch, komplexe Sprache und Kultur</td></tr>
+    </table>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Kein geradliniger "Fortschritt"</h3>
+        <p>Die Menschwerdung verlief nicht als einfache, geradlinige Kette von einer Art zur nächsten. Zeitweise lebten mehrere Menschenarten gleichzeitig nebeneinander (z. B. Homo erectus, Homo neanderthalensis und früher Homo sapiens). Viele dieser Seitenlinien sind ausgestorben – der heutige Mensch ist die einzige noch lebende Art der Gattung Homo.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Beschreibe, wie sich das Gehirnvolumen im Verlauf der Menschwerdung verändert hat.</li>
+        <li>Erkläre, warum Homo habilis seinen Namen ("der geschickte Mensch") trägt.</li>
+        <li>Begründe, warum die Entwicklung des Menschen eher als "Strauch" mit vielen Seitenlinien statt als gerade Linie beschrieben wird.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="stammbaum.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="neandertaler.html" class="btn">Weiter zum Neandertaler →</a>
+    </div>
+</div>
+
+<script>
+const stages = [
+    { name: "Australopithecus", age: "vor 4–2,9 Mio. Jahren", brain: "≈ 400–500 cm³", height: "≈ 1,1–1,5 m",
+      desc: "Ging bereits aufrecht auf zwei Beinen, hatte aber noch ein affenähnlich kleines Gehirn und war teilweise noch an das Klettern in Bäumen angepasst. Bekanntestes Fossil: das Skelett „Lucy“ (Äthiopien)." },
+    { name: "Homo habilis", age: "vor 2,4–1,4 Mio. Jahren", brain: "≈ 600–650 cm³", height: "≈ 1,0–1,5 m",
+      desc: "„Der geschickte Mensch“ – gilt als erste Art, die gezielt einfache Steinwerkzeuge herstellte (sogenannte Oldowan-Werkzeuge), um z. B. Fleisch von Knochen zu schaben." },
+    { name: "Homo erectus", age: "vor 1,9 Mio.–ca. 110.000 Jahren", brain: "≈ 900–1100 cm³", height: "≈ 1,6–1,8 m",
+      desc: "„Der aufgerichtete Mensch“ – nutzte kontrolliert Feuer, stellte fortschrittlichere Werkzeuge her (Faustkeile) und war die erste Menschenart, die Afrika verließ und sich in Teilen Asiens und Europas ausbreitete." },
+    { name: "Homo sapiens", age: "seit ca. 300.000 Jahren", brain: "≈ 1300–1400 cm³", height: "≈ 1,6–1,8 m",
+      desc: "„Der wissende Mensch“ – der moderne Mensch. Zeichnet sich durch komplexe Sprache, abstraktes Denken, Kunst und vielfältige Kultur aus. Alle heute lebenden Menschen gehören zu dieser einen Art." }
+];
+
+function updateStage() {
+    const i = parseInt(document.getElementById('stageSlider').value);
+    const s = stages[i];
+    document.getElementById('speciesName').innerText = s.name;
+    document.getElementById('infoAge').innerText = s.age;
+    document.getElementById('infoBrain').innerText = s.brain;
+    document.getElementById('infoHeight').innerText = s.height;
+    document.getElementById('speciesDesc').innerText = s.desc;
+}
+
+updateStage();
+</script>
+
+</body>
+</html>

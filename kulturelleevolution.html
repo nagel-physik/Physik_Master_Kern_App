@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 6: Kulturelle Evolution</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .slider-label { display: block; margin-top: 10px; font-weight: bold; text-align: center; font-size: 1.1rem; color: var(--accent); }
+        #milestoneDesc { margin-top: 15px; font-size: 0.9rem; text-align: center; }
+        .timeline-marker { text-align:center; font-size: 0.8rem; color: #888; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="evolution.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU EVOLUTION DES MENSCHEN</a>
+    </div>
+
+    <h1>Station 6: Kulturelle Evolution</h1>
+
+    <p>Neben der biologischen Evolution hat sich beim Menschen eine zweite, viel schnellere Form der Entwicklung herausgebildet: die <b>kulturelle Evolution</b> – die Weitergabe von Wissen, Fähigkeiten und Werkzeugen von Generation zu Generation, ohne dass sich dabei das Erbgut verändern muss.</p>
+
+    <div class="definition">
+        <b>Kulturelle Evolution</b> bezeichnet die Weitergabe und Weiterentwicklung von Wissen, Techniken und Verhaltensweisen durch Lernen und Nachahmung – im Gegensatz zur biologischen Evolution geschieht dies nicht über Gene, sondern über Sprache, Beobachtung und Tradition, und kann sich dadurch viel schneller vollziehen.
+    </div>
+
+    <h2>Probier's aus: Meilensteine der kulturellen Evolution</h2>
+    <div class="sim-box">
+        <input type="range" id="milestoneSlider" min="0" max="4" step="1" value="0" oninput="updateMilestone()">
+        <div class="slider-label" id="milestoneName"></div>
+        <div class="timeline-marker" id="milestoneAge"></div>
+        <div id="milestoneDesc"></div>
+    </div>
+
+    <h2>Warum kulturelle Evolution so wirkungsvoll ist</h2>
+    <p>Biologische Merkmale verändern sich nur über viele Generationen durch Mutation und Selektion. Kulturelles Wissen dagegen kann innerhalb einer einzigen Generation entstehen und sich – etwa durch Sprache, Schrift oder heute digitale Medien – rasant verbreiten. Das erklärt, warum sich die Lebensweise des Menschen in den letzten Jahrtausenden viel schneller verändert hat als sein Körperbau.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Gene und Kultur beeinflussen sich gegenseitig</h3>
+        <p>Ein bekanntes Beispiel für das Zusammenspiel von biologischer und kultureller Evolution ist die Milchverträglichkeit: Ursprünglich konnten erwachsene Menschen den Milchzucker (Laktose) nicht mehr verdauen. Seit der Domestizierung von Nutztieren und der kulturellen Praxis, auch im Erwachsenenalter Milch zu trinken, hat sich in vielen Bevölkerungsgruppen eine genetische Veränderung durchgesetzt, die die Laktoseverträglichkeit auch im Erwachsenenalter ermöglicht – ein Beispiel dafür, wie kulturelle Praktiken die biologische Evolution beeinflussen können.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen biologischer und kultureller Evolution.</li>
+        <li>Begründe, warum sich kulturelles Wissen viel schneller verbreiten kann als genetische Veränderungen.</li>
+        <li>Diskutiere, welchen Meilenstein der kulturellen Evolution du persönlich für den bedeutendsten hältst, und begründe deine Wahl.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="neandertaler.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="evolution-quiz.html" class="btn" style="background: linear-gradient(45deg, #00ff88, #0062ff); color:#000;">Zum Quiz →</a>
+    </div>
+</div>
+
+<script>
+const milestones = [
+    { name: "Werkzeuggebrauch", age: "seit ca. 2,6 Mio. Jahren",
+      desc: "Erste gezielt hergestellte Steinwerkzeuge (Oldowan-Werkzeuge) ermöglichten es, Nahrung effizienter zu verarbeiten – ein entscheidender Schritt, um mehr Energie für die Entwicklung eines größeren Gehirns bereitzustellen." },
+    { name: "Beherrschung des Feuers", age: "seit ca. 1 Mio. Jahren (sicher belegt)",
+      desc: "Feuer bot Schutz vor Kälte und Raubtieren, ermöglichte das Garen von Nahrung (dadurch bessere Verdaulichkeit und mehr nutzbare Energie) und schuf einen sozialen Treffpunkt für die Gruppe." },
+    { name: "Entwicklung komplexer Sprache", age: "vermutlich vor mehreren Hunderttausend Jahren",
+      desc: "Komplexe Sprache ermöglichte den präzisen Austausch von Wissen, Planung und abstraktem Denken – ein wesentlicher Motor für kulturelle Weiterentwicklung, dessen genauer Entstehungszeitpunkt sich archäologisch schwer bestimmen lässt." },
+    { name: "Kunst und Symbolik", age: "seit ca. 70.000–40.000 Jahren",
+      desc: "Höhlenmalereien, Schmuck und geschnitzte Figuren belegen die Fähigkeit zu abstraktem, symbolischem Denken – ein Hinweis auf komplexe Kultur und möglicherweise auch spirituelle Vorstellungen." },
+    { name: "Sesshaftwerdung und Ackerbau", age: "seit ca. 12.000 Jahren (Neolithische Revolution)",
+      desc: "Der Übergang vom Jäger-und-Sammler-Dasein zu Ackerbau und Viehzucht ermöglichte dauerhafte Siedlungen, Vorratshaltung und Bevölkerungswachstum – die Grundlage für die Entstehung von Dörfern, Städten und schließlich komplexen Gesellschaften." }
+];
+
+function updateMilestone() {
+    const i = parseInt(document.getElementById('milestoneSlider').value);
+    const m = milestones[i];
+    document.getElementById('milestoneName').innerText = m.name;
+    document.getElementById('milestoneAge').innerText = m.age;
+    document.getElementById('milestoneDesc').innerText = m.desc;
+}
+
+updateMilestone();
+</script>
+
+</body>
+</html>

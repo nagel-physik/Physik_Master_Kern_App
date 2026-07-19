@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Schatten und Finsternisse</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 2: Schatten und Finsternisse</h1>
+
+    <p>Jeder kennt Schatten aus dem Alltag – doch warum haben Schatten manchmal einen scharfen und manchmal einen unscharfen Rand? Und wie entstehen Sonnen- und Mondfinsternis?</p>
+
+    <h2>Kernschatten und Halbschatten</h2>
+    <div class="step-box">
+        <h3>Experiment: Punktförmige Lichtquelle</h3>
+        <p>Beleuchtet man einen undurchsichtigen Körper mit einer sehr kleinen (punktförmigen) Lichtquelle, entsteht ein Schatten mit <b>scharfem Rand</b>.</p>
+    </div>
+    <div class="step-box">
+        <h3>Experiment: Ausgedehnte Lichtquelle</h3>
+        <p>Verwendet man stattdessen eine größere (ausgedehnte) Lichtquelle, wird der Schatten <b>unscharf</b>: Um einen dunklen, inneren Bereich bildet sich ein hellerer Rand.</p>
+    </div>
+    <div class="definition">
+        Bei einer ausgedehnten Lichtquelle entsteht ein <b>Kernschatten</b> (Bereich, den kein Licht der Quelle erreicht) und ein <b>Halbschatten</b> (Bereich, den nur ein Teil des Lichts der Quelle erreicht).
+    </div>
+    <p>Bei einer punktförmigen Lichtquelle gibt es dagegen nur Kernschatten, da jeder Punkt hinter dem Hindernis entweder vollständig von der Lichtquelle abgeschattet wird oder vollständig beleuchtet ist.</p>
+
+    <h2>Probier's aus: Kernschatten und Halbschatten</h2>
+    <p>Verändere die Größe der Lichtquelle und beobachte, wie sich Kern- und Halbschatten hinter dem Hindernis verändern.</p>
+    <div class="sim-box">
+        <canvas id="shadowCanvas" width="420" height="220"></canvas>
+        <label class="slider-label">Größe der Lichtquelle: <span id="sizeVal">10</span> px</label>
+        <input type="range" id="lightSize" min="4" max="70" step="2" value="10" oninput="drawShadow()">
+    </div>
+
+    <h2>Sonnenfinsternis und Mondfinsternis</h2>
+    <p>Die Erde und der Mond sind selbst nicht selbstleuchtend – sie werden von der Sonne beleuchtet und werfen dabei einen Schatten in den Weltraum. Stehen Sonne, Mond und Erde in einer Linie, kann der Schatten des einen Himmelskörpers auf den anderen fallen.</p>
+
+    <div class="step-box">
+        <h3>Sonnenfinsternis</h3>
+        <p>Steht der Mond zwischen Sonne und Erde, fällt sein Schatten auf die Erde. Im Kernschattenbereich des Mondes auf der Erde sehen Menschen eine <b>totale Sonnenfinsternis</b> – der Mond verdeckt die Sonne vollständig. Im Halbschattenbereich ist nur eine <b>partielle (teilweise) Sonnenfinsternis</b> zu sehen.</p>
+    </div>
+    <div class="step-box">
+        <h3>Mondfinsternis</h3>
+        <p>Steht die Erde zwischen Sonne und Mond, fällt der Schatten der Erde auf den Mond. Wandert der Mond durch den Kernschatten der Erde, spricht man von einer <b>totalen Mondfinsternis</b> – der Mond wird oft rötlich gefärbt, weil ihn nur durch die Erdatmosphäre gebrochenes und gestreutes Licht erreicht.</p>
+    </div>
+
+    <div class="definition">
+        Eine <b>Sonnenfinsternis</b> entsteht, wenn der Mond zwischen Sonne und Erde steht. Eine <b>Mondfinsternis</b> entsteht, wenn die Erde zwischen Sonne und Mond steht.
+    </div>
+
+    <p>Finsternisse treten nicht bei jedem Neu- bzw. Vollmond auf, weil die Bahnebene des Mondes leicht gegenüber der Bahnebene der Erde um die Sonne geneigt ist – meist steht der Mond etwas ober- oder unterhalb der genauen Linie Sonne–Erde.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Warum ist der Mond bei einer Mondfinsternis rot?</h3>
+        <p>Auch wenn die Erde direkt zwischen Sonne und Mond steht, wird der Mond nicht vollständig dunkel. Die Erdatmosphäre bricht und streut das Sonnenlicht, das an ihrem Rand vorbeistreift, in den Kernschatten hinein. Weil blaues Licht in der Atmosphäre stärker gestreut wird als rotes (siehe Station „Farbmischung und Farben der Natur"), gelangt vor allem rötliches Licht bis zum Mond – der Mond erscheint während einer totalen Mondfinsternis oft kupferrot ("Blutmond").</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen Kernschatten und Halbschatten mithilfe einer Skizze.</li>
+        <li>Begründe, warum es nicht bei jedem Neumond zu einer Sonnenfinsternis kommt.</li>
+        <li>Ordne zu: Bei welcher Finsternisart steht die Erde im Schatten, bei welcher der Mond?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="licht.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="reflexion.html" class="btn">Weiter zum Reflexionsgesetz →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('shadowCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawShadow() {
+        const size = parseFloat(document.getElementById('lightSize').value);
+        document.getElementById('sizeVal').innerText = size;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const lightX = 60, lightY = 60;
+        const objX = 190, objTop = 90, objBottom = 150;
+        const screenX = 400;
+
+        // Lichtquelle
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.arc(lightX, lightY, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Hindernis (senkrechter Balken)
+        ctx.fillStyle = '#888';
+        ctx.fillRect(objX - 4, objTop, 8, objBottom - objTop);
+
+        // Kernschatten: Strahlen von beiden Rändern der Lichtquelle durch die jeweils gegenüberliegende Objektkante
+        const half = size / 2;
+        // obere Objektkante, Strahl von unterem Rand der Quelle
+        const topRayY0 = lightY + half, topRayY1 = objTop;
+        const topSlope = (topRayY1 - topRayY0) / (objX - lightX);
+        const topAtScreen = topRayY1 + topSlope * (screenX - objX);
+
+        const botRayY0 = lightY - half, botRayY1 = objBottom;
+        const botSlope = (botRayY1 - botRayY0) / (objX - lightX);
+        const botAtScreen = botRayY1 + botSlope * (screenX - objX);
+
+        // Halbschattenränder: Strahlen von der jeweils gleichen Seite der Quelle über die jeweilige Kante hinaus (äußerer Rand)
+        const topOuterY0 = lightY - half, topOuterY1 = objTop;
+        const topOuterSlope = (topOuterY1 - topOuterY0) / (objX - lightX);
+        const topOuterAtScreen = topOuterY1 + topOuterSlope * (screenX - objX);
+
+        const botOuterY0 = lightY + half, botOuterY1 = objBottom;
+        const botOuterSlope = (botOuterY1 - botOuterY0) / (objX - lightX);
+        const botOuterAtScreen = botOuterY1 + botOuterSlope * (screenX - objX);
+
+        // Halbschatten (heller) zeichnen
+        ctx.fillStyle = 'rgba(241,196,15,0.25)';
+        ctx.beginPath();
+        ctx.moveTo(objX, objTop);
+        ctx.lineTo(screenX, topOuterAtScreen);
+        ctx.lineTo(screenX, topAtScreen);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(objX, objBottom);
+        ctx.lineTo(screenX, botOuterAtScreen);
+        ctx.lineTo(screenX, botAtScreen);
+        ctx.closePath();
+        ctx.fill();
+
+        // Kernschatten (dunkel) zeichnen
+        ctx.fillStyle = 'rgba(0,0,0,0.85)';
+        ctx.beginPath();
+        ctx.moveTo(objX, objTop);
+        ctx.lineTo(objX, objBottom);
+        ctx.lineTo(screenX, botAtScreen);
+        ctx.lineTo(screenX, topAtScreen);
+        ctx.closePath();
+        ctx.fill();
+
+        // Schirm (rechter Rand)
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(screenX, 10); ctx.lineTo(screenX, 210);
+        ctx.stroke();
+
+        // Strahlen andeuten
+        ctx.strokeStyle = 'rgba(241,196,15,0.5)';
+        ctx.lineWidth = 1;
+        [[lightX, lightY - half, objX, objTop], [lightX, lightY + half, objX, objTop],
+         [lightX, lightY - half, objX, objBottom], [lightX, lightY + half, objX, objBottom]].forEach(([x0,y0,x1,y1]) => {
+            ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '11px sans-serif';
+        ctx.fillText('Lichtquelle', lightX - 25, lightY - size/2 - 8);
+        ctx.fillText('Hindernis', objX - 20, objTop - 8);
+        ctx.fillText('Schirm', screenX - 20, 20);
+    }
+
+    drawShadow();
+</script>
+
+</body>
+</html>

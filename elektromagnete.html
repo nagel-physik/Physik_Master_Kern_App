@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Elektromagnete</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Elektromagnet-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .coil-visual { font-size: 60px; margin: 10px 0; transition: transform 0.3s; }
+        .clip-count { font-family: 'Courier New', monospace; font-size: 2rem; background: #222; color: #00ff88; padding: 10px; border-radius: 5px; display: inline-block; margin: 10px 0; min-width: 120px; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .clips { font-size: 24px; letter-spacing: 4px; min-height: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="magnetismus.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM MAGNETFELDER-DASHBOARD</a>
+    </div>
+
+    <h1>Station 2: Elektromagnete</h1>
+
+    <p>In der Recyclingtechnik werden eisenhaltige Metalle mithilfe von Elektromagneten aus dem Haushaltsmüll heraussortiert – ein Beispiel dafür, wie nützlich es ist, Magnetismus <b>ein- und ausschalten</b> zu können.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Der stromdurchflossene Draht</h3>
+        <p>Wickelt man isolierten Kupferdraht 20-mal um eine dicke Schraube und schaltet eine Spannungsquelle ein, beginnt sich eine in der Nähe gehaltene Kompassnadel zu bewegen. Polt man die Spannungsquelle um, dreht sich die Nadel in die andere Richtung.</p>
+    </div>
+
+    <p>Nähert sich die Magnetnadel dem stromdurchflossenen Leiter, kann man das nur durch das Wirken magnetischer Kräfte erklären.</p>
+
+    <div class="definition">
+        <b>Elektromagnete bestehen im einfachsten Fall aus einem stromdurchflossenen Leiter.</b>
+    </div>
+
+    <p>Diese Entdeckung machte der dänische Physiker <b>Christian Ørsted</b>: Er stellte fest, dass ein stromdurchflossener Draht eine Magnetnadel ablenkt. Daraus schlussfolgerte er, dass beim Fließen von elektrischem Strom immer eine magnetische Wirkung vorhanden ist. Es bildet sich ein magnetischer Körper mit Magnetfeld heraus, der dieselben Eigenschaften wie ein Dauermagnet zeigt.</p>
+
+    <p>Der große Vorteil eines Elektromagneten ist die <b>einfache Veränderung</b> seiner magnetischen Kraft – sie lässt sich ein- und ausschalten und sogar umpolen. Meist werden Elektromagnete deshalb in Form einer <span class="highlight">Spule</span> gebaut: So lässt sich trotz großer Drahtlänge eine kompakte Bauform erreichen. Auch Spulen haben, wie Dauermagnete, einen Nord- und einen Südpol.</p>
+
+    <h2>Wovon hängt die Kraft eines Elektromagneten ab?</h2>
+    <div class="definition">
+        Die magnetische Kraft eines Elektromagneten ist umso stärker,
+        <ul style="margin:10px 0;">
+            <li>je größer die <b>Stärke des elektrischen Stroms</b> durch die Spule ist;</li>
+            <li>je größer die <b>Windungszahl</b> der stromdurchflossenen Spule ist.</li>
+        </ul>
+        Zusätzlich verstärkt ein <b>Eisenkern</b> in der Spule den Elektromagneten.
+    </div>
+
+    <p>Wird ein stromdurchflossener Leiter – die einfachste Bauform eines Elektromagneten – in das Magnetfeld eines anderen Magneten gebracht, wirken zwischen beiden anziehende und abstoßende Kräfte. Das kann den Leiter in Bewegung versetzen: <b>Auf stromdurchflossene Leiter wirkt in einem Magnetfeld eine Kraft.</b> Genau dieses Prinzip nutzt später der Elektromotor.</p>
+
+    <h2>Teste es selbst: Wie stark ist der Elektromagnet?</h2>
+    <p>Stelle mit den Reglern Stromstärke und Windungszahl ein und beobachte, wie viele (virtuelle) Büroklammern der Elektromagnet halten kann.</p>
+    <div class="sim-box">
+        <div class="coil-visual" id="coilIcon">🧲</div>
+        <div class="clip-count" id="clipDisplay">0 Büroklammern</div>
+        <div class="clips" id="clipRow"></div>
+
+        <label class="slider-label">Stromstärke: <span id="currentVal">2</span> A</label>
+        <input type="range" id="current" min="1" max="10" step="1" value="2" oninput="updateMagnet()">
+
+        <label class="slider-label">Windungszahl der Spule: <span id="windVal">50</span></label>
+        <input type="range" id="windings" min="10" max="200" step="10" value="50" oninput="updateMagnet()">
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Der Lautsprecher</h3>
+        <p>Das Grundprinzip eines Lautsprechers ist die Kombination aus einem vom elektrischen Strom (Musiksignal) durchflossenen Leiter, der als Spule gebaut ist, und einem Dauermagneten. Die dabei entstehenden Anziehungs- und Abstoßungskräfte sorgen für eine Bewegung der Spule, die auf die Membran übertragen wird. Die hin- und herschwingende Membran erzeugt den Schall, den wir als Sprache oder Musik wahrnehmen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erläutere, was passiert, wenn man einen Elektromagneten mit Wechselspannung statt Gleichspannung betreibt.</li>
+        <li>Kann ein Elektromagnet auch aus einem Aluminiumdraht gebaut werden? Begründe.</li>
+        <li>Nenne Eigenschaften, die ein möglichst starker Elektromagnet haben muss.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="magnete.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="magnetfeld.html" class="btn">Weiter zum Magnetfeld →</a>
+    </div>
+</div>
+
+<script>
+    function updateMagnet() {
+        const current = parseInt(document.getElementById('current').value);
+        const windings = parseInt(document.getElementById('windings').value);
+        document.getElementById('currentVal').innerText = current;
+        document.getElementById('windVal').innerText = windings;
+
+        // Vereinfachtes Modell: Kraft ~ Stromstärke * Windungszahl
+        const strength = current * windings;
+        const clipCount = Math.min(30, Math.round(strength / 60));
+
+        document.getElementById('clipDisplay').innerText = clipCount + ' Büroklammern';
+        document.getElementById('clipRow').innerText = '📎'.repeat(clipCount);
+
+        const icon = document.getElementById('coilIcon');
+        const scale = 1 + Math.min(clipCount, 30) / 40;
+        icon.style.transform = 'scale(' + scale + ')';
+    }
+    updateMagnet();
+</script>
+
+</body>
+</html>

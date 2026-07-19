@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 7: Abbildungsmaßstab und Linsengleichung</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.3rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult1, #calcResult2 { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent); min-height: 30px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="optik.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM OPTIK-DASHBOARD</a>
+    </div>
+
+    <h1>Station 7: Abbildungsmaßstab und Linsengleichung</h1>
+
+    <p>Wie groß wird das Bild und wo genau entsteht es? Mit zwei Formeln lassen sich Bildort und Bildgröße einer Sammellinse exakt berechnen.</p>
+
+    <h2>Die Linsengleichung</h2>
+    <p>Zwischen Brennweite f, Gegenstandsweite g und Bildweite b einer Sammellinse besteht folgender Zusammenhang:</p>
+    <div class="formula-box">1 / f = 1 / g + 1 / b</div>
+    <div class="definition">
+        Kennt man zwei der drei Größen <b>f</b> (Brennweite), <b>g</b> (Gegenstandsweite) und <b>b</b> (Bildweite), lässt sich die dritte mit der <b>Linsengleichung</b> berechnen.
+    </div>
+
+    <h2>Der Abbildungsmaßstab</h2>
+    <p>Für das Verhältnis von Bildgröße B zu Gegenstandsgröße G gilt:</p>
+    <div class="formula-box">B / G = b / g</div>
+    <div class="definition">
+        Der <b>Abbildungsmaßstab</b> B/G gibt an, um welchen Faktor das Bild größer oder kleiner als der Gegenstand ist. Ist B/G &gt; 1, ist das Bild vergrößert; ist B/G &lt; 1, ist es verkleinert.
+    </div>
+
+    <div class="step-box">
+        <h3>Musteraufgabe: Die Smartphone-Kamera</h3>
+        <p>Das Kameraobjektiv eines Smartphones hat eine Brennweite von f = 4 mm. Ein 1,60 m großer Mensch wird aus g = 2 m Entfernung fotografiert. Berechne die Bildweite b und die Bildgröße B auf dem Kamerasensor.</p>
+        <p><b>Gegeben:</b> f = 4 mm = 0,004 m, g = 2 m, G = 1,60 m &nbsp; <b>Gesucht:</b> b, B</p>
+        <p><b>Lösung Bildweite:</b> 1/b = 1/f − 1/g = 1/0,004 − 1/2 = 250 − 0,5 = 249,5 &nbsp;→&nbsp; b ≈ <span class="highlight">0,00401 m ≈ 4,01 mm</span></p>
+        <p><b>Lösung Bildgröße:</b> B = G · (b/g) = 1,60 m · (0,00401 m / 2 m) ≈ <span class="highlight">0,0032 m ≈ 3,2 mm</span></p>
+        <p>Auf dem winzigen Kamerasensor entsteht also ein nur etwa 3,2 mm großes, reelles, umgekehrtes Bild des Menschen – die Kamera-Elektronik dreht das Bild anschließend automatisch wieder um.</p>
+    </div>
+
+    <h2>Probier's aus: Der Linsengleichungs-Rechner</h2>
+    <p>Trage zwei der drei Werte f, g, b ein (in cm) und lasse den dritten berechnen.</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Brennweite f in cm</label><input type="number" id="f1" placeholder="z. B. 10"></div>
+            <div><label>Gegenstandsweite g in cm</label><input type="number" id="g1" placeholder="z. B. 30"></div>
+            <div><label>Bildweite b in cm</label><input type="number" id="b1" placeholder="leer lassen, um zu berechnen"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcLensEq()">Berechnen</button></div>
+        <div id="calcResult1"></div>
+    </div>
+
+    <h2>Probier's aus: Der Abbildungsmaßstab-Rechner</h2>
+    <p>Trage drei der vier Werte G, B, g, b ein (Größen in cm) und lasse den vierten berechnen.</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Gegenstandsgröße G in cm</label><input type="number" id="G2" placeholder="z. B. 5"></div>
+            <div><label>Bildgröße B in cm</label><input type="number" id="B2" placeholder="leer lassen, um zu berechnen"></div>
+            <div><label>Gegenstandsweite g in cm</label><input type="number" id="g2" placeholder="z. B. 30"></div>
+            <div><label>Bildweite b in cm</label><input type="number" id="b2" placeholder="z. B. 15"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcMagnification()">Berechnen</button></div>
+        <div id="calcResult2"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Autofokus</h3>
+        <p>Damit ein scharfes Bild entsteht, muss der Kamerasensor genau in der berechneten Bildweite b liegen. Weil sich b mit der Entfernung g zum fotografierten Objekt ändert, verschieben Kameras beim Scharfstellen (Autofokus) die Linse minimal, um b an die veränderte Bildweite anzupassen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Eine Sammellinse mit f = 5 cm bildet einen Gegenstand aus g = 20 cm Entfernung ab. Berechne die Bildweite b.</li>
+        <li>Ein 3 cm großer Gegenstand wird mit b = 12 cm und g = 4 cm abgebildet. Berechne die Bildgröße B und beurteile, ob das Bild vergrößert oder verkleinert ist.</li>
+        <li>Erkläre, warum bei der Smartphone-Kamera aus der Musteraufgabe b und f fast identisch sind.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="linsen.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="auge.html" class="btn">Weiter zum Auge &amp; optischen Geräten →</a>
+    </div>
+</div>
+
+<script>
+function calcLensEq() {
+    const f = parseFloat(document.getElementById('f1').value);
+    const g = parseFloat(document.getElementById('g1').value);
+    const b = parseFloat(document.getElementById('b1').value);
+    const result = document.getElementById('calcResult1');
+    const vals = { f, g, b };
+    const missing = Object.keys(vals).filter(k => isNaN(vals[k]));
+
+    if (missing.length !== 1) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte genau 2 der 3 Felder ausfüllen, ein Feld leer lassen.';
+        return;
+    }
+    result.style.color = '#00ff88';
+    if (missing[0] === 'b') {
+        const r = 1 / (1/f - 1/g);
+        result.innerText = (r > 0 ? 'b = ' + r.toFixed(2) + ' cm (reelles Bild)' : 'b = ' + Math.abs(r).toFixed(2) + ' cm (virtuelles Bild, g < f)');
+    } else if (missing[0] === 'g') {
+        const r = 1 / (1/f - 1/b);
+        result.innerText = 'g = ' + r.toFixed(2) + ' cm';
+    } else if (missing[0] === 'f') {
+        const r = 1 / (1/g + 1/b);
+        result.innerText = 'f = ' + r.toFixed(2) + ' cm';
+    }
+}
+
+function calcMagnification() {
+    const G = parseFloat(document.getElementById('G2').value);
+    const B = parseFloat(document.getElementById('B2').value);
+    const g = parseFloat(document.getElementById('g2').value);
+    const b = parseFloat(document.getElementById('b2').value);
+    const result = document.getElementById('calcResult2');
+    const vals = { G, B, g, b };
+    const missing = Object.keys(vals).filter(k => isNaN(vals[k]));
+
+    if (missing.length !== 1) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte genau 3 der 4 Felder ausfüllen, ein Feld leer lassen.';
+        return;
+    }
+    result.style.color = '#00ff88';
+    if (missing[0] === 'B') {
+        const r = G * (b / g);
+        result.innerText = 'B = ' + r.toFixed(2) + ' cm  (B/G = b/g)';
+    } else if (missing[0] === 'G') {
+        const r = B * (g / b);
+        result.innerText = 'G = ' + r.toFixed(2) + ' cm';
+    } else if (missing[0] === 'b') {
+        const r = (B / G) * g;
+        result.innerText = 'b = ' + r.toFixed(2) + ' cm';
+    } else if (missing[0] === 'g') {
+        const r = (G / B) * b;
+        result.innerText = 'g = ' + r.toFixed(2) + ' cm';
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Energieversorgung der Menschheit</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display:flex; flex-direction:column; align-items:center; min-height:100vh; box-sizing:border-box; }
+        .container { max-width: 700px; width:100%; }
+        .back-link { margin-bottom: 20px; }
+        .back-link a { text-decoration: none; color: var(--accent); font-weight: bold; }
+
+        h1 { color: var(--accent); text-align:center; }
+        .progress { text-align:center; color:#888; margin-bottom: 20px; font-size:0.9rem; }
+
+        .quiz-card { background: var(--box); border-radius: 15px; padding: 25px; border: 1px solid #333; }
+        .question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; }
+        .option { display:block; width:100%; text-align:left; background:#2a2a2a; color:white; border:2px solid #444; border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; font-size:1rem; transition: all 0.2s; }
+        .option:hover { border-color: var(--accent); }
+        .option.correct { background:#1e5e3a; border-color: var(--accent); }
+        .option.wrong { background:#5e1e1e; border-color:#e74c3c; }
+        .option:disabled { cursor: default; }
+
+        .next-btn { margin-top:20px; width:100%; padding:14px; background: var(--accent); color:#000; border:none; border-radius:10px; font-weight:bold; font-size:1rem; cursor:pointer; display:none; }
+
+        .score-screen { text-align:center; }
+        .score-num { font-size: 3.5rem; color: var(--accent); font-weight:bold; }
+        .retry-btn { margin-top:20px; padding:14px 30px; background:#333; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
+        .retry-btn:hover { background: var(--accent); color:#000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-link"><a href="energie.html">← ZURÜCK ZU ENERGIEVERSORGUNG</a></div>
+    <h1>🏆 Quiz: Energieversorgung</h1>
+    <div class="progress" id="progress"></div>
+
+    <div class="quiz-card" id="quizCard"></div>
+</div>
+
+<script>
+const questions = [
+    { q: "Energie in ihrer ursprünglichen, natürlichen Form (z. B. Kohle, Sonnenstrahlung) nennt man ...", options: ["Sekundärenergie", "Primärenergie", "Endenergie"], correct: 1 },
+    { q: "Fossile Energieträger gelten als nicht erneuerbar, weil ...", options: ["sie giftig sind", "ihre Entstehung Jahrmillionen dauert", "sie zu billig sind"], correct: 1 },
+    { q: "Bei der Verbrennung von Kohlenstoff entsteht ...", options: ["Sauerstoff", "Kohlenstoffdioxid", "Wasserstoff"], correct: 1 },
+    { q: "Welche Energiequelle zählt zu den erneuerbaren Energien?", options: ["Erdgas", "Windenergie", "Steinkohle"], correct: 1 },
+    { q: "Verdoppelt sich die Windgeschwindigkeit, steigt die Leistung einer Windkraftanlage um den Faktor ...", options: ["2", "4", "8"], correct: 2 },
+    { q: "Ein Pumpspeicherkraftwerk dient vor allem dazu, ...", options: ["Strom direkt aus Kohle zu erzeugen", "Energie zu speichern", "Wasser zu entsalzen"], correct: 1 },
+    { q: "Kernkraftwerke erzeugen Strom, indem sie ...", options: ["Wärme aus Kernspaltung zum Antrieb einer Turbine nutzen", "Sonnenlicht direkt in Strom umwandeln", "Wind einfangen"], correct: 0 },
+    { q: "Deutschland hat seine letzten Kernkraftwerke abgeschaltet im Jahr ...", options: ["2011", "2023", "2030"], correct: 1 },
+    { q: "Die Energie, die der Körper allein für lebenswichtige Prozesse in Ruhe benötigt, heißt ...", options: ["Leistungsumsatz", "Grundumsatz", "Nährwert"], correct: 1 },
+    { q: "Pro Gramm die meiste Energie liefert:", options: ["Kohlenhydrate", "Eiweiße", "Fette"], correct: 2 },
+    { q: "Die elektrische Energie eines Geräts berechnet man mit:", options: ["E = P · t", "E = P / t", "E = P + t"], correct: 0 },
+    { q: "LED-Lampen sind gegenüber Glühlampen im Vorteil, weil sie ...", options: ["mehr Wärme abgeben", "einen höheren Wirkungsgrad haben", "billiger in der Anschaffung sind"], correct: 1 },
+    { q: "Der natürliche Treibhauseffekt wird vor allem verursacht durch:", options: ["Sauerstoff in der Atmosphäre", "Treibhausgase wie CO₂, Methan und Wasserdampf", "die Ozonschicht"], correct: 1 },
+    { q: "Der menschengemachte Klimawandel wird hauptsächlich verursacht durch:", options: ["natürliche Sonnenschwankungen", "die verstärkte Freisetzung von Treibhausgasen durch fossile Energieträger", "Vulkanausbrüche"], correct: 1 },
+    { q: "Der Umbau der Energieversorgung hin zu erneuerbaren Energien wird bezeichnet als:", options: ["Energiewende", "Energieumsatz", "Energieerhaltung"], correct: 0 }
+];
+
+let current = 0;
+let score = 0;
+
+function renderQuestion() {
+    const card = document.getElementById('quizCard');
+    document.getElementById('progress').innerText = 'Frage ' + (current + 1) + ' von ' + questions.length + '  |  Punkte: ' + score;
+
+    if (current >= questions.length) {
+        renderScore();
+        return;
+    }
+
+    const item = questions[current];
+    let html = '<div class="question">' + item.q + '</div>';
+    item.options.forEach((opt, i) => {
+        html += '<button class="option" onclick="checkAnswer(' + i + ')">' + opt + '</button>';
+    });
+    html += '<button class="next-btn" id="nextBtn" onclick="nextQuestion()">Weiter →</button>';
+    card.innerHTML = html;
+}
+
+function checkAnswer(i) {
+    const item = questions[current];
+    const buttons = document.querySelectorAll('.option');
+    buttons.forEach(b => b.disabled = true);
+
+    if (i === item.correct) {
+        buttons[i].classList.add('correct');
+        score++;
+    } else {
+        buttons[i].classList.add('wrong');
+        buttons[item.correct].classList.add('correct');
+    }
+    document.getElementById('nextBtn').style.display = 'block';
+}
+
+function nextQuestion() {
+    current++;
+    renderQuestion();
+}
+
+function renderScore() {
+    const card = document.getElementById('quizCard');
+    const percent = Math.round((score / questions.length) * 100);
+    let feedback = "";
+    if (percent >= 90) feedback = "Stark! Du kennst dich mit der Energieversorgung richtig gut aus. 💪";
+    else if (percent >= 60) feedback = "Gut gemacht! Schau dir die Themen, bei denen es haperte, noch einmal an.";
+    else feedback = "Das war ein guter Start – geh die Stationen noch einmal in Ruhe durch, dann klappt es beim nächsten Mal besser.";
+
+    card.innerHTML = `
+        <div class="score-screen">
+            <div class="score-num">${score} / ${questions.length}</div>
+            <p>${percent}% richtig</p>
+            <p>${feedback}</p>
+            <button class="retry-btn" onclick="restartQuiz()">Nochmal versuchen</button>
+        </div>`;
+    document.getElementById('progress').innerText = 'Quiz beendet';
+}
+
+function restartQuiz() {
+    current = 0;
+    score = 0;
+    renderQuestion();
+}
+
+renderQuestion();
+</script>
+
+</body>
+</html>

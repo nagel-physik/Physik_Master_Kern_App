@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 3: Erneuerbare Energien</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent); min-height: 40px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 3: Erneuerbare Energien</h1>
+
+    <p>Erneuerbare Energien nutzen Quellen, die sich ständig erneuern oder praktisch unerschöpflich sind – allen voran die Energie der Sonne, die auch Wind, Wasserkreislauf und Biomasse antreibt.</p>
+
+    <h2>Sonnenenergie</h2>
+    <div class="step-box">
+        <p><b>Photovoltaikanlagen</b> wandeln Sonnenlicht direkt mithilfe von Solarzellen in elektrischen Strom um. <b>Solarthermieanlagen</b> nutzen die Sonnenstrahlung dagegen, um Wasser direkt zu erwärmen (z. B. für Warmwasser oder Heizung) – ohne den Umweg über elektrischen Strom.</p>
+    </div>
+
+    <h2>Windenergie</h2>
+    <p>Windkraftanlagen wandeln die Bewegungsenergie der Luft über einen Rotor in elektrische Energie um. Je größer die Rotorfläche und je höher die Windgeschwindigkeit, desto mehr Leistung liefert eine Anlage – die Leistung steigt dabei sogar mit der <b>dritten Potenz</b> der Windgeschwindigkeit: Doppelte Windgeschwindigkeit bedeutet die achtfache Leistung.</p>
+
+    <h2>Wasserkraft</h2>
+    <p>Wasserkraftwerke nutzen die Energie strömenden oder fallenden Wassers. Man unterscheidet <b>Laufwasserkraftwerke</b> (nutzen die Strömung von Flüssen kontinuierlich), <b>Speicherkraftwerke</b> (stauen Wasser in Stauseen, um bei Bedarf Energie freizugeben) und <b>Pumpspeicherkraftwerke</b> (pumpen bei Stromüberschuss Wasser in ein höher gelegenes Becken und lassen es bei Bedarf wieder abfließen – eine wichtige Möglichkeit, um Energie zu speichern).</p>
+
+    <h2>Biomasse und Geothermie</h2>
+    <p><b>Biomasse</b> (Holz, Energiepflanzen, Biogas aus organischen Abfällen) speichert Sonnenenergie in Form chemischer Energie, die bei Verbrennung oder Vergärung wieder freigesetzt wird. <b>Geothermie</b> nutzt die im Erdinneren gespeicherte Wärme, z. B. zum Heizen oder zur Stromerzeugung.</p>
+
+    <div class="definition">
+        Erneuerbare Energiequellen stehen (im Gegensatz zu fossilen Energieträgern) langfristig unbegrenzt zur Verfügung. Ihre Nutzung ist meist deutlich <b>CO₂-ärmer</b> als die fossiler Energieträger, bringt aber eigene Herausforderungen mit sich: <b>Wetterabhängigkeit</b> (Sonne, Wind), <b>Flächenbedarf</b> und die Notwendigkeit, Energie zu <b>speichern</b>, wenn Angebot und Bedarf nicht zusammenpassen.
+    </div>
+
+    <h2>Probier's aus: Der Solarertrag-Rechner</h2>
+    <p>In Deutschland liefert die Sonne im Jahresdurchschnitt etwa 1000 kWh pro Quadratmeter. Berechne, wie viel Strom eine Photovoltaikanlage bei gegebener Fläche und Wirkungsgrad im Jahr liefert.</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Fläche der Solaranlage in m²</label><input type="number" id="flaeche" placeholder="z. B. 30"></div>
+            <div><label>Wirkungsgrad in %</label><input type="number" id="wirkungsgrad" placeholder="z. B. 20"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcSolar()">Jahresertrag berechnen</button></div>
+        <div id="calcResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Speicher als Schlüsseltechnologie</h3>
+        <p>Weil Sonne und Wind nicht rund um die Uhr gleichmäßig zur Verfügung stehen, wird die Speicherung von Energie für eine sichere Energiewende immer wichtiger: Batteriespeicher, Pumpspeicherkraftwerke und die Umwandlung von überschüssigem Strom in Wasserstoff ("Power-to-Gas") sind Ansätze, um Energie aus Zeiten mit Überschuss in Zeiten mit hohem Bedarf zu übertragen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum Wind- und Solarenergie als "wetterabhängig" gelten und welche Folgen das für die Stromversorgung hat.</li>
+        <li>Vergleiche Laufwasser-, Speicher- und Pumpspeicherkraftwerke hinsichtlich ihrer Funktion.</li>
+        <li>Eine Windkraftanlage verdoppelt ihre Windgeschwindigkeit. Um welchen Faktor steigt ihre Leistung?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="fossile.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="energie-kernkraft.html" class="btn">Weiter zu Kernenergie →</a>
+    </div>
+</div>
+
+<script>
+function calcSolar() {
+    const flaeche = parseFloat(document.getElementById('flaeche').value);
+    const wirkungsgrad = parseFloat(document.getElementById('wirkungsgrad').value);
+    const result = document.getElementById('calcResult');
+    if (isNaN(flaeche) || isNaN(wirkungsgrad) || flaeche <= 0 || wirkungsgrad <= 0) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte gültige Werte für Fläche und Wirkungsgrad eingeben.';
+        return;
+    }
+    const G = 1000; // kWh pro m² und Jahr (Deutschland, Durchschnitt)
+    const ertrag = flaeche * G * (wirkungsgrad / 100);
+    result.style.color = '#00ff88';
+    result.innerText = 'Jahresertrag ≈ ' + ertrag.toFixed(0) + ' kWh (bei ' + G + ' kWh/m²·a Sonneneinstrahlung)';
+}
+</script>
+
+</body>
+</html>

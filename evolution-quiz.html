@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Evolution des Menschen</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display:flex; flex-direction:column; align-items:center; min-height:100vh; box-sizing:border-box; }
+        .container { max-width: 700px; width:100%; }
+        .back-link { margin-bottom: 20px; }
+        .back-link a { text-decoration: none; color: var(--accent); font-weight: bold; }
+
+        h1 { color: var(--accent); text-align:center; }
+        .progress { text-align:center; color:#888; margin-bottom: 20px; font-size:0.9rem; }
+
+        .quiz-card { background: var(--box); border-radius: 15px; padding: 25px; border: 1px solid #333; }
+        .question { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; }
+        .option { display:block; width:100%; text-align:left; background:#2a2a2a; color:white; border:2px solid #444; border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; font-size:1rem; transition: all 0.2s; }
+        .option:hover { border-color: var(--accent); }
+        .option.correct { background:#1e5e3a; border-color: var(--accent); }
+        .option.wrong { background:#5e1e1e; border-color:#e74c3c; }
+        .option:disabled { cursor: default; }
+
+        .next-btn { margin-top:20px; width:100%; padding:14px; background: var(--accent); color:#000; border:none; border-radius:10px; font-weight:bold; font-size:1rem; cursor:pointer; display:none; }
+
+        .score-screen { text-align:center; }
+        .score-num { font-size: 3.5rem; color: var(--accent); font-weight:bold; }
+        .retry-btn { margin-top:20px; padding:14px 30px; background:#333; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
+        .retry-btn:hover { background: var(--accent); color:#000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-link"><a href="evolution.html">← ZURÜCK ZU EVOLUTION DES MENSCHEN</a></div>
+    <h1>🏆 Quiz: Evolution des Menschen</h1>
+    <div class="progress" id="progress"></div>
+
+    <div class="quiz-card" id="quizCard"></div>
+</div>
+
+<script>
+const questions = [
+    { q: "Lamarck ging davon aus, dass ...", options: ["nur zufällige Mutationen die Evolution antreiben", "erworbene Eigenschaften an Nachkommen vererbt werden", "Arten sich nie verändern"], correct: 1 },
+    { q: "Darwins Theorie der natürlichen Selektion beruht unter anderem auf:", options: ["Variabilität, Vererbung, Überproduktion, Selektion", "reinem Zufall ohne Vererbung", "der Vererbung erworbener Eigenschaften"], correct: 0 },
+    { q: "Organe mit gemeinsamem evolutionärem Ursprung, aber unterschiedlicher Funktion, nennt man:", options: ["analog", "homolog", "rudimentär"], correct: 1 },
+    { q: "Ein berühmtes Brückentier zwischen Reptilien und Vögeln ist:", options: ["Archaeopteryx", "Australopithecus", "Neandertaler"], correct: 0 },
+    { q: "Je ähnlicher die DNA zweier Arten ist, desto ...", options: ["weiter entfernt ist ihre Verwandtschaft", "näher ist ihre Verwandtschaft", "älter ist die jüngere Art"], correct: 1 },
+    { q: "Der nächste noch lebende Verwandte des Menschen ist:", options: ["der Gorilla", "der Orang-Utan", "der Schimpanse"], correct: 2 },
+    { q: "Mensch und Schimpanse trennten sich von einem gemeinsamen Vorfahren vor etwa ...", options: ["6–7 Millionen Jahren", "600.000 Jahren", "60.000 Jahren"], correct: 0 },
+    { q: "„Lucy“ ist ein berühmtes Fossil der Art:", options: ["Homo erectus", "Australopithecus", "Homo neanderthalensis"], correct: 1 },
+    { q: "Homo habilis wird auch „der geschickte Mensch“ genannt, weil er ...", options: ["als Erster Feuer beherrschte", "erste einfache Steinwerkzeuge herstellte", "als Erster sprechen konnte"], correct: 1 },
+    { q: "Homo erectus war die erste Menschenart, die ...", options: ["Ackerbau betrieb", "Afrika verließ", "in Höhlen malte"], correct: 1 },
+    { q: "Der moderne Mensch, Homo sapiens, existiert seit etwa ...", options: ["300.000 Jahren", "3 Millionen Jahren", "30.000 Jahren"], correct: 0 },
+    { q: "Neandertaler und Homo sapiens ...", options: ["haben nie gleichzeitig gelebt", "lebten zeitweise gleichzeitig und vermischten sich", "sind genetisch identisch"], correct: 1 },
+    { q: "Heutige Menschen außerhalb Afrikas tragen im Durchschnitt wie viel Neandertaler-Erbgut in sich?", options: ["etwa 1–2 %", "etwa 50 %", "gar keins"], correct: 0 },
+    { q: "Kulturelle Evolution unterscheidet sich von biologischer Evolution dadurch, dass sie ...", options: ["über Gene weitergegeben wird", "über Lernen und Sprache weitergegeben wird und viel schneller verläuft", "gar nicht stattfindet"], correct: 1 },
+    { q: "Die Sesshaftwerdung mit Ackerbau und Viehzucht wird auch bezeichnet als:", options: ["Neolithische Revolution", "Industrielle Revolution", "Digitale Revolution"], correct: 0 }
+];
+
+let current = 0;
+let score = 0;
+
+function renderQuestion() {
+    const card = document.getElementById('quizCard');
+    document.getElementById('progress').innerText = 'Frage ' + (current + 1) + ' von ' + questions.length + '  |  Punkte: ' + score;
+
+    if (current >= questions.length) {
+        renderScore();
+        return;
+    }
+
+    const item = questions[current];
+    let html = '<div class="question">' + item.q + '</div>';
+    item.options.forEach((opt, i) => {
+        html += '<button class="option" onclick="checkAnswer(' + i + ')">' + opt + '</button>';
+    });
+    html += '<button class="next-btn" id="nextBtn" onclick="nextQuestion()">Weiter →</button>';
+    card.innerHTML = html;
+}
+
+function checkAnswer(i) {
+    const item = questions[current];
+    const buttons = document.querySelectorAll('.option');
+    buttons.forEach(b => b.disabled = true);
+
+    if (i === item.correct) {
+        buttons[i].classList.add('correct');
+        score++;
+    } else {
+        buttons[i].classList.add('wrong');
+        buttons[item.correct].classList.add('correct');
+    }
+    document.getElementById('nextBtn').style.display = 'block';
+}
+
+function nextQuestion() {
+    current++;
+    renderQuestion();
+}
+
+function renderScore() {
+    const card = document.getElementById('quizCard');
+    const percent = Math.round((score / questions.length) * 100);
+    let feedback = "";
+    if (percent >= 90) feedback = "Stark! Du kennst dich mit der Evolution des Menschen richtig gut aus. 💪";
+    else if (percent >= 60) feedback = "Gut gemacht! Schau dir die Themen, bei denen es haperte, noch einmal an.";
+    else feedback = "Das war ein guter Start – geh die Stationen noch einmal in Ruhe durch, dann klappt es beim nächsten Mal besser.";
+
+    card.innerHTML = `
+        <div class="score-screen">
+            <div class="score-num">${score} / ${questions.length}</div>
+            <p>${percent}% richtig</p>
+            <p>${feedback}</p>
+            <button class="retry-btn" onclick="restartQuiz()">Nochmal versuchen</button>
+        </div>`;
+    document.getElementById('progress').innerText = 'Quiz beendet';
+}
+
+function restartQuiz() {
+    current = 0;
+    score = 0;
+    renderQuestion();
+}
+
+renderQuestion();
+</script>
+
+</body>
+</html>

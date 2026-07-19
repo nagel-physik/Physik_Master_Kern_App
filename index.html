@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro - Lernbox Physik 10</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .orbit-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 35px;
+        }
+        .core {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 60px; height: 60px;
+            background: #00ff88;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 40px #00ff88;
+            animation: pulseCore 2s ease-in-out infinite;
+        }
+        .orbit-icon {
+            position: absolute;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.35);
+            animation: float 3s ease-in-out infinite;
+        }
+        .oi-top    { top: 0px;   left: 85px; animation-delay: 0s; }
+        .oi-right  { top: 85px;  left: 170px; animation-delay: 0.5s; }
+        .oi-bottom { top: 170px; left: 85px; animation-delay: 1s; }
+        .oi-left   { top: 85px;  left: 0px; animation-delay: 1.5s; }
+
+        @keyframes pulseCore {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.18); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 { font-size: 2.3rem; letter-spacing: 1px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin: 10px; }
+        p { font-size: 1.05rem; max-width: 85%; line-height: 1.5; font-weight: normal; color: #d7e6e8; }
+
+        .start-btn {
+            margin-top: 35px;
+            padding: 15px 40px;
+            background: #00ff88;
+            color: #0f2027;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .start-btn:hover { transform: scale(1.08); }
+    </style>
+</head>
+<body>
+
+    <div class="orbit-container">
+        <div class="core"></div>
+        <div class="orbit-icon oi-top">🧲</div>
+        <div class="orbit-icon oi-right">🌊</div>
+        <div class="orbit-icon oi-bottom">☢️</div>
+        <div class="orbit-icon oi-left">💡</div>
+    </div>
+
+    <h1>LERNBOX PHYSIK 10</h1>
+    <p>Dein Begleiter durchs Physik-Schuljahr: Magnetfelder, Schwingungen &amp; Wellen, Kernphysik und Optik – kompakt zum Nachschlagen und für die Testvorbereitung, unterwegs auf dem Handy.</p>
+
+    <button class="start-btn" onclick="window.location.href='home.html'">LOS GEHT'S</button>
+
+</body>
+</html>

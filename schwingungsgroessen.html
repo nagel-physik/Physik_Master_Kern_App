@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 1: Kenngrößen einer Schwingung</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.2rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        /* Schwingungs-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="schwingungen.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM SCHWINGUNGEN-DASHBOARD</a>
+    </div>
+
+    <h1>Station 1: Kenngrößen einer Schwingung</h1>
+
+    <p>Schwingungen begegnen uns überall: die Bewegung einer alten Pendeluhr, das Hin und Her einer Schaukel, die Saiten einer Gitarre, eine Lautsprechermembran, ein Bungeespringer während des Sprungs, Stoßdämpfer an Fahrzeugen oder sogar die Erdoberfläche bei einem Erdbeben.</p>
+
+    <div class="step-box">
+        <h3>Experiment: Fadenpendel und Federpendel</h3>
+        <p>Baut man ein Faden- und ein Federpendel auf und versetzt beide in Schwingung, lassen sich Gemeinsamkeiten der Bewegungen erkennen: Ein schwingungsfähiger Körper befindet sich zunächst in Ruhelage, wird bis zu einem Punkt A bewegt und losgelassen. Er ändert seine Bewegungsrichtung, bewegt sich mit zunehmender Geschwindigkeit zur Ruhelage zurück, an dieser vorbei zu einem Punkt B – und ändert dort wieder seine Bewegungsrichtung, um zum Ausgangspunkt A zurückzukehren.</p>
+    </div>
+
+    <div class="definition">
+        <b>Periodische Bewegung:</b> Eine Bewegung, die sich in gleichen Zeitabständen wiederholt, nennt man <b>Schwingung</b>. Eine vollständige Schwingung ist die Bewegung vom Punkt A nach B und wieder zurück zum Punkt A.<br><br>
+        <b>Eine mechanische Schwingung ist eine periodische Bewegung eines Körpers um eine Ruhelage herum. Dabei bewegt er sich zwischen zwei Umkehrpunkten hin und her.</b>
+    </div>
+
+    <p>Jede Schwingung wird durch Reibung gebremst – die Bewegung kommt daher irgendwann in der Ruhelage zum Stillstand.</p>
+
+    <h2>Auslenkung und Amplitude</h2>
+    <p>Der Pendelkörper wird durch eine einmalig wirkende Kraft von der Ruhelage zum Punkt A ausgelenkt. Danach bewegt er sich durch die Erdanziehungskraft zur Ruhelage zurück, schwingt durch seine Trägheit weiter zum Umkehrpunkt B und erreicht dort seine größte Auslenkung.</p>
+    <div class="definition">
+        Die <b>Auslenkung y</b> gibt an, wie weit der schwingende Körper zu einem bestimmten Zeitpunkt von seiner Ruhelage entfernt ist.<br>
+        Der größte Abstand des Körpers von der Ruhelage wird <b>Amplitude</b> genannt und mit <i>y</i><sub>max</sub> bezeichnet.
+    </div>
+    <p><i>Übrigens:</i> Die Auslenkung wird manchmal auch <i>Elongation</i> genannt. Beide Begriffe sind gleichbedeutend.</p>
+
+    <h2>Periodendauer und Frequenz</h2>
+    <p>Es ist schwierig, die Zeit für eine einzige Schwingung direkt zu messen – die eigene Reaktionszeit beim Stoppen verfälscht das Ergebnis stark. Besser ist es, die Zeit für 10 Schwingungen zu stoppen und anschließend durch die Anzahl der Schwingungen zu teilen.</p>
+    <div class="definition">
+        Die <b>Schwingungs- oder Periodendauer</b> gibt an, wie lange ein schwingender Körper für eine vollständige Hin-und-her-Bewegung benötigt.<br>
+        Formelzeichen: <i>T</i> · Einheit: Sekunde (s)
+    </div>
+    <div class="formula-box">Periodendauer = gemessene Zeit / Anzahl der Schwingungen &nbsp;→&nbsp; T = t / n</div>
+
+    <div class="definition">
+        Die <b>Frequenz</b> gibt an, wie viele Schwingungen ein Körper pro Sekunde ausführt.<br>
+        Formelzeichen: <i>f</i> · Einheit: Hertz (Hz), Kilohertz (kHz), Megahertz (MHz)
+    </div>
+    <div class="formula-box">f = 1 / T &nbsp;&nbsp;|&nbsp;&nbsp; 1 Hz = 1/s &nbsp;&nbsp;|&nbsp;&nbsp; 1 MHz = 1000 kHz = 1 000 000 Hz</div>
+
+    <h2>Probier's aus: Das Schwingungsbild (y-t-Diagramm)</h2>
+    <p>Stellt man die Auslenkung einer Schwingung in Abhängigkeit von der Zeit grafisch dar, erhält man das <b>Schwingungsbild</b> – ein y(t)-Diagramm. Verändere Amplitude und Periodendauer und beobachte, wie sich die Kurve ändert.</p>
+    <div class="sim-box">
+        <canvas id="swingCanvas" width="500" height="220"></canvas>
+        <label class="slider-label">Amplitude y<sub>max</sub>: <span id="ampVal">2.0</span> cm</label>
+        <input type="range" id="amp" min="0.5" max="4" step="0.1" value="2" oninput="drawSwing()">
+        <label class="slider-label">Periodendauer T: <span id="periodVal">2.0</span> s</label>
+        <input type="range" id="period" min="0.5" max="4" step="0.1" value="2" oninput="drawSwing()">
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Nicht harmonische Schwingungen</h3>
+        <p>Schwingungen, bei denen das Schwingungsbild über eine lange Zeitdauer gleich bleibt, nennt man <b>harmonische Schwingungen</b> – ein Beispiel ist ein Uhrenpendel (wäre die Schwingung einer Uhr nicht harmonisch, würde sie sehr ungenau gehen). In der Praxis verändern sich Schwingungen oftmals im Laufe der Zeit. Schwingungen, bei denen dies auftritt, sind nicht mehr harmonisch – ein gutes Beispiel sind Schwingungen an einem Lautsprecher.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Beschreibe und skizziere die Bewegung eines Federpendels. Beziehe dabei die Begriffe Ruhelage, Umkehrpunkt und Geschwindigkeit ein.</li>
+        <li>Ein Kind auf einer Schaukel benötigt für 20 Schwingungen eine Zeit von 50 s. Berechne Periodendauer und Frequenz der Schaukel.</li>
+        <li>Rechne um: 2 MHz = … Hz; 3 kHz = … Hz; 220 Hz = … kHz; 6550 Hz = … MHz.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="schwingungen.html" class="btn" style="background: #555; color: white;">Zurück zur Übersicht</a>
+        <a href="fadenpendel.html" class="btn">Weiter zum Fadenpendel →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('swingCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawSwing() {
+        const amp = parseFloat(document.getElementById('amp').value);
+        const period = parseFloat(document.getElementById('period').value);
+        document.getElementById('ampVal').innerText = amp.toFixed(1);
+        document.getElementById('periodVal').innerText = period.toFixed(1);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const midY = canvas.height / 2;
+        const scaleY = 40 / 4 * amp === 0 ? 1 : (canvas.height / 2 - 20) / 4;
+        const pxPerSec = 60;
+
+        // Achsen
+        ctx.strokeStyle = '#444';
+        ctx.beginPath();
+        ctx.moveTo(0, midY); ctx.lineTo(canvas.width, midY);
+        ctx.moveTo(30, 10); ctx.lineTo(30, canvas.height - 10);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = 30; x < canvas.width; x++) {
+            const t = (x - 30) / pxPerSec;
+            const y = midY - (amp / 4) * (canvas.height / 2 - 20) * Math.sin((2 * Math.PI / period) * t);
+            if (x === 30) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.fillStyle = '#888';
+        ctx.font = '11px sans-serif';
+        ctx.fillText('t', canvas.width - 15, midY - 8);
+        ctx.fillText('y', 15, 20);
+    }
+    drawSwing();
+</script>
+
+</body>
+</html>

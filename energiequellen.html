@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 1: Energiequellen im Überblick</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .slider-row label { width: 130px; font-size: 0.85rem; font-weight: bold; }
+        input[type=range] { flex: 1; cursor: pointer; }
+        .valnum { width: 40px; text-align: right; font-family: monospace; }
+        .bar-container { background: #222; border-radius: 8px; overflow: hidden; height: 34px; margin-top: 15px; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #00ff88, #f1c40f, #e74c3c); text-align: right; padding-right: 10px; box-sizing: border-box; color: #000; font-weight: bold; line-height: 34px; transition: width 0.2s; }
+        #mixResult { text-align:center; margin-top:10px; font-weight:bold; }
+        #sumWarn { text-align:center; color:#e74c3c; font-weight:bold; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 1: Energiequellen im Überblick</h1>
+
+    <p>Ohne Energie läuft nichts: Licht, Heizung, Handys, Fabriken, Verkehr – der weltweite Energiebedarf wächst seit Jahrzehnten stetig. Doch woher kommt diese Energie eigentlich, und wie unterscheiden sich die verschiedenen Energiequellen?</p>
+
+    <h2>Primärenergie und Sekundärenergie</h2>
+    <div class="definition">
+        <b>Primärenergie</b> ist Energie in ihrer ursprünglichen Form, wie sie in der Natur vorkommt (z. B. Kohle, Erdöl, Sonnenstrahlung, Wind). <b>Sekundärenergie</b> entsteht erst durch Umwandlung von Primärenergie, z. B. elektrischer Strom oder Benzin.
+    </div>
+    <p>Auf dem Weg von der Primär- zur Sekundärenergie und schließlich zur genutzten <b>Endenergie</b> (z. B. Licht einer Lampe, Wärme einer Heizung) geht durch Umwandlungsverluste immer ein Teil der Energie als nicht nutzbare Wärme verloren – der Energieerhaltungssatz gilt dabei natürlich weiterhin: Energie geht nie verloren, sie wird nur in eine weniger nützliche Form umgewandelt.</p>
+
+    <h2>Einteilung der Energiequellen</h2>
+    <div class="step-box">
+        <p>Energiequellen lassen sich grob in drei Gruppen einteilen:</p>
+        <ul>
+            <li><b>Fossile Energieträger:</b> Kohle, Erdöl, Erdgas – entstanden über Jahrmillionen aus abgestorbenen Lebewesen, nicht erneuerbar.</li>
+            <li><b>Kernenergie:</b> Nutzt die Energie aus der Kernspaltung von Uran, ebenfalls ein endlicher Rohstoff.</li>
+            <li><b>Erneuerbare Energien:</b> Sonne, Wind, Wasser, Biomasse, Geothermie – stehen (menschlich betrachtet) unbegrenzt zur Verfügung.</li>
+        </ul>
+    </div>
+
+    <table class="table">
+        <tr><th>Energiequelle</th><th>Erneuerbar?</th><th>CO₂-Ausstoß bei Stromerzeugung</th></tr>
+        <tr><td>Braunkohle</td><td>Nein</td><td>sehr hoch</td></tr>
+        <tr><td>Steinkohle</td><td>Nein</td><td>hoch</td></tr>
+        <tr><td>Erdgas</td><td>Nein</td><td>mittel</td></tr>
+        <tr><td>Kernenergie</td><td>Nein (aber CO₂-arm im Betrieb)</td><td>sehr gering</td></tr>
+        <tr><td>Wind, Sonne, Wasser</td><td>Ja</td><td>sehr gering</td></tr>
+        <tr><td>Biomasse</td><td>Ja (bedingt)</td><td>gering bis mittel</td></tr>
+    </table>
+
+    <h2>Probier's aus: Baue deinen eigenen Energiemix</h2>
+    <p>Verschiebe die Regler so, dass die Summe 100 % ergibt, und beobachte, wie sich der durchschnittliche CO₂-Ausstoß deines Energiemixes verändert.</p>
+    <div class="sim-box">
+        <div class="slider-row"><label>Kohle (%)</label><input type="range" id="kohle" min="0" max="100" value="30" oninput="updateMix()"><span class="valnum" id="kohleVal">30</span></div>
+        <div class="slider-row"><label>Erdgas (%)</label><input type="range" id="gas" min="0" max="100" value="20" oninput="updateMix()"><span class="valnum" id="gasVal">20</span></div>
+        <div class="slider-row"><label>Kernenergie (%)</label><input type="range" id="kern" min="0" max="100" value="10" oninput="updateMix()"><span class="valnum" id="kernVal">10</span></div>
+        <div class="slider-row"><label>Erneuerbare (%)</label><input type="range" id="erneuerbar" min="0" max="100" value="40" oninput="updateMix()"><span class="valnum" id="erneuerbarVal">40</span></div>
+        <div id="sumWarn"></div>
+        <div class="bar-container"><div class="bar-fill" id="co2Bar" style="width:50%;">0 g CO₂/kWh</div></div>
+        <div id="mixResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Der weltweite Energiehunger</h3>
+        <p>Der weltweite Energiebedarf ist in den letzten hundert Jahren stark gestiegen – durch Bevölkerungswachstum, Industrialisierung und steigenden Wohlstand. Gleichzeitig sind fossile Energieträger endlich und ihre Verbrennung verstärkt den Treibhauseffekt. Die zentrale Herausforderung der <b>Energiewende</b> besteht darin, den Energiebedarf zunehmend mit erneuerbaren, CO₂-armen Quellen zu decken.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre den Unterschied zwischen Primärenergie, Sekundärenergie und Endenergie an einem eigenen Beispiel.</li>
+        <li>Begründe, warum bei jeder Energieumwandlung Verluste auftreten, obwohl der Energieerhaltungssatz gilt.</li>
+        <li>Nenne je zwei Vor- und Nachteile fossiler und erneuerbarer Energiequellen.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="energie.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="fossile.html" class="btn">Weiter zu Fossilen Energieträgern →</a>
+    </div>
+</div>
+
+<script>
+    const co2 = { kohle: 900, gas: 490, kern: 12, erneuerbar: 40 };
+
+    function updateMix() {
+        const kohle = parseFloat(document.getElementById('kohle').value);
+        const gas = parseFloat(document.getElementById('gas').value);
+        const kern = parseFloat(document.getElementById('kern').value);
+        const erneuerbar = parseFloat(document.getElementById('erneuerbar').value);
+
+        document.getElementById('kohleVal').innerText = kohle;
+        document.getElementById('gasVal').innerText = gas;
+        document.getElementById('kernVal').innerText = kern;
+        document.getElementById('erneuerbarVal').innerText = erneuerbar;
+
+        const sum = kohle + gas + kern + erneuerbar;
+        const warn = document.getElementById('sumWarn');
+        const result = document.getElementById('mixResult');
+        const bar = document.getElementById('co2Bar');
+
+        if (Math.abs(sum - 100) > 0.5) {
+            warn.innerText = 'Summe = ' + sum + ' % — stelle die Regler so ein, dass die Summe 100 % ergibt!';
+            return;
+        }
+        warn.innerText = '';
+
+        const avgCO2 = (kohle*co2.kohle + gas*co2.gas + kern*co2.kern + erneuerbar*co2.erneuerbar) / 100;
+        const widthPercent = Math.min(100, (avgCO2 / 900) * 100);
+        bar.style.width = widthPercent + '%';
+        bar.innerText = Math.round(avgCO2) + ' g CO₂/kWh';
+
+        if (avgCO2 < 100) {
+            result.style.color = '#00ff88';
+            result.innerText = 'Sehr klimafreundlicher Energiemix!';
+        } else if (avgCO2 < 400) {
+            result.style.color = '#f1c40f';
+            result.innerText = 'Mittlerer CO₂-Ausstoß – geht noch besser.';
+        } else {
+            result.style.color = '#e74c3c';
+            result.innerText = 'Hoher CO₂-Ausstoß – viel Kohle/Gas im Mix.';
+        }
+    }
+
+    updateMix();
+</script>
+
+</body>
+</html>

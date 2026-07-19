@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Elektromagnetische Induktion</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* Induktions-Simulation */
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        .induction-stage { position: relative; width: 100%; max-width: 380px; height: 100px; margin: 15px auto; }
+        .coil-icon { position: absolute; right: 20px; top: 10px; font-size: 70px; }
+        .magnet-slider-visual { position: absolute; top: 30px; left: 0; width: 90px; height: 32px; display: flex; border-radius: 4px; overflow: hidden; font-weight: bold; color: #000; }
+        .magnet-slider-visual div { flex: 1; display: flex; align-items: center; justify-content: center; }
+        .n-pole { background: #e74c3c; }
+        .s-pole { background: #3498db; }
+        .display { font-family: 'Courier New', monospace; background: #222; color: #00ff00; padding: 10px; font-size: 1.8rem; border-radius: 5px; display: inline-block; margin: 10px 0; min-width: 160px; }
+        .slider-label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="magnetismus.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM MAGNETFELDER-DASHBOARD</a>
+    </div>
+
+    <h1>Station 5: Elektromagnetische Induktion</h1>
+
+    <p>Kabelloses Laden hält immer mehr Einzug: Eine elektrische Zahnbürste wird einfach in ihre Ladestation gestellt – ohne direkte leitende Verbindung. Auch das kabellose Laden von Smartphones ist längst nichts Ungewöhnliches mehr. Weitere Entwicklungen stehen in den Startlöchern: Akkus von Elektroautos sollen in der Garage oder an der Ampel geladen werden, sogar Lampen sollen ganz ohne Kabel mit Energie versorgt werden. Die gemeinsame technische Lösung: <b>Spulen</b>, die eine kabellose Übertragung elektrischer Energie ermöglichen.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Nikola Tesla</h3>
+        <p>Beschäftigt man sich mit diesen Entwicklungen näher, taucht in der Geschichte immer wieder ein Name auf: <b>Nikola Tesla</b>. Seine Erfindungen nutzen wir heute ganz selbstverständlich, zum Beispiel Wechselstrom, Funk-Fernsteuerung und verschiedene Elektromotoren. Außerdem bilden seine Entdeckungen die Grundlagen für Mikrowellengeräte, das Radio und das Radar.</p>
+    </div>
+
+    <div class="step-box">
+        <h3>Experiment: Erzeugung elektrischer Energie</h3>
+        <p>Bewegt man einen Dauermagneten in verschiedenen Richtungen zu einer Spule und beobachtet dabei einen angeschlossenen Spannungsmesser, zeigt sich: Bewegt man den Magneten schneller, wird die angezeigte Spannung größer. Auch mit stärkeren Magneten wird die Spannung größer.</p>
+    </div>
+
+    <div class="definition">
+        Wenn sich ein Magnet und eine Spule relativ zueinander bewegen, dann wird in der Spule eine elektrische Spannung hervorgerufen. Diesen Vorgang nennt man <b>elektromagnetische Induktion</b>, die entstehende Spannung <b>Induktionsspannung</b>.
+    </div>
+
+    <p>Die Induktionsspannung ist umso größer,</p>
+    <ul>
+        <li>je <b>schneller</b> der Magnet bewegt wird und</li>
+        <li>je <b>größer</b> die magnetische Kraft des Magneten ist.</li>
+    </ul>
+    <p><i>Übrigens:</i> Eine Spannung wird auch induziert, wenn man die Spule gegenüber dem Magneten bewegt. Es ist egal, ob der Magnet oder die Spule bewegt wird – entscheidend ist nur die <b>relative Bewegung</b>.</p>
+
+    <h2>Probier's aus: Magnet in die Spule schieben</h2>
+    <p>Stelle die Geschwindigkeit ein, mit der der Magnet in die Spule hinein- und wieder herausbewegt wird, und beobachte die induzierte Spannung.</p>
+    <div class="sim-box">
+        <div class="induction-stage">
+            <div class="magnet-slider-visual" id="indMagnet"><div class="n-pole">N</div><div class="s-pole">S</div></div>
+            <div class="coil-icon">🌀</div>
+        </div>
+        <div class="display" id="voltDisplay">0,0 V</div>
+
+        <label class="slider-label">Geschwindigkeit des Magneten:</label>
+        <input type="range" id="speed" min="1" max="10" step="1" value="3" oninput="updateSpeedLabel()">
+        <p id="speedText">Geschwindigkeit: 3</p>
+
+        <div class="sim-btns">
+            <button onclick="moveMagnet()">Magnet hinein- und herausbewegen</button>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <h3>Das Induktionsgesetz</h3>
+        <p>Noch genauer zeigt ein zweites Experiment: Bringt man einen Elektromagneten in die Nähe einer zweiten Spule, ist die Induktionsspannung besonders hoch, wenn sich die Feldlinien des Magnetfelds und die Windungen der Spule so zueinander bewegen, dass sich die <b>Anzahl der Feldlinien</b>, die die Windungen durchsetzen, <b>stark ändert</b>.</p>
+        <div class="definition" style="margin-top:15px;">
+            Ändert sich das von einer Spule umfasste Magnetfeld, so wird in der Spule eine Spannung induziert. Die Induktionsspannung ist umso größer, je <b>schneller</b> und <b>stärker</b> sich das Magnetfeld ändert und je <b>größer</b> die Windungszahl der Spule ist.
+        </div>
+        <p>Beim Einsatz von Elektromagneten reicht bereits das <b>Ein- oder Ausschalten</b> des Stroms für eine Änderung des Magnetfelds – und damit für einen kurzzeitigen Induktionsvorgang, auch ganz ohne Bewegung.</p>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Anwendungen der Induktion</h3>
+        <p>Die Induktion wurde <b>1831 von Michael Faraday</b> entdeckt. Er legte damit die Grundlage für die elektrische Energieversorgung von heute. Eine einfache Anwendung stellt der <b>Fahrraddynamo</b> dar: Durch Drehung eines Magneten in einer Spule wird in dieser eine Spannung induziert. Beim Anschließen einer Lampe fließt ein Strom – bei schnellerer Fahrt leuchten die Lampen heller. Vergleichbares passiert im Generator einer Windkraftanlage bzw. in der Lichtmaschine eines Fahrzeugs. Bei Fahrzeugen darf die Induktionsspannung allerdings nicht schwanken, sondern muss unabhängig von der Geschwindigkeit sein – das wird durch eine Batterie erreicht.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Bei welchen Bewegungen wird in der Spule eine Spannung induziert – und bei welchen nicht?</li>
+        <li>Erläutere grob die Funktionsweise eines Fahrradtachometers. Gehe auch auf die physikalischen Grundlagen ein.</li>
+        <li>Erläutere die Vorgänge in einer Schütteltaschenlampe. Gib zusätzlich an, welche Energieumwandlungen stattfinden.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="elektromotor.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="generator.html" class="btn">Weiter zum Generator →</a>
+    </div>
+</div>
+
+<script>
+    function updateSpeedLabel() {
+        document.getElementById('speedText').innerText = 'Geschwindigkeit: ' + document.getElementById('speed').value;
+    }
+
+    function moveMagnet() {
+        const speed = parseInt(document.getElementById('speed').value);
+        const magnet = document.getElementById('indMagnet');
+        const voltDisplay = document.getElementById('voltDisplay');
+        const duration = Math.max(300, 1600 - speed * 130);
+
+        magnet.style.transition = 'left ' + duration + 'ms linear';
+        magnet.style.left = '190px';
+
+        const peakVoltage = (speed * 1.1).toFixed(1);
+        setTimeout(() => { voltDisplay.innerText = peakVoltage + ' V'; }, duration / 2);
+
+        setTimeout(() => {
+            magnet.style.transition = 'left ' + duration + 'ms linear';
+            magnet.style.left = '0px';
+            setTimeout(() => { voltDisplay.innerText = '-' + peakVoltage + ' V'; }, duration / 2);
+            setTimeout(() => { voltDisplay.innerText = '0,0 V'; }, duration);
+        }, duration + 200);
+    }
+</script>
+
+</body>
+</html>

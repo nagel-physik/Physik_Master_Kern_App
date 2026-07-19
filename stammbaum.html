@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 3: Der Stammbaum der Primaten</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; cursor: pointer; }
+        #treeInfo { margin-top: 15px; min-height: 60px; text-align: left; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="evolution.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU EVOLUTION DES MENSCHEN</a>
+    </div>
+
+    <h1>Station 3: Der Stammbaum der Primaten</h1>
+
+    <p>Der Mensch steht nicht "über" den anderen Menschenaffen, sondern ist selbst ein Menschenaffe – eng verwandt mit Schimpansen, Gorillas und Orang-Utans. Ein Stammbaum zeigt, wie sich diese Arten im Laufe von Jahrmillionen auseinanderentwickelt haben.</p>
+
+    <div class="definition">
+        Der Mensch gehört biologisch zur Familie der <b>Menschenaffen (Hominidae)</b>, gemeinsam mit Schimpansen, Bonobos, Gorillas und Orang-Utans. Alle heute lebenden Menschenaffen gehen auf <b>gemeinsame Vorfahren</b> zurück, die sich vor Jahrmillionen in verschiedene Entwicklungslinien aufgespalten haben.
+    </div>
+
+    <h2>Probier's aus: Der Primaten-Stammbaum</h2>
+    <p>Klicke auf einen Ast oder eine Art, um mehr über die geschätzte Trennungszeit von der menschlichen Entwicklungslinie zu erfahren.</p>
+    <div class="sim-box">
+        <canvas id="treeCanvas" width="480" height="280"></canvas>
+        <div id="treeInfo">Klicke auf eine Art im Stammbaum!</div>
+    </div>
+
+    <p>Wichtig zu betonen: Der Mensch stammt <b>nicht vom Schimpansen ab</b> – Mensch und Schimpanse haben stattdessen einen <b>gemeinsamen Vorfahren</b>, von dem sich beide Linien vor rund 6–7 Millionen Jahren getrennt entwickelt haben. Seitdem haben sich beide Linien unabhängig voneinander weiterentwickelt.</p>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Wie schätzt man Trennungszeiten?</h3>
+        <p>Um abzuschätzen, wann sich zwei Entwicklungslinien getrennt haben, nutzen Forschende zum einen Fossilfunde, zum anderen den Vergleich des Erbguts: Je mehr Unterschiede sich im Erbgut zweier Arten angesammelt haben, desto länger liegt ihre Trennung vermutlich zurück – man spricht von der "molekularen Uhr", die auf der ungefähr gleichmäßigen Rate zufälliger Mutationen über lange Zeiträume beruht.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum die Aussage "Der Mensch stammt vom Affen ab" wissenschaftlich ungenau ist, und wie man es korrekt formulieren würde.</li>
+        <li>Ordne die im Stammbaum gezeigten Arten nach ihrer Verwandtschaftsnähe zum Menschen.</li>
+        <li>Erkläre das Prinzip der "molekularen Uhr" in eigenen Worten.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="indizien.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="hominiden.html" class="btn">Weiter zum Australopithecus →</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('treeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Äste: [x-Trennpunkt (jünger rechts), y der Art, Name, Mya seit Trennung, Beschreibung]
+    const species = [
+        { x: 440, y: 40,  name: "Mensch",     mya: 0,  info: "Homo sapiens – die eigene Entwicklungslinie." },
+        { x: 380, y: 80,  name: "Schimpanse", mya: 7,  info: "Nächster lebender Verwandter des Menschen, Trennung vor ca. 6–7 Mio. Jahren." },
+        { x: 340, y: 130, name: "Gorilla",    mya: 9,  info: "Trennung von der Menschen/Schimpansen-Linie vor ca. 9 Mio. Jahren." },
+        { x: 280, y: 180, name: "Orang-Utan", mya: 14, info: "Trennung vor ca. 14 Mio. Jahren – lebt in Asien, alle anderen gezeigten Arten in Afrika." },
+        { x: 220, y: 230, name: "Gibbon",     mya: 17, info: "Trennung vor ca. 17 Mio. Jahren – kleinster und am frühesten abgezweigter Menschenaffe hier." }
+    ];
+
+    function drawTree() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const rootX = 40, rootY = 255;
+
+        ctx.strokeStyle = '#8ecae6';
+        ctx.lineWidth = 2;
+
+        let prevX = rootX, prevY = rootY;
+        species.slice().reverse().forEach((sp) => {
+            // horizontaler Ast zum Verzweigungspunkt
+            ctx.beginPath();
+            ctx.moveTo(prevX, rootY);
+            ctx.lineTo(sp.x, rootY);
+            ctx.stroke();
+            // vertikal hoch zur Art
+            ctx.beginPath();
+            ctx.moveTo(sp.x, rootY);
+            ctx.lineTo(sp.x, sp.y);
+            ctx.stroke();
+            // weiter nach rechts zur nächsten Art (Linie geht bis Mensch weiter)
+            prevX = sp.x;
+        });
+        // Linie vom letzten Verzweigungspunkt zum Menschen (ganz rechts)
+        ctx.beginPath();
+        ctx.moveTo(prevX, rootY);
+        ctx.lineTo(440, rootY);
+        ctx.lineTo(440, 40);
+        ctx.stroke();
+
+        species.forEach(sp => {
+            ctx.fillStyle = sp.name === 'Mensch' ? '#00ff88' : '#f1c40f';
+            ctx.beginPath();
+            ctx.arc(sp.x, sp.y, 7, 0, Math.PI*2);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.font = '11px sans-serif';
+            ctx.fillText(sp.name, sp.x - 20, sp.y - 12);
+        });
+
+        ctx.fillStyle = '#888';
+        ctx.font = '10px sans-serif';
+        ctx.fillText('gemeinsame Vorfahren (Zeit nimmt nach links zu)', rootX, rootY + 20);
+    }
+
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        species.forEach(sp => {
+            const dist = Math.sqrt((clickX-sp.x)**2 + (clickY-sp.y)**2);
+            if (dist < 15) {
+                document.getElementById('treeInfo').innerHTML = '<b>' + sp.name + '</b> (Trennung vor ca. ' + sp.mya + ' Mio. Jahren): ' + sp.info;
+            }
+        });
+    });
+
+    drawTree();
+</script>
+
+</body>
+</html>

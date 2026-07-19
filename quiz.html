@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master-Quiz: Kernphysik</title>
+    <style>
+        :root { --bg: #0f172a; --accent: #00ff88; --wrong: #ef4444; --box: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
+        .container { max-width: 600px; margin: auto; padding-bottom: 50px; }
+        
+        h1 { color: var(--accent); text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        .setup-box { background: var(--box); padding: 20px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 20px; }
+        
+        select { width: 100%; padding: 12px; border-radius: 8px; background: #000; color: #fff; border: 1px solid var(--accent); font-size: 1rem; cursor: pointer; }
+
+        /* Fortschritt */
+        .progress-bar { width: 100%; height: 8px; background: #334155; border-radius: 4px; margin: 20px 0; overflow: hidden; }
+        #fill { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
+
+        /* Quiz Box */
+        .quiz-card { background: var(--box); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
+        .question { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; min-height: 60px; }
+        
+        .opt-btn { 
+            display: block; width: 100%; padding: 14px; margin: 8px 0; 
+            background: #334155; border: 2px solid transparent; border-radius: 12px; 
+            color: #fff; text-align: left; cursor: pointer; transition: 0.2s; font-size: 1rem;
+        }
+        .opt-btn:hover { border-color: var(--accent); background: #3f4e63; }
+        
+        /* Feedback */
+        #feedback { display: none; margin-top: 20px; padding: 15px; border-radius: 10px; font-weight: bold; line-height: 1.4; }
+        .correct { background: rgba(0, 255, 136, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+        .incorrect { background: rgba(239, 68, 68, 0.15); color: var(--wrong); border: 1px solid var(--wrong); }
+        
+        .next-btn { 
+            display: none; width: 100%; padding: 15px; background: var(--accent); 
+            color: #000; border: none; border-radius: 10px; font-weight: bold; 
+            margin-top: 20px; cursor: pointer; font-size: 1rem;
+        }
+        .next-btn:hover { background: #fff; }
+
+        .summary { text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="dashboard.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">← ZURÜCK</a>
+    <h1>Challenge-Zone</h1>
+
+    <div class="setup-box" id="setup">
+        <p>Wähle eine Station für dein Quiz:</p>
+        <select id="topic" onchange="initQuiz()">
+            <option value="">-- Station wählen --</option>
+            <option value="0">1. Die Entdeckung</option>
+            <option value="1">2. Atombau & Isotope</option>
+            <option value="2">3. Strahlenarten</option>
+            <option value="3">4. Messung & Schutz</option>
+            <option value="4">5. Halbwertszeit</option>
+            <option value="5">6. Zerfallsreihen</option>
+            <option value="6">7. Kernkraftwerk</option>
+            <option value="7">8. Anwendung & Umwelt</option>
+        </select>
+    </div>
+
+    <div id="quiz-ui" class="quiz-card">
+        <div class="progress-bar"><div id="fill"></div></div>
+        <div id="q-area">
+            <div class="question" id="q-text"></div>
+            <div id="options"></div>
+            <div id="feedback"></div>
+            <button id="next" class="next-btn" onclick="nextQ()">NÄCHSTE FRAGE</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    // 1. Entdeckung
+    [
+        {q: "Wer entdeckte 1896 die Radioaktivität?", a: ["Curie", "Becquerel", "Röntgen", "Einstein"], c: 1, info: "Becquerel bemerkte, dass Uranerz eine Fotoplatte schwärzte."},
+        {q: "Wie hieß das Element, das Marie Curie nach ihrer Heimat benannte?", a: ["Uran", "Radium", "Polonium", "Heimatrium"], c: 2, info: "Polonium ist nach Polen benannt."},
+        {q: "Was legte Becquerel auf die Fotoplatte?", a: ["Gold", "Uransalze", "Magnete", "Blei"], c: 1, info: "Uransalze sendeten die unsichtbare Strahlung aus."},
+        {q: "Welchen Nobelpreis erhielt Marie Curie zuerst?", a: ["Physik", "Chemie", "Frieden", "Literatur"], c: 0, info: "Sie bekam ihn 1903 zusammen mit Pierre und Henri."},
+        {q: "Warum leuchteten die Proben der Curies im Dunkeln?", a: ["Wegen Phosphor", "Wegen Radium", "Wegen Elektrizität", "Wegen Taschenlampen"], c: 1, info: "Radium ist extrem aktiv und leuchtet bläulich."},
+        {q: "Was passierte mit der Fotoplatte in der Schublade?", a: ["Sie schmolz", "Sie wurde belichtet", "Sie verschwand", "Sie blieb weiß"], c: 1, info: "Die Strahlung ging durch die Verpackung."},
+        {q: "Woher kam die Energie für die Strahlung laut Becquerel zuerst?", a: ["Von der Sonne", "Vom Kern selbst", "Aus der Luft", "Vom Mond"], c: 1, info: "Er dachte erst an Sonne, merkte aber: Es kommt von innen!"},
+        {q: "Welcher Begriff stammt von Marie Curie?", a: ["Atombombe", "Radioaktivität", "Röntgenstrahl", "Quantensprung"], c: 1, info: "Radioaktivität leitet sich von 'Radius' (Strahl) ab."},
+        {q: "Was passierte mit Marie Curies Gesundheit?", a: ["Sie wurde 100", "Sie wurde krank durch Strahlung", "Nichts", "Sie wurde immun"], c: 1, info: "Die Gefahr der Strahlung war damals unbekannt."},
+        {q: "In welchem Land wurde Marie Curie geboren?", a: ["Frankreich", "Deutschland", "Polen", "Russland"], c: 2, info: "Sie wurde in Warschau geboren."}
+    ],
+    // 2. Atombau
+    [
+        {q: "Was bestimmt das chemische Element?", a: ["Neutronen", "Elektronen", "Protonen", "Masse"], c: 2, info: "Die Protonenzahl (Ordnungszahl) ist der Fingerabdruck des Elements."},
+        {q: "Wo befinden sich die Neutronen?", a: ["In der Hülle", "Im Kern", "Überall", "Außen"], c: 1, info: "Protonen und Neutronen bilden den massereichen Kern."},
+        {q: "Was sind Isotope?", a: ["Gleiche Protonen, andere Neutronen", "Gleiche Neutronen, andere Protonen", "Andere Elektronen", "Kaputte Atome"], c: 0, info: "Isotope sind 'Geschwister' des gleichen Elements."},
+        {q: "Wie nennt man die Bausteine des Kerns zusammen?", a: ["Elektronen", "Nukleonen", "Moleküle", "Ionen"], c: 1, info: "Nukleonen = Kernbausteine."},
+        {q: "Welche Ladung hat ein Neutron?", a: ["Positiv", "Negativ", "Neutral", "Stark"], c: 2, info: "Neutronen haben keine elektrische Ladung."},
+        {q: "Welche Masse hat ein Elektron im Vergleich zum Proton?", a: ["Gleich viel", "Fast 2000x weniger", "Viel mehr", "Doppelt so viel"], c: 1, info: "Elektronen sind extrem leicht."},
+        {q: "Was hält den Kern zusammen?", a: ["Magnetismus", "Kernkraft", "Gravitation", "Kleber"], c: 1, info: "Die 'Starke Kernkraft' überwindet die elektrische Abstoßung."},
+        {q: "Was bedeutet die Massenzahl?", a: ["Nur Protonen", "Protonen + Neutronen", "Nur Elektronen", "Gewicht in Gramm"], c: 1, info: "Die Massenzahl gibt die Gesamtzahl der Kernbausteine an."},
+        {q: "Wie viele Neutronen hat Wasserstoff-1?", a: ["0", "1", "2", "3"], c: 0, info: "Normaler Wasserstoff hat nur ein Proton."},
+        {q: "Was passiert, wenn ein Kern zu viele Neutronen hat?", a: ["Er wird schwerer", "Er wird instabil", "Er schmilzt", "Nichts"], c: 1, info: "Ein Ungleichgewicht führt oft zu Radioaktivität."}
+    ],
+    // 3. Strahlenarten
+    [
+        {q: "Was ist Alpha-Strahlung?", a: ["Licht", "Elektronen", "Heliumkerne", "Neutronen"], c: 2, info: "Alpha besteht aus 2 Protonen und 2 Neutronen."},
+        {q: "Welche Ladung hat Beta-Minus-Strahlung?", a: ["Positiv", "Negativ", "Neutral", "Keine"], c: 1, info: "Beta-Minus sind schnelle Elektronen."},
+        {q: "Was stoppt Gamma-Strahlung am besten?", a: ["Papier", "Luft", "Blei", "Plastik"], c: 2, info: "Gamma braucht dichte Materialien wie Blei oder Beton."},
+        {q: "Wie schnell ist Gamma-Strahlung?", a: ["Schallgeschwindigkeit", "Lichtgeschwindigkeit", "100 km/h", "Wie ein Auto"], c: 1, info: "Gamma ist elektromagnetische Strahlung."},
+        {q: "Welche Strahlung ist am schwersten?", a: ["Alpha", "Beta", "Gamma", "Röntgen"], c: 0, info: "Alpha-Teilchen haben die größte Masse."},
+        {q: "Was passiert bei Beta-Minus-Zerfall im Kern?", a: ["Proton wird Neutron", "Neutron wird Proton", "Kern verschwindet", "Elektron wird Proton"], c: 1, info: "Ein Neutron wandelt sich um, ein Elektron wird abgegeben."},
+        {q: "Welche Reichweite hat Alpha in Luft?", a: ["Kilometer", "Einige Zentimeter", "Meter", "Unendlich"], c: 1, info: "Alpha-Teilchen werden durch Luftmoleküle schnell gestoppt."},
+        {q: "Ist Gamma-Strahlung ein Teilchen?", a: ["Ja", "Nein, eine Welle", "Manchmal", "Nur im Wasser"], c: 1, info: "Gamma ist reine Energie in Wellenform."},
+        {q: "Welche Strahlung ist am stärksten ionisierend?", a: ["Alpha", "Beta", "Gamma", "Licht"], c: 0, info: "Wegen ihrer Größe richten Alpha-Teilchen den größten Schaden an Atomen an."},
+        {q: "Was ist ein Positron?", a: ["Ein schweres Proton", "Ein positives Elektron (Beta+)", "Ein Neutron", "Ein Lichtteilchen"], c: 1, info: "Das Positron ist das Antiteilchen zum Elektron."}
+    ],
+    // 4. Schutz
+    [
+        {q: "Welche Regel hilft beim Strahlenschutz?", a: ["Die 3 Musketiere", "Die 5 S-Regeln", "Die 4 Phasen", "Die 2 Wege"], c: 1, info: "Abschirmung, Abstand, Aufenthaltsdauer..."},
+        {q: "Wie verändert sich die Strahlung bei doppeltem Abstand?", a: ["Halbiert sich", "Viertelt sich", "Bleibt gleich", "Verdoppelt sich"], c: 1, info: "Abstandsgesetz: Intensität sinkt quadratisch!"},
+        {q: "Womit misst man die Aktivität?", a: ["Geiger-Müller-Zähler", "Thermometer", "Zollstock", "Waage"], c: 0, info: "Das Zählrohr registriert die Ionisation."},
+        {q: "Was bedeutet 'Kontamination'?", a: ["Heilung", "Verunreinigung mit Stoffen", "Durchstrahlung", "Schutz"], c: 1, info: "Wenn radioaktiver Staub an Kleidung oder Haut klebt."},
+        {q: "Was schützt vor Alpha-Strahlung am Körper?", a: ["Nur Blei", "Die oberste Hautschicht", "Nichts", "Ein Magnet"], c: 1, info: "Alpha kommt nicht durch die abgestorbene Hautschicht."},
+        {q: "Warum ist Inkorporation gefährlich?", a: ["Man leuchtet", "Strahler im Körper richten Dauerschaden an", "Man wird schwerer", "Nichts"], c: 1, info: "Einatmen oder Essen von Strahlern ist extrem riskant."},
+        {q: "Was ist die Einheit für die biologische Wirkung (Dosis)?", a: ["Becquerel", "Sievert", "Kilogramm", "Meter"], c: 1, info: "Sievert (Sv) gibt die Gefahr für den Körper an."},
+        {q: "Welches Symbol warnt vor Radioaktivität?", a: ["Ein Totenkopf", "Das Kleeblatt (Trefoil)", "Ein Blitz", "Ein Stop-Schild"], c: 1, info: "Das gelbe Schild mit dem schwarzen Fächerrad."},
+        {q: "Was macht man mit radioaktivem Müll?", a: ["Verbrennen", "In den Fluss", "Sicher Endlagern", "Einfrieren"], c: 2, info: "Er muss für Jahrtausende sicher eingeschlossen werden."},
+        {q: "Warum tragen Forscher Dosimeter?", a: ["Zum Spaß", "Um die empfangene Dosis zu überwachen", "Um besser zu sehen", "Als Akku"], c: 1, info: "Sicherheit geht vor - die Dosis wird summiert."}
+    ],
+    // 5. Halbwertszeit
+    [
+        {q: "Was ist nach einer Halbwertszeit noch übrig?", a: ["Nichts", "Die Hälfte", "Ein Viertel", "Alles"], c: 1, info: "Genau 50% der Kerne sind noch da."},
+        {q: "Was bleibt nach 2 Halbwertszeiten übrig?", a: ["0%", "25%", "50%", "10%"], c: 1, info: "Die Hälfte der Hälfte = ein Viertel."},
+        {q: "Kann man sagen, wann ein einzelner Kern zerfällt?", a: ["Ja, auf die Sekunde", "Nein, es ist Zufall", "Nur bei Vollmond", "Ja, mit dem Lineal"], c: 1, info: "Es ist ein rein statistischer Prozess."},
+        {q: "Jod-131 hat 8 Tage HWZ. Wie viel ist nach 16 Tagen noch da?", a: ["50%", "25%", "0%", "12,5%"], c: 1, info: "16 Tage sind genau 2 Halbwertszeiten."},
+        {q: "Welcher Stoff hat eine HWZ von Milliarden Jahren?", a: ["Jod", "Radon", "Uran-238", "Kohlenstoff"], c: 2, info: "Uran-238 zerfällt extrem langsam."},
+        {q: "Wofür steht das Symbol T 1/2?", a: ["Temperatur", "Halbwertszeit", "Totalzeit", "Takt"], c: 1, info: "Das ist das Standard-Symbol in der Physik."},
+        {q: "Was passiert mit der Aktivität über die Zeit?", a: ["Steigt", "Bleibt gleich", "Sinkt exponentiell", "Wird linear weniger"], c: 2, info: "Die Kurve wird immer flacher, erreicht aber nie ganz Null."},
+        {q: "Ist ein Stoff mit kurzer HWZ gefährlicher?", a: ["Ja, er strahlt kurz sehr intensiv", "Nein", "Kommt auf die Farbe an", "Nur im Winter"], c: 0, info: "Kurze HWZ bedeutet viele Zerfälle pro Sekunde."},
+        {q: "Bleibt die HWZ bei Hitze gleich?", a: ["Nein, sie wird kürzer", "Ja, sie ist unveränderlich", "Sie wird länger", "Nur bei Druck"], c: 1, info: "Äußere Einflüsse ändern den Kernzerfall nicht."},
+        {q: "Wie viel Prozent sind nach 3 HWZ übrig?", a: ["33%", "12,5%", "25%", "5%"], c: 1, info: "100 -> 50 -> 25 -> 12,5%."}
+    ],
+    // 6. Zerfallsreihen
+    [
+        {q: "Wann endet eine Zerfallsreihe?", a: ["Bei Gold", "Bei einem stabilen Kern", "Nie", "Nach 10 Schritten"], c: 1, info: "Meistens endet sie bei stabilem Blei."},
+        {q: "Was ändert sich beim Alpha-Zerfall in der Reihe?", a: ["Nichts", "Masse -4, Ordnung -2", "Masse bleibt, Ordnung +1", "Kern wird schwerer"], c: 1, info: "Zwei Protonen und zwei Neutronen gehen weg."},
+        {q: "Was ändert sich beim Beta-Minus-Zerfall?", a: ["Masse -1", "Ordnung +1", "Ordnung -1", "Masse +4"], c: 1, info: "Ein Neutron wird zum Proton, die Masse bleibt fast gleich."},
+        {q: "Wie heißt die bekannteste Reihe?", a: ["Gold-Reihe", "Uran-Radium-Reihe", "Eisen-Kette", "Wasser-Serie"], c: 1, info: "Sie startet bei U-238 und endet bei Pb-206."},
+        {q: "Welches Edelgas tritt in Zerfallsreihen auf?", a: ["Helium", "Neon", "Radon", "Argon"], c: 2, info: "Radon ist gefährlich, da man es einatmen kann."},
+        {q: "Was ist ein 'Mutterkern'?", a: ["Der erste Kern", "Der zerfallende Kern", "Der stabile Kern", "Ein Magnet"], c: 1, info: "Der Kern vor dem Zerfall."},
+        {q: "Was ist der 'Tochterkern'?", a: ["Das Elektron", "Das Produkt nach dem Zerfall", "Das Licht", "Der Anfang"], c: 1, info: "Das neue Element, das entstanden ist."},
+        {q: "Kann eine Reihe Alpha- und Beta-Schritte haben?", a: ["Nur Alpha", "Nur Beta", "Ja, beides abwechselnd", "Nein"], c: 2, info: "Oft wechseln sich die Zerfallsarten ab."},
+        {q: "Warum ist Radon im Keller ein Problem?", a: ["Es riecht schlecht", "Es ist radioaktiv und schwer", "Es macht Schimmel", "Es brennt"], c: 1, info: "Es sammelt sich am Boden und wird eingeatmet."},
+        {q: "Wie viele Schritte hat die U-238 Reihe ca.?", a: ["3", "14", "100", "1"], c: 1, info: "Es ist ein langer Weg bis zum Blei."}
+    ],
+    // 7. Kernkraftwerk
+    [
+        {q: "Was ist die Aufgabe des Moderators?", a: ["Bremsen von Neutronen", "Kühlen", "Strom machen", "Putzen"], c: 0, info: "Langsame Neutronen spalten besser."},
+        {q: "Was passiert im Primärkreislauf?", a: ["Turbine dreht sich", "Wasser wird im Reaktor heiß", "Flusswasser kühlt", "Strom fließt"], c: 1, info: "Dieser Kreislauf ist radioaktiv geschlossen."},
+        {q: "Wozu dienen Steuerstäbe?", a: ["Zum Umrühren", "Zum Regeln der Kettenreaktion", "Als Brennstoff", "Zum Heizen"], c: 1, info: "Sie absorbieren Neutronen und stoppen die Reaktion."},
+        {q: "Welches Gas kommt aus dem Kühlturm?", a: ["Rauch", "Radioaktives Gas", "Wasserdampf", "Abgase"], c: 2, info: "Es ist reiner, harmloser Wasserdampf."},
+        {q: "Was macht der Generator?", a: ["Spaltet Kerne", "Macht aus Bewegung Strom", "Kühlt", "Pumpt Wasser"], c: 1, info: "Wie ein Dynamo am Fahrrad."},
+        {q: "Welches Metall wird meist als Brennstoff genutzt?", a: ["Eisen", "Uran", "Blei", "Kupfer"], c: 1, info: "Meist U-235."},
+        {q: "Warum gibt es mehrere Kreisläufe?", a: ["Aus Spaß", "Zur Sicherheit/Trennung der Radioaktivität", "Damit es schneller geht", "Wegen dem Druck"], c: 1, info: "Radioaktives Wasser soll den Reaktor nicht verlassen."},
+        {q: "Was ist die Aufgabe der Turbine?", a: ["Kerne spalten", "Wasserdampf in Drehung umwandeln", "Strom speichern", "Wasser kühlen"], c: 1, info: "Der Dampfdruck treibt die Schaufelräder an."},
+        {q: "Wie heißt das Gebäude mit der Betonkuppel?", a: ["Kühlturm", "Containment", "Büro", "Lager"], c: 1, info: "Es schützt bei Unfällen nach außen."},
+        {q: "Was passiert bei einer Kernschmelze?", a: ["Das Eis schmilzt", "Der Brennstoff wird zu heiß und flüssig", "Das Kraftwerk rostet", "Nichts"], c: 1, info: "Ein schwerer Unfall bei Kühlungsausfall."}
+    ],
+    // 8. Anwendung & Umwelt
+    [
+        {q: "Welches Isotop nutzt man zur Altersbestimmung?", a: ["Uran", "C-14 (Kohlenstoff)", "Gold", "Eisen"], c: 1, info: "C-14 ist ideal für organische Funde."},
+        {q: "Was ist ein 'Tracer' in der Medizin?", a: ["Ein Medikament", "Ein radioaktiver Markierungsstoff", "Ein Messer", "Ein Verband"], c: 1, info: "Man verfolgt den Weg im Körper."},
+        {q: "Woher kommt natürliche Hintergrundstrahlung?", a: ["Nur von Handys", "Boden, Weltall, Nahrung", "Nur von Kraftwerken", "Aus Batterien"], c: 1, info: "Wir leben in einer natürlich strahlenden Welt."},
+        {q: "Warum ist Radioaktivität bei Krebs nützlich?", a: ["Sie heilt Wunden", "Sie zerstört gezielt Tumorzellen", "Sie macht gesundes Blut", "Sie kühlt"], c: 1, info: "Strahlenbehandlung tötet krankes Gewebe."},
+        {q: "Was ist Radon?", a: ["Ein Metall", "Ein radioaktives Edelgas", "Ein Heilmittel", "Ein Baustoff"], c: 1, info: "Es kommt natürlich im Boden vor."},
+        {q: "Welches Lebensmittel enthält natürlich viel Kalium-40?", a: ["Bananen", "Fleisch", "Wasser", "Brot"], c: 0, info: "Bananen strahlen ganz leicht natürlich."},
+        {q: "Wie lange kann man mit C-14 zurückmessen?", a: ["100 Jahre", "ca. 50.000 Jahre", "Millionen Jahre", "Unendlich"], c: 1, info: "Danach ist zu wenig C-14 übrig."},
+        {q: "Was schützt Piloten vor Höhenstrahlung?", a: ["Die Flugzeughaut", "Wenig, sie haben höhere Belastung", "Spezielle Hüte", "Sonnenbrillen"], c: 1, info: "In großer Höhe ist die kosmische Strahlung stärker."},
+        {q: "Was macht man bei der Bestrahlung von Lebensmitteln?", a: ["Sie haltbar machen (Keime töten)", "Sie kochen", "Sie giftig machen", "Sie färben"], c: 0, info: "In manchen Ländern wird so die Haltbarkeit erhöht."},
+        {q: "Sind wir selbst radioaktiv?", a: ["Nein", "Ja, ganz leicht durch Kalium und Kohlenstoff", "Nur nach dem Röntgen", "Nur wenn wir Uran essen"], c: 1, info: "Jeder Mensch enthält natürliche Radioisotope."}
+    ]
+];
+
+let currentTopic = 0;
+let currentQIndex = 0;
+let score = 0;
+
+function initQuiz() {
+    const val = document.getElementById('topic').value;
+    if(val === "") return;
+    currentTopic = parseInt(val);
+    currentQIndex = 0;
+    score = 0;
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('quiz-ui').style.display = 'block';
+    showQuestion();
+}
+
+function showQuestion() {
+    const q = quizData[currentTopic][currentQIndex];
+    document.getElementById('q-text').innerText = q.q;
+    const optArea = document.getElementById('options');
+    optArea.innerHTML = '';
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('next').style.display = 'none';
+    
+    // Progress
+    const progress = (currentQIndex / 10) * 100;
+    document.getElementById('fill').style.width = progress + "%";
+
+    q.a.forEach((option, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = option;
+        btn.onclick = () => check(i);
+        optArea.appendChild(btn);
+    });
+}
+
+function check(idx) {
+    const q = quizData[currentTopic][currentQIndex];
+    const fb = document.getElementById('feedback');
+    const btns = document.getElementsByClassName('opt-btn');
+    
+    for(let b of btns) b.disabled = true;
+
+    if(idx === q.c) {
+        fb.innerHTML = "🚀 <b>RICHTIG!</b> " + q.info;
+        fb.className = "feedback correct";
+        score++;
+    } else {
+        fb.innerHTML = "💡 <b>KOPF HOCH!</b> Die richtige Antwort ist: <u>" + q.a[q.c] + "</u>.<br><small>" + q.info + "</small>";
+        fb.className = "feedback incorrect";
+    }
+    fb.style.display = 'block';
+    document.getElementById('next').style.display = 'block';
+}
+
+function nextQ() {
+    currentQIndex++;
+    if(currentQIndex < 10) {
+        showQuestion();
+    } else {
+        finish();
+    }
+}
+
+function finish() {
+    document.getElementById('fill').style.width = "100%";
+    const area = document.getElementById('q-area');
+    let msg = score > 7 ? "🏆 Wahnsinn! Du bist ein Profi!" : "👍 Gut gemacht! Lern noch ein bisschen weiter.";
+    area.innerHTML = `<div class="summary">
+        <h2>Ergebnis: ${score} / 10</h2>
+        <p>${msg}</p>
+        <button class="next-btn" style="display:block" onclick="location.reload()">NOCHMAL SPIELEN</button>
+    </div>`;
+}
+</script>
+
+</body>
+</html>

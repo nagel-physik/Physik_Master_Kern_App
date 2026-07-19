@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 1: Stoffe und ihre Eigenschaften</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.3rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; }
+        canvas { background: #111; border-radius: 8px; border: 1px solid #333; max-width: 100%; }
+        .sim-btns { margin-top: 12px; }
+        .sim-btns button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #333; color: white; margin: 4px; }
+        .sim-btns button:hover, .sim-btns button.active { background: var(--accent); color: #000; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; text-align:left; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; }
+        #calcResult { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent); min-height: 30px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="stoffe.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU WELT DER STOFFE</a>
+    </div>
+
+    <h1>Station 1: Stoffe und ihre Eigenschaften</h1>
+
+    <p>Ob Wasser, Eisen, Zucker oder Sauerstoff – jeder Stoff hat charakteristische Eigenschaften, an denen man ihn erkennen und von anderen Stoffen unterscheiden kann.</p>
+
+    <h2>Stoffeigenschaften</h2>
+    <div class="definition">
+        <b>Stoffeigenschaften</b> sind messbare oder beobachtbare Merkmale eines Stoffes, die zu seiner Identifikation dienen, z. B. <b>Dichte, Schmelztemperatur, Siedetemperatur, Farbe, Löslichkeit, elektrische Leitfähigkeit</b> und Geruch.
+    </div>
+    <p>Diese Eigenschaften sind für einen bestimmten Reinstoff (unter gleichen Bedingungen wie Druck und Temperatur) stets gleich – deshalb kann man z. B. anhand der Siedetemperatur prüfen, ob eine Flüssigkeit reines Wasser ist oder nicht.</p>
+
+    <table class="table">
+        <tr><th>Stoff</th><th>Dichte (g/cm³)</th><th>Schmelztemperatur</th><th>Siedetemperatur</th></tr>
+        <tr><td>Wasser</td><td>1,0</td><td>0 °C</td><td>100 °C</td></tr>
+        <tr><td>Eisen</td><td>7,87</td><td>1538 °C</td><td>2861 °C</td></tr>
+        <tr><td>Aluminium</td><td>2,70</td><td>660 °C</td><td>2467 °C</td></tr>
+        <tr><td>Ethanol (Alkohol)</td><td>0,79</td><td>−114 °C</td><td>78 °C</td></tr>
+    </table>
+
+    <h2>Die Dichte</h2>
+    <p>Die Dichte gibt an, welche Masse ein bestimmtes Volumen eines Stoffes hat:</p>
+    <div class="formula-box">ρ = m / V &nbsp;&nbsp;|&nbsp;&nbsp; ρ = Dichte, m = Masse, V = Volumen</div>
+
+    <h2>Probier's aus: Dichte-Rechner</h2>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Masse m in g</label><input type="number" id="masse" placeholder="z. B. 100"></div>
+            <div><label>Volumen V in cm³</label><input type="number" id="volumen" placeholder="z. B. 12,7"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcDichte()">Dichte berechnen</button></div>
+        <div id="calcResult"></div>
+    </div>
+
+    <h2>Das Teilchenmodell und Aggregatzustände</h2>
+    <p>Alle Stoffe bestehen aus kleinsten Teilchen (Atomen bzw. Molekülen), die sich ständig bewegen. Je nach Anordnung und Beweglichkeit dieser Teilchen unterscheidet man drei Aggregatzustände:</p>
+    <div class="step-box">
+        <ul>
+            <li><b>Fest:</b> Teilchen sind eng und geordnet angeordnet, schwingen nur um feste Plätze.</li>
+            <li><b>Flüssig:</b> Teilchen sind noch eng benachbart, können aber aneinander vorbeigleiten.</li>
+            <li><b>Gasförmig:</b> Teilchen bewegen sich frei und mit großem Abstand zueinander.</li>
+        </ul>
+    </div>
+
+    <h2>Probier's aus: Aggregatzustände im Teilchenmodell</h2>
+    <div class="sim-box">
+        <canvas id="stateCanvas" width="360" height="200"></canvas>
+        <div class="sim-btns">
+            <button id="btnFest" class="active" onclick="setState('fest')">Fest</button>
+            <button id="btnFluessig" onclick="setState('fluessig')">Flüssig</button>
+            <button id="btnGas" onclick="setState('gas')">Gasförmig</button>
+        </div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Anomalie des Wassers</h3>
+        <p>Die meisten Stoffe werden beim Erstarren dichter (das Feste sinkt in der eigenen Schmelze). Wasser verhält sich anders: Eis ist weniger dicht als flüssiges Wasser und schwimmt deshalb obenauf. Diese sogenannte <b>Anomalie des Wassers</b> ist überlebenswichtig für Fische und andere Wasserlebewesen, denn Seen frieren dadurch von oben und nicht von unten zu.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum die Dichte eine geeignete Stoffeigenschaft zur Identifikation eines Stoffes ist.</li>
+        <li>Ein Gegenstand hat eine Masse von 270 g und ein Volumen von 100 cm³. Berechne die Dichte und bestimme mithilfe der Tabelle, um welchen Stoff es sich wahrscheinlich handelt.</li>
+        <li>Beschreibe mithilfe des Teilchenmodells, was beim Schmelzen von Eis geschieht.</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="stoffe.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="gemische.html" class="btn">Weiter zu Gemischen &amp; Trennverfahren →</a>
+    </div>
+</div>
+
+<script>
+function calcDichte() {
+    const m = parseFloat(document.getElementById('masse').value);
+    const V = parseFloat(document.getElementById('volumen').value);
+    const result = document.getElementById('calcResult');
+    if (isNaN(m) || isNaN(V) || V <= 0) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte gültige Werte für Masse und Volumen eingeben.';
+        return;
+    }
+    const rho = m / V;
+    result.style.color = '#00ff88';
+    result.innerText = 'ρ = ' + rho.toFixed(2) + ' g/cm³';
+}
+
+const canvas = document.getElementById('stateCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let state = 'fest';
+let animId = null;
+
+function initParticles() {
+    particles = [];
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 6; col++) {
+            particles.push({
+                baseX: 40 + col * 55,
+                baseY: 30 + row * 45,
+                x: 40 + col * 55,
+                y: 30 + row * 45,
+                vx: (Math.random()-0.5)*2,
+                vy: (Math.random()-0.5)*2
+            });
+        }
+    }
+}
+
+function setState(s) {
+    state = s;
+    document.getElementById('btnFest').classList.toggle('active', s === 'fest');
+    document.getElementById('btnFluessig').classList.toggle('active', s === 'fluessig');
+    document.getElementById('btnGas').classList.toggle('active', s === 'gas');
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff88';
+
+    particles.forEach(p => {
+        if (state === 'fest') {
+            p.x = p.baseX + Math.sin(Date.now()/200 + p.baseX) * 2;
+            p.y = p.baseY + Math.cos(Date.now()/200 + p.baseY) * 2;
+        } else if (state === 'fluessig') {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 15 || p.x > canvas.width-15) p.vx *= -1;
+            if (p.y < 15 || p.y > canvas.height-15) p.vy *= -1;
+        } else {
+            p.x += p.vx * 3; p.y += p.vy * 3;
+            if (p.x < 10 || p.x > canvas.width-10) p.vx *= -1;
+            if (p.y < 10 || p.y > canvas.height-10) p.vy *= -1;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 7, 0, Math.PI*2);
+        ctx.fill();
+    });
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(state === 'fest' ? 'fest: geordnet, feste Plätze' : (state === 'fluessig' ? 'flüssig: beweglich, eng benachbart' : 'gasförmig: frei, großer Abstand'), 10, canvas.height - 8);
+
+    animId = requestAnimationFrame(animate);
+}
+
+initParticles();
+animate();
+</script>
+
+</body>
+</html>

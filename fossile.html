@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 2: Fossile Energieträger</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --formula: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+
+        .definition { background: #2c3e50; border-left: 5px solid var(--formula); padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step-box { background: var(--box); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .table th { background: #333; color: var(--accent); }
+
+        .highlight { color: var(--formula); font-weight: bold; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .formula-box { font-family: monospace; font-size: 1.2rem; text-align: center; background: #000; padding: 12px; border-radius: 8px; border: 1px dashed var(--formula); color: var(--formula); margin: 15px 0; }
+
+        .sim-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 25px 0; }
+        .calc-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 15px; }
+        .calc-grid label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #bbb; }
+        .calc-grid input { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #1e1e1e; color: white; box-sizing: border-box; width: 100%; }
+        #calcResult { text-align: center; font-size: 1rem; font-weight: bold; color: var(--accent); min-height: 60px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="energie.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZU ENERGIEVERSORGUNG</a>
+    </div>
+
+    <h1>Station 2: Fossile Energieträger</h1>
+
+    <p>Kohle, Erdöl und Erdgas decken bis heute einen Großteil des weltweiten Energiebedarfs. Sie werden als „fossil" bezeichnet, weil sie über riesige Zeiträume aus abgestorbenen Lebewesen entstanden sind.</p>
+
+    <h2>Entstehung fossiler Energieträger</h2>
+    <div class="step-box">
+        <p><b>Kohle</b> entstand vor rund 300 Millionen Jahren aus abgestorbenen Pflanzen, die in Sumpfgebieten unter Luftabschluss lagerten. Über Jahrmillionen wurden sie durch Druck und Hitze zunächst zu Torf, dann zu Braunkohle und schließlich zu Steinkohle umgewandelt. <b>Erdöl und Erdgas</b> entstanden ähnlich aus abgestorbenen Kleinstlebewesen (Plankton) am Meeresgrund, die unter Sedimentschichten begraben wurden.</p>
+    </div>
+    <div class="definition">
+        Fossile Energieträger entstehen über <b>Jahrmillionen</b> aus abgestorbenen Organismen unter Luftabschluss, Druck und Hitze. Sie werden in menschlichen Zeiträumen praktisch <b>nicht nachgebildet</b> und gelten deshalb als nicht erneuerbar.
+    </div>
+
+    <h2>Verbrennung fossiler Energieträger</h2>
+    <p>Bei der Verbrennung reagiert der im Brennstoff enthaltene Kohlenstoff mit Sauerstoff aus der Luft. Dabei wird die im Brennstoff gespeicherte chemische Energie als Wärme freigesetzt:</p>
+    <div class="formula-box">Kohlenstoff + Sauerstoff → Kohlenstoffdioxid + Energie (Wärme)<br>C + O₂ → CO₂ + Energie</div>
+    <p>Diese Wärme wird in Kraftwerken genutzt, um Wasser zu Dampf zu erhitzen, der wiederum eine Turbine und einen Generator antreibt – so entsteht elektrischer Strom.</p>
+
+    <h2>Energiedichte und Endlichkeit</h2>
+    <p>Fossile Energieträger unterscheiden sich in ihrem <b>Heizwert</b> (der Energiemenge, die bei vollständiger Verbrennung von 1 kg bzw. 1 m³ freigesetzt wird):</p>
+    <table class="table">
+        <tr><th>Energieträger</th><th>Heizwert (ca.)</th></tr>
+        <tr><td>Steinkohle</td><td>≈ 30 MJ/kg</td></tr>
+        <tr><td>Erdöl</td><td>≈ 42 MJ/kg</td></tr>
+        <tr><td>Erdgas</td><td>≈ 36 MJ/m³</td></tr>
+    </table>
+
+    <h2>Probier's aus: Wie viel Brennstoff brauchst du?</h2>
+    <p>Gib die benötigte Energiemenge in kWh ein (1 kWh = 3,6 MJ) und lass berechnen, wie viel Steinkohle, Erdöl oder Erdgas dafür nötig wäre.</p>
+    <div class="sim-box">
+        <div class="calc-grid">
+            <div><label>Benötigte Energie in kWh</label><input type="number" id="energyNeed" placeholder="z. B. 1000"></div>
+        </div>
+        <div style="text-align:center;"><button class="btn" style="border:none; cursor:pointer;" onclick="calcFuel()">Brennstoffmenge berechnen</button></div>
+        <div id="calcResult"></div>
+    </div>
+
+    <div class="step-box" style="border-left-color: #f1c40f;">
+        <h3>Wissenswertes: Reichweite und Umweltprobleme</h3>
+        <p>Die bekannten und wirtschaftlich abbaubaren Vorkommen fossiler Energieträger sind endlich; je nach Rohstoff und Fördertechnik (z. B. Fracking bei Erdgas) reichen Schätzungen von wenigen Jahrzehnten bis über hundert Jahren – genaue Zahlen sind stark von Preisen und neuen Fördertechniken abhängig. Neben der Endlichkeit verursacht die Verbrennung fossiler Energieträger erhebliche Umweltprobleme: den Ausstoß von klimawirksamem CO₂, Feinstaub und Schadstoffen sowie – bei Erdöl – das Risiko von Tankerunglücken und Ölkatastrophen.</p>
+    </div>
+
+    <h3>Aufgaben zum Nachdenken</h3>
+    <ul>
+        <li>Erkläre, warum fossile Energieträger als „gespeicherte Sonnenenergie" bezeichnet werden können.</li>
+        <li>Begründe, warum die Verbrennung fossiler Energieträger den Treibhauseffekt verstärkt.</li>
+        <li>Vergleiche die Heizwerte von Steinkohle und Erdöl: Welcher Energieträger liefert pro Kilogramm mehr Energie?</li>
+    </ul>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <a href="energiequellen.html" class="btn" style="background: #555; color: white;">← Zurück</a>
+        <a href="erneuerbare.html" class="btn">Weiter zu Erneuerbaren Energien →</a>
+    </div>
+</div>
+
+<script>
+function calcFuel() {
+    const kWh = parseFloat(document.getElementById('energyNeed').value);
+    const result = document.getElementById('calcResult');
+    if (isNaN(kWh) || kWh <= 0) {
+        result.style.color = '#e74c3c';
+        result.innerText = 'Bitte eine gültige Energiemenge eingeben.';
+        return;
+    }
+    const MJ = kWh * 3.6;
+    const kohle = MJ / 30;
+    const oel = MJ / 42;
+    const gas = MJ / 36;
+    result.style.color = '#00ff88';
+    result.innerHTML = 'Für ' + kWh + ' kWh (= ' + MJ.toFixed(0) + ' MJ) brauchst du etwa:<br>' +
+        '≈ ' + kohle.toFixed(1) + ' kg Steinkohle&nbsp;&nbsp;|&nbsp;&nbsp;' +
+        '≈ ' + oel.toFixed(1) + ' kg Erdöl&nbsp;&nbsp;|&nbsp;&nbsp;' +
+        '≈ ' + gas.toFixed(1) + ' m³ Erdgas';
+}
+</script>
+
+</body>
+</html>

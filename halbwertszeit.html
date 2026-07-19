@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station 5: Halbwertszeit & Zerfall</title>
+    <style>
+        :root { --bg: #121212; --accent: #00ff88; --box: #1e1e1e; --text: #e0e0e0; --highlight: #3498db; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        h1, h2, h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+        
+        .definition-box { background: #2c3e50; border-left: 5px solid var(--highlight); padding: 20px; border-radius: 5px; margin: 20px 0; }
+        
+        /* Zerfall Simulation */
+        .sim-area { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin: 30px 0; text-align: center; }
+        .atom-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 300px; margin: 20px auto; }
+        .atom { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; transition: background 0.5s; }
+        .decayed { background: #444; box-shadow: none; }
+        
+        .stat-box { font-size: 1.2rem; font-weight: bold; color: var(--highlight); margin: 10px 0; }
+        .btn { padding: 12px 25px; background: var(--accent); color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; cursor: pointer; border: none; margin: 5px; }
+
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #1e1e1e; }
+        .table th, .table td { border: 1px solid #444; padding: 12px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--accent); font-weight: bold;">← ZURÜCK ZUM DASHBOARD</a>
+    </div>
+
+    <h1>Station 5: Die Halbwertszeit ($T_{1/2}$)</h1>
+
+    <p>Radioaktiver Zerfall ist ein reiner Zufall. Man kann nie sagen, wann ein <i>einzelner</i> Kern zerfällt. Aber man kann bei einer <i>großen Menge</i> genau sagen, wie lange es dauert, bis die Hälfte weg ist.</p>
+
+    <div class="definition-box">
+        <h3>Was ist die Halbwertszeit?</h3>
+        <p>Die <b>Halbwertszeit</b> ist die Zeitspanne, in der jeweils die <span style="color:var(--highlight); font-weight:bold;">Hälfte</span> der ursprünglich vorhandenen Atomkerne eines radioaktiven Nuklids zerfällt.</p>
+    </div>
+
+    <section class="sim-area">
+        <h3>Live-Simulation: Der 50%-Check</h3>
+        <p>Hier siehst du 100 instabile Kerne. Nach jedem "Klick" vergeht eine Halbwertszeit.</p>
+        
+        <div class="atom-grid" id="atomGrid"></div>
+        
+        <div class="stat-box">Noch aktive Kerne: <span id="count">100</span>%</div>
+        <div id="stepInfo">Schritt: 0 Halbwertszeiten vergangen</div>
+        
+        <button class="btn" onclick="decayStep()">EINE HALBWERTSZEIT WARTEN</button>
+        <button class="btn" style="background:#555; color:#fff;" onclick="resetSim()">RESET</button>
+    </section>
+
+    <h2>Die Abnahme-Tabelle</h2>
+    <p>In Prüfungen musst du oft ausrechnen, wie viel Material nach einer gewissen Zeit noch übrig ist. Das Schema ist immer gleich:</p>
+
+    <table class="table">
+        <tr><th>Zeit ($T_{1/2}$)</th><th>Anteil in %</th><th>Bruch</th></tr>
+        <tr><td>0 (Start)</td><td>100 %</td><td>1 / 1</td></tr>
+        <tr><td>1 Halbwertszeit</td><td>50 %</td><td>1 / 2</td></tr>
+        <tr><td>2 Halbwertszeiten</td><td>25 %</td><td>1 / 4</td></tr>
+        <tr><td>3 Halbwertszeiten</td><td>12,5 %</td><td>1 / 8</td></tr>
+        <tr><td>4 Halbwertszeiten</td><td>6,25 %</td><td>1 / 16</td></tr>
+    </table>
+
+    <div class="definition-box" style="background:#1e1e1e; border-left-color:var(--accent);">
+        <h3>Beispiele aus dem Buch:</h3>
+        <ul>
+            <li><b>Jod-131:</b> ca. 8 Tage (Medizin)</li>
+            <li><b>C-14:</b> 5.730 Jahre (Archäologie)</li>
+            <li><b>Uran-238:</b> 4,5 Milliarden Jahre (Erdgeschichte)</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 40px; text-align: right;">
+        <a href="kernenergie.html" class="btn">Zum Finale: Kernenergie →</a>
+    </div>
+</div>
+
+<script>
+    let activePercent = 100;
+    let steps = 0;
+    const grid = document.getElementById('atomGrid');
+
+    function createGrid() {
+        grid.innerHTML = '';
+        for(let i=0; i<100; i++) {
+            let div = document.createElement('div');
+            div.className = 'atom';
+            div.id = 'a' + i;
+            grid.appendChild(div);
+        }
+    }
+
+    function decayStep() {
+        if(activePercent <= 1) return;
+        steps++;
+        let target = Math.round(activePercent / 2);
+        
+        // Atome visuell "zerfallen" lassen
+        let atoms = document.querySelectorAll('.atom:not(.decayed)');
+        let toDecay = atoms.length - target;
+        
+        for(let i=0; i < toDecay; i++) {
+            atoms[i].classList.add('decayed');
+        }
+
+        activePercent = target;
+        document.getElementById('count').innerText = activePercent;
+        document.getElementById('stepInfo').innerText = "Schritt: " + steps + " Halbwertszeit(en) vergangen";
+    }
+
+    function resetSim() {
+        activePercent = 100;
+        steps = 0;
+        document.getElementById('count').innerText = "100";
+        document.getElementById('stepInfo').innerText = "Schritt: 0 Halbwertszeiten vergangen";
+        createGrid();
+    }
+
+    createGrid();
+</script>
+
+</body>
+</html>
